@@ -22,11 +22,37 @@ async def run_test():
     graph = get_compiled_graph(checkpointer=checkpointer)
     
     project_id = f"test_proj_{uuid.uuid4().hex[:8]}"
+    job_id = "test_job_1"
     logger.info(f"Starting test generation workflow for project {project_id}...")
     
+    # Create entries in the DB first so updates succeed
+    from app.database.repositories.project_repository import ProjectRepository
+    from app.database.repositories.job_repository import JobRepository
+    
+    project_repo = ProjectRepository()
+    project_repo.create({
+        "id": project_id, 
+        "title": "Test Project",
+        "input_type": "text", 
+        "input_text": "Generate exactly 1 simple scene explaining 1+1=2."
+    })
+    # Override id since create() generates a random one
+    # Actually wait, ProjectRepository.create() ignores the 'id' parameter and generates a new UUID.
+    # Let me just use the created project's ID.
+    project_doc = project_repo.create({
+        "title": "Test Project",
+        "input_type": "text", 
+        "input_text": "Generate exactly 1 simple scene explaining 1+1=2."
+    })
+    project_id = project_doc["id"]
+    
+    job_repo = JobRepository()
+    job_doc = job_repo.create(project_id)
+    job_id = job_doc["id"]
+
     initial_state = create_initial_state(
         project_id=project_id,
-        job_id="test_job_1",
+        job_id=job_id,
         input_type="text",
         input_text="Generate exactly 1 simple scene explaining 1+1=2. Keep it incredibly short, maximum 1 object and 1 animation.",
     )

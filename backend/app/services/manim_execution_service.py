@@ -69,10 +69,10 @@ class ManimExecutionService:
 
         # Build the Manim command
         command = self._build_command(
-            script_path=script_path,
+            script_path=str(Path(script_path).absolute()),
             scene_class=main_class,
             quality_flag=quality_flag,
-            output_dir=str(output_dir),
+            output_dir=str(Path(output_dir).absolute()),
         )
 
         logger.info(

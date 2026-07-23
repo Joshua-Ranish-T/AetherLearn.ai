@@ -43,70 +43,75 @@ class OCRService:
         if not path.exists():
             raise OCRError(f"PDF file not found: {file_path}")
 
-        logger.info("Extracting PDF", path=file_path)
-
-        try:
-            doc = fitz.open(str(path))
-        except Exception as exc:
-            raise OCRError(f"Failed to open PDF: {exc}", context={"path": file_path}) from exc
-
         all_text: list[str] = []
         chunks: list[ContentChunk] = []
         all_equations: list[str] = []
         all_code: list[str] = []
         all_tables: list[list[list[str]]] = []
+        page_count = 0
+        doc = None
 
-        for page_num, page in enumerate(doc, start=1):
-            # Extract text blocks
-            blocks = page.get_text("blocks")
-            page_text_parts: list[str] = []
+        try:
+            doc = fitz.open(str(path))
+            page_count = len(doc)
+            for page_num in range(1, page_count + 1):
+                page = doc[page_num - 1]
+                # Extract text blocks
+                blocks = page.get_text("blocks")
+                page_text_parts: list[str] = []
 
-            for block in blocks:
-                if block[6] == 0:  # Text block (not image)
-                    text = block[4].strip()
-                    if not text:
-                        continue
+                for block in blocks:
+                    if block[6] == 0:  # Text block (not image)
+                        text = block[4].strip()
+                        if not text:
+                            continue
 
-                    page_text_parts.append(text)
+                        page_text_parts.append(text)
 
-                    # Classify chunk
-                    chunk_type = self._classify_text_chunk(text)
-                    chunks.append(
-                        ContentChunk(
-                            chunk_type=chunk_type,
-                            content=text,
-                            confidence=1.0,
-                            page_number=page_num,
-                            metadata={"block_bbox": list(block[:4])},
-                        )
-                    )
-
-                    # Extract specialized content
-                    equations = self._extract_equations(text)
-                    all_equations.extend(equations)
-
-                    code = self._extract_code_blocks(text)
-                    all_code.extend(code)
-
-            # Extract tables
-            tables = page.find_tables()
-            if tables and tables.tables:
-                for table in tables.tables:
-                    extracted_table = table.extract()
-                    if extracted_table:
-                        all_tables.append(extracted_table)
+                        # Classify chunk
+                        chunk_type = self._classify_text_chunk(text)
                         chunks.append(
                             ContentChunk(
-                                chunk_type="table",
-                                content=str(extracted_table),
+                                chunk_type=chunk_type,
+                                content=text,
+                                confidence=1.0,
                                 page_number=page_num,
-                                metadata={"rows": len(extracted_table)},
+                                metadata={"block_bbox": list(block[:4])},
                             )
                         )
 
-            all_text.append("\n".join(page_text_parts))
+                        # Extract specialized content
+                        equations = self._extract_equations(text)
+                        all_equations.extend(equations)
 
-        doc.close()
+                        code = self._extract_code_blocks(text)
+                        all_code.extend(code)
+
+                # Extract tables
+                tables = page.find_tables()
+                if tables and tables.tables:
+                    for table in tables.tables:
+                        extracted_table = table.extract()
+                        if extracted_table:
+                            all_tables.append(extracted_table)
+                            chunks.append(
+                                ContentChunk(
+                                    chunk_type="table",
+                                    content=str(extracted_table),
+                                    page_number=page_num,
+                                    metadata={"rows": len(extracted_table)},
+                                )
+                            )
+
+                all_text.append("\n".join(page_text_parts))
+        except Exception as exc:
+            raise OCRError(f"Failed to process PDF: {exc}", context={"path": file_path}) from exc
+        finally:
+            if doc is not None and hasattr(doc, "close"):
+                try:
+                    doc.close()
+                except Exception:
+                    pass
 
         raw_text = "\n\n".join(all_text)
         word_count = len(raw_text.split())
@@ -124,7 +129,7 @@ class OCRService:
             ocr_used=False,
             source_file_name=path.name,
             extraction_metadata={
-                "page_count": len(doc) if not doc.is_closed else 0,
+                "page_count": page_count,
                 "file_size_bytes": path.stat().st_size,
             },
         )

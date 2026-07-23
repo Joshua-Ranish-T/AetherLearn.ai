@@ -10,5 +10,101 @@
     "created_at": "2026-07-23T16:02:08.280080+00:00",
     "updated_at": "2026-07-23T16:02:08.280080+00:00",
     "metadata": {}
+  },
+  "80461083-a190-4377-8b02-36fd8d69d2c6": {
+    "id": "80461083-a190-4377-8b02-36fd8d69d2c6",
+    "title": "Test Project",
+    "description": "A test project for integration",
+    "input_type": "text",
+    "input_text": "Explain the pythagorean theorem",
+    "input_file_url": "",
+    "status": "running",
+    "created_at": "2026-07-23T16:09:44.385932+00:00",
+    "updated_at": "2026-07-23T16:18:54.524069+00:00",
+    "metadata": {}
+  },
+  "57f8dd7a-604d-4a9a-9a04-eade6956c365": {
+    "id": "57f8dd7a-604d-4a9a-9a04-eade6956c365",
+    "title": "Test",
+    "description": "",
+    "input_type": "text",
+    "input_text": "Hello world",
+    "input_file_url": "",
+    "status": "pending",
+    "created_at": "2026-07-23T16:23:46.500396+00:00",
+    "updated_at": "2026-07-23T16:23:46.500396+00:00",
+    "metadata": {}
+  },
+  "217e6c3f-5f52-4e89-ba98-78ebf8bcd3f6": {
+    "id": "217e6c3f-5f52-4e89-ba98-78ebf8bcd3f6",
+    "title": "Test",
+    "description": "",
+    "input_type": "text",
+    "input_text": "Hello world",
+    "input_file_url": "",
+    "status": "running",
+    "created_at": "2026-07-23T16:23:55.853520+00:00",
+    "updated_at": "2026-07-23T16:23:57.970521+00:00",
+    "metadata": {}
+  },
+  "7b938b38-4bff-42d5-9550-bc2d7647e55f": {
+    "id": "7b938b38-4bff-42d5-9550-bc2d7647e55f",
+    "title": "Test",
+    "description": "",
+    "input_type": "text",
+    "input_text": "Hello world",
+    "input_file_url": "",
+    "status": "running",
+    "created_at": "2026-07-23T16:25:52.587344+00:00",
+    "updated_at": "2026-07-23T16:25:54.658836+00:00",
+    "metadata": {}
+  },
+  "c2978be9-8a10-4616-9a0a-4acf6b88f07e": {
+    "id": "c2978be9-8a10-4616-9a0a-4acf6b88f07e",
+    "title": "Test Project",
+    "description": "",
+    "input_type": "text",
+    "input_text": "Generate exactly 1 simple scene explaining 1+1=2.",
+    "input_file_url": "",
+    "status": "pending",
+    "created_at": "2026-07-23T16:56:02.465019+00:00",
+    "updated_at": "2026-07-23T16:56:02.465019+00:00",
+    "metadata": {}
+  },
+  "d77022b3-a02f-4962-8728-f7ad7e75a046": {
+    "id": "d77022b3-a02f-4962-8728-f7ad7e75a046",
+    "title": "Test Project",
+    "description": "",
+    "input_type": "text",
+    "input_text": "Generate exactly 1 simple scene explaining 1+1=2.",
+    "input_file_url": "",
+    "status": "running",
+    "created_at": "2026-07-23T16:56:02.472335+00:00",
+    "updated_at": "2026-07-23T16:56:02.666766+00:00",
+    "metadata": {}
+  },
+  "82a3769d-15b8-4714-84f1-2c6e6d97a904": {
+    "id": "82a3769d-15b8-4714-84f1-2c6e6d97a904",
+    "title": "Test Project",
+    "description": "",
+    "input_type": "text",
+    "input_text": "Generate exactly 1 simple scene explaining 1+1=2.",
+    "input_file_url": "",
+    "status": "pending",
+    "created_at": "2026-07-23T16:59:40.506111+00:00",
+    "updated_at": "2026-07-23T16:59:40.506111+00:00",
+    "metadata": {}
+  },
+  "db5fe2d6-74eb-4b80-8068-cb8a3ce2ad19": {
+    "id": "db5fe2d6-74eb-4b80-8068-cb8a3ce2ad19",
+    "title": "Test Project",
+    "description": "",
+    "input_type": "text",
+    "input_text": "Generate exactly 1 simple scene explaining 1+1=2.",
+    "input_file_url": "",
+    "status": "running",
+    "created_at": "2026-07-23T16:59:40.549451+00:00",
+    "updated_at": "2026-07-23T16:59:40.771921+00:00",
+    "metadata": {}
   }
 }

@@ -111,16 +111,16 @@ class JobResponse(BaseModel):
 
     id: str
     project_id: str
-    status: GenerationStatus
-    current_stage: str
-    stages_completed: list[str]
-    error_message: str
-    error_stage: str
-    retry_count: int
-    started_at: datetime
-    completed_at: datetime | None
-    duration_seconds: float
-    logs: list[dict[str, Any]]
+    status: GenerationStatus = GenerationStatus.PENDING
+    current_stage: str = ""
+    stages_completed: list[str] = Field(default_factory=list)
+    error_message: str = ""
+    error_stage: str = ""
+    retry_count: int = 0
+    started_at: datetime | str | None = None
+    completed_at: datetime | str | None = None
+    duration_seconds: float = 0.0
+    logs: list[dict[str, Any]] = Field(default_factory=list)
 
     model_config = {"from_attributes": True}
 
@@ -132,19 +132,19 @@ class VideoResponse(BaseModel):
 
     id: str
     project_id: str
-    job_id: str
-    title: str
-    duration_seconds: float
-    resolution: str
-    file_url: str
-    audio_url: str
-    transcript_url: str
-    manim_script_url: str
-    storyboard_url: str
-    thumbnail_url: str
-    file_size_bytes: int
-    created_at: datetime
-    metadata: dict[str, Any]
+    job_id: str = ""
+    title: str = "Generated Video"
+    duration_seconds: float = 0.0
+    resolution: str = "1080p"
+    file_url: str = ""
+    audio_url: str = ""
+    transcript_url: str = ""
+    manim_script_url: str = ""
+    storyboard_url: str = ""
+    thumbnail_url: str = ""
+    file_size_bytes: int = 0
+    created_at: datetime | str | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
 
     model_config = {"from_attributes": True}
 

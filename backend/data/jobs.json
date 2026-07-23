@@ -1,1 +1,144 @@
-{}
+{
+  "d7710715-d128-4343-95c9-3b05747bf50a": {
+    "id": "d7710715-d128-4343-95c9-3b05747bf50a",
+    "project_id": "80461083-a190-4377-8b02-36fd8d69d2c6",
+    "status": "queued",
+    "current_stage": "initialized",
+    "progress_percent": 0.0,
+    "error_message": "",
+    "created_at": "2026-07-23T16:09:46.445573+00:00",
+    "updated_at": "2026-07-23T16:09:46.445573+00:00",
+    "started_at": null,
+    "completed_at": null,
+    "result_data": {}
+  },
+  "30fe4544-e69c-4570-be8b-25ac1f41289c": {
+    "id": "30fe4544-e69c-4570-be8b-25ac1f41289c",
+    "project_id": "80461083-a190-4377-8b02-36fd8d69d2c6",
+    "status": "pending",
+    "current_stage": "initialized",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-23T16:18:54.491863+00:00",
+    "updated_at": "2026-07-23T16:18:54.491863+00:00",
+    "started_at": "2026-07-23T16:18:54.491863+00:00",
+    "completed_at": null,
+    "duration_seconds": 0.0,
+    "logs": [],
+    "result_data": {}
+  },
+  "32ce5053-a9d4-433f-b76e-ba5ff1ad2589": {
+    "id": "32ce5053-a9d4-433f-b76e-ba5ff1ad2589",
+    "project_id": "217e6c3f-5f52-4e89-ba98-78ebf8bcd3f6",
+    "status": "pending",
+    "current_stage": "initialized",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-23T16:23:57.928298+00:00",
+    "updated_at": "2026-07-23T16:23:57.928298+00:00",
+    "started_at": "2026-07-23T16:23:57.928298+00:00",
+    "completed_at": null,
+    "duration_seconds": 0.0,
+    "logs": [],
+    "result_data": {}
+  },
+  "2e6c252f-930b-44ea-a27c-525eb560fe94": {
+    "id": "2e6c252f-930b-44ea-a27c-525eb560fe94",
+    "project_id": "7b938b38-4bff-42d5-9550-bc2d7647e55f",
+    "status": "pending",
+    "current_stage": "initialized",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-23T16:25:54.634037+00:00",
+    "updated_at": "2026-07-23T16:25:54.634037+00:00",
+    "started_at": "2026-07-23T16:25:54.634037+00:00",
+    "completed_at": null,
+    "duration_seconds": 0.0,
+    "logs": [],
+    "result_data": {}
+  },
+  "4181060b-9dcd-406e-b7a1-06f1eea3b034": {
+    "id": "4181060b-9dcd-406e-b7a1-06f1eea3b034",
+    "project_id": "d77022b3-a02f-4962-8728-f7ad7e75a046",
+    "status": "pending",
+    "current_stage": "supervisor",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-23T16:56:02.512220+00:00",
+    "updated_at": "2026-07-23T16:56:02.628173+00:00",
+    "started_at": "2026-07-23T16:56:02.512220+00:00",
+    "completed_at": null,
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: text. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "92ffeec6-a8bf-4af5-aee5-4bd6159250bb": {
+    "id": "92ffeec6-a8bf-4af5-aee5-4bd6159250bb",
+    "project_id": "db5fe2d6-74eb-4b80-8068-cb8a3ce2ad19",
+    "status": "pending",
+    "current_stage": "supervisor",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-23T16:59:40.584419+00:00",
+    "updated_at": "2026-07-23T16:59:40.741883+00:00",
+    "started_at": "2026-07-23T16:59:40.584419+00:00",
+    "completed_at": null,
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: text. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "f7eb8ccb-627e-4ec7-ad6c-d18d3f0f52a5": {
+    "id": "f7eb8ccb-627e-4ec7-ad6c-d18d3f0f52a5",
+    "project_id": "73788e03-8c08-4678-8d38-64894a4493d6",
+    "status": "pending",
+    "current_stage": "supervisor",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-23T17:11:44.247705+00:00",
+    "updated_at": "2026-07-23T17:11:44.315837+00:00",
+    "started_at": "2026-07-23T17:11:44.247705+00:00",
+    "completed_at": null,
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: text. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  }
+}

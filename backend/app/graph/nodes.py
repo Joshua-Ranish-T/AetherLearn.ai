@@ -103,11 +103,13 @@ def content_generation_node(state: VideoGenerationState) -> dict[str, Any]:
         updates = agent.run(state)
         updates["content_generated"] = True
         updates["current_stage"] = "content_generation_agent"
+        lp = updates.get("lesson_plan")
+        scene_count = len(lp.storyboard) if lp and hasattr(lp, "storyboard") else 0
         updates["stage_logs"] = [
             _log_entry(
                 "content_generation_agent",
                 "completed",
-                f"Lesson plan created with {len(updates.get('lesson_plan', {}).storyboard if updates.get('lesson_plan') else [])} scenes",
+                f"Lesson plan created with {scene_count} scenes",
             )
         ]
         return updates

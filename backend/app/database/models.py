@@ -21,8 +21,8 @@ class ProjectDocument(TypedDict, total=False):
     input_text: str                  # raw text input (if any)
     input_file_url: str              # Firebase Storage URL for uploaded file
     status: str                      # GenerationStatus enum value
-    created_at: datetime
-    updated_at: datetime
+    created_at: datetime | str
+    updated_at: datetime | str
     metadata: dict[str, Any]
 
 
@@ -34,13 +34,17 @@ class JobDocument(TypedDict, total=False):
     status: str                      # "pending" | "running" | "completed" | "failed"
     current_stage: str               # current LangGraph node name
     stages_completed: list[str]
+    progress_percent: float
     error_message: str
     error_stage: str
     retry_count: int
-    started_at: datetime
-    completed_at: datetime
+    created_at: datetime | str
+    updated_at: datetime | str
+    started_at: datetime | str
+    completed_at: datetime | str | None
     duration_seconds: float
     logs: list[dict[str, Any]]       # append-only execution log entries
+    result_data: dict[str, Any]
     graph_state_ref: str             # Firestore doc path to serialized graph state
 
 
@@ -60,7 +64,8 @@ class VideoDocument(TypedDict, total=False):
     storyboard_url: str              # Firebase Storage URL for storyboard JSON
     thumbnail_url: str               # Firebase Storage URL for thumbnail image
     file_size_bytes: int
-    created_at: datetime
+    created_at: datetime | str
+    updated_at: datetime | str
     metadata: dict[str, Any]
 
 
@@ -71,5 +76,5 @@ class CheckpointDocument(TypedDict, total=False):
     checkpoint_id: str
     parent_checkpoint_id: str
     state: dict[str, Any]           # serialized LangGraph state
-    created_at: datetime
+    created_at: datetime | str
     metadata: dict[str, Any]

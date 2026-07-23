@@ -12,8 +12,9 @@ from __future__ import annotations
 import asyncio
 import json
 from datetime import datetime, timezone
-from typing import Any, Iterator, Sequence
+from typing import Any, AsyncIterator, Iterator, Sequence
 
+from langchain_core.runnables import RunnableConfig
 from langgraph.checkpoint.base import (
     BaseCheckpointSaver,
     Checkpoint,
@@ -33,14 +34,26 @@ CHECKPOINTS_COLLECTION = "checkpoints"
 def _serialize(obj: Any) -> Any:
     """JSON-serialize LangGraph state (handle non-serializable types)."""
     if isinstance(obj, dict):
-        return {k: _serialize(v) for k, v in obj.items()}
-    if isinstance(obj, list):
+        return {str(k): _serialize(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple, set)):
         return [_serialize(item) for item in obj]
     if hasattr(obj, "model_dump"):
-        return obj.model_dump()
+        try:
+            return _serialize(obj.model_dump())
+        except Exception:
+            pass
+    if hasattr(obj, "dict") and callable(obj.dict):
+        try:
+            return _serialize(obj.dict())
+        except Exception:
+            pass
+    if hasattr(obj, "value"):
+        return obj.value
     if isinstance(obj, datetime):
         return obj.isoformat()
-    return obj
+    if isinstance(obj, (int, float, str, bool, type(None))):
+        return obj
+    return str(obj)
 
 
 class FirebaseCheckpointer(BaseCheckpointSaver):
@@ -63,10 +76,13 @@ class FirebaseCheckpointer(BaseCheckpointSaver):
             .collection("snapshots")
         )
 
-    def get_tuple(self, config: dict[str, Any]) -> CheckpointTuple | None:
+    def get_tuple(self, config: RunnableConfig) -> CheckpointTuple | None:
         """Retrieve the latest (or specific) checkpoint for a thread."""
-        thread_id: str = config["configurable"]["thread_id"]
-        checkpoint_id: str | None = config["configurable"].get("checkpoint_id")
+        configurable = config.get("configurable", {}) if config else {}
+        thread_id: str | None = configurable.get("thread_id")
+        if not thread_id:
+            return None
+        checkpoint_id: str | None = configurable.get("checkpoint_id")
 
         try:
             col = self._thread_col(thread_id)
@@ -74,7 +90,7 @@ class FirebaseCheckpointer(BaseCheckpointSaver):
                 snap = col.document(checkpoint_id).get()
                 if not snap.exists:
                     return None
-                doc = snap.to_dict()
+                doc = snap.to_dict() or {}
             else:
                 # Get the most recent checkpoint
                 results = list(
@@ -82,11 +98,11 @@ class FirebaseCheckpointer(BaseCheckpointSaver):
                 )
                 if not results:
                     return None
-                doc = results[0].to_dict()
+                doc = results[0].to_dict() or {}
 
             checkpoint = doc.get("checkpoint", {})
             metadata = doc.get("metadata", {})
-            parent_config = None
+            parent_config: RunnableConfig | None = None
             if parent_id := doc.get("parent_checkpoint_id"):
                 parent_config = {
                     "configurable": {
@@ -99,7 +115,7 @@ class FirebaseCheckpointer(BaseCheckpointSaver):
                 config={
                     "configurable": {
                         "thread_id": thread_id,
-                        "checkpoint_id": doc["checkpoint_id"],
+                        "checkpoint_id": doc.get("checkpoint_id", checkpoint_id or ""),
                     }
                 },
                 checkpoint=checkpoint,
@@ -112,22 +128,25 @@ class FirebaseCheckpointer(BaseCheckpointSaver):
 
     def list(
         self,
-        config: dict[str, Any],
+        config: RunnableConfig | None,
         *,
         filter: dict[str, Any] | None = None,
-        before: dict[str, Any] | None = None,
+        before: RunnableConfig | None = None,
         limit: int | None = None,
     ) -> Iterator[CheckpointTuple]:
         """List checkpoints for a thread, most recent first."""
-        thread_id: str = config["configurable"]["thread_id"]
+        configurable = config.get("configurable", {}) if config else {}
+        thread_id: str | None = configurable.get("thread_id")
+        if not thread_id:
+            return
         try:
             col = self._thread_col(thread_id)
             query = col.order_by("created_at", direction="DESCENDING")
             if limit:
                 query = query.limit(limit)
             for snap in query.stream():
-                doc = snap.to_dict()
-                parent_config = None
+                doc = snap.to_dict() or {}
+                parent_config: RunnableConfig | None = None
                 if parent_id := doc.get("parent_checkpoint_id"):
                     parent_config = {
                         "configurable": {
@@ -139,7 +158,7 @@ class FirebaseCheckpointer(BaseCheckpointSaver):
                     config={
                         "configurable": {
                             "thread_id": thread_id,
-                            "checkpoint_id": doc["checkpoint_id"],
+                            "checkpoint_id": doc.get("checkpoint_id", ""),
                         }
                     },
                     checkpoint=doc.get("checkpoint", {}),
@@ -152,27 +171,29 @@ class FirebaseCheckpointer(BaseCheckpointSaver):
 
     def put(
         self,
-        config: dict[str, Any],
+        config: RunnableConfig,
         checkpoint: Checkpoint,
         metadata: CheckpointMetadata,
         new_versions: dict[str, Any],
-    ) -> dict[str, Any]:
+    ) -> RunnableConfig:
         """Persist a checkpoint to Firestore."""
-        thread_id: str = config["configurable"]["thread_id"]
-        checkpoint_id: str = checkpoint["id"]
-        parent_id: str | None = config["configurable"].get("checkpoint_id")
+        configurable = config.get("configurable", {}) if config else {}
+        thread_id: str = configurable.get("thread_id", "default")
+        checkpoint_id: str = checkpoint.get("id", "") if isinstance(checkpoint, dict) else str(getattr(checkpoint, "id", ""))
+        parent_id: str | None = configurable.get("checkpoint_id")
 
         doc = {
             "thread_id": thread_id,
             "checkpoint_id": checkpoint_id,
             "parent_checkpoint_id": parent_id or "",
             "checkpoint": _serialize(checkpoint),
-            "metadata": _serialize(dict(metadata)),
+            "metadata": _serialize(dict(metadata) if metadata else {}),
             "created_at": datetime.now(tz=timezone.utc),
         }
 
         try:
-            self._thread_col(thread_id).document(checkpoint_id).set(doc)
+            if thread_id and checkpoint_id:
+                self._thread_col(thread_id).document(checkpoint_id).set(doc)
         except Exception as exc:
             logger.warning(
                 "Failed to persist checkpoint",
@@ -190,39 +211,44 @@ class FirebaseCheckpointer(BaseCheckpointSaver):
 
     def put_writes(
         self,
-        config: dict[str, Any],
+        config: RunnableConfig,
         writes: Sequence[tuple[str, Any]],
         task_id: str,
+        task_path: str = "",
     ) -> None:
         """Store intermediate writes (no-op: we only checkpoint full state)."""
         pass
 
-    async def aget_tuple(self, config: dict[str, Any]) -> CheckpointTuple | None:
+    async def aget_tuple(self, config: RunnableConfig) -> CheckpointTuple | None:
         return await asyncio.to_thread(self.get_tuple, config)
 
     async def alist(
         self,
-        config: dict[str, Any],
+        config: RunnableConfig | None,
         *,
         filter: dict[str, Any] | None = None,
-        before: dict[str, Any] | None = None,
+        before: RunnableConfig | None = None,
         limit: int | None = None,
-    ) -> Iterator[CheckpointTuple]:
-        return await asyncio.to_thread(self.list, config, filter=filter, before=before, limit=limit)
+    ) -> AsyncIterator[CheckpointTuple]:
+        res = await asyncio.to_thread(self.list, config, filter=filter, before=before, limit=limit)
+        for item in res:
+            yield item
 
     async def aput(
         self,
-        config: dict[str, Any],
+        config: RunnableConfig,
         checkpoint: Checkpoint,
         metadata: CheckpointMetadata,
         new_versions: dict[str, Any],
-    ) -> dict[str, Any]:
+    ) -> RunnableConfig:
         return await asyncio.to_thread(self.put, config, checkpoint, metadata, new_versions)
 
     async def aput_writes(
         self,
-        config: dict[str, Any],
+        config: RunnableConfig,
         writes: Sequence[tuple[str, Any]],
         task_id: str,
+        task_path: str = "",
     ) -> None:
-        return await asyncio.to_thread(self.put_writes, config, writes, task_id)
+        return await asyncio.to_thread(self.put_writes, config, writes, task_id, task_path)
+

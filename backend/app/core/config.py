@@ -65,12 +65,20 @@ class Settings(BaseSettings):
 
     @field_validator("cors_origins", mode="before")
     @classmethod
-    def parse_cors_origins(cls, v: str | list[str]) -> list[str]:
+    def parse_cors_origins(cls, v: Any) -> list[str]:
         if isinstance(v, str):
+            v_str = v.strip()
+            if not v_str:
+                return []
             try:
-                return json.loads(v)
-            except json.JSONDecodeError:
-                return [origin.strip() for origin in v.split(",")]
+                parsed = json.loads(v_str)
+                if isinstance(parsed, list):
+                    return [str(item).strip() for item in parsed if str(item).strip()]
+            except (json.JSONDecodeError, TypeError):
+                pass
+            return [origin.strip() for origin in v_str.split(",") if origin.strip()]
+        if isinstance(v, list):
+            return [str(item).strip() for item in v if str(item).strip()]
         return v
 
     @property

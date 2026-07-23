@@ -55,7 +55,7 @@ def build_video_generation_graph() -> StateGraph:
                                                                             (loop until success or max retries)
         Any node failure ──> error_handler ──> END
     """
-    workflow = StateGraph(VideoGenerationState)
+    workflow = StateGraph(VideoGenerationState)  # type: ignore[arg-type]
 
     # ── Add nodes ──────────────────────────────────────────────────────────
     workflow.add_node("supervisor", supervisor_node)
@@ -171,12 +171,14 @@ def get_compiled_graph(checkpointer=None):
 _compiled_graph = None
 
 
-def get_graph():
+def get_graph(checkpointer=None):
     """
     Lazy singleton accessor for the compiled graph.
-    Call this after Firebase has been initialized.
+    Call this after Firebase has been initialized, or pass a custom checkpointer.
     """
     global _compiled_graph
+    if checkpointer is not None:
+        return get_compiled_graph(checkpointer=checkpointer)
     if _compiled_graph is None:
         _compiled_graph = get_compiled_graph()
     return _compiled_graph

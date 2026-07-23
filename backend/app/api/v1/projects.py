@@ -9,7 +9,7 @@ Endpoints:
 
 from __future__ import annotations
 
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile, status
+from fastapi import APIRouter, File, Form, HTTPException, Response, UploadFile, status
 from fastapi.responses import JSONResponse
 
 from app.core.config import get_settings
@@ -162,7 +162,7 @@ async def get_project(project_id: str) -> ProjectResponse:
         )
 
 
-@router.delete("/{project_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{project_id}", status_code=status.HTTP_204_NO_CONTENT, response_class=Response, response_model=None)
 async def delete_project(project_id: str) -> None:
     """Delete a project and its associated jobs."""
     try:

@@ -23,7 +23,7 @@ from app.database.repositories.job_repository import JobRepository
 from app.database.repositories.project_repository import ProjectRepository
 from app.database.repositories.video_repository import VideoRepository
 from app.schemas.project import GenerationRequest, JobResponse, ProgressEvent
-from app.schemas.state import create_initial_state
+from app.schemas.state import VideoGenerationState, create_initial_state
 
 logger = get_logger(__name__)
 router = APIRouter(tags=["Generation"])
@@ -127,7 +127,7 @@ async def stream_job_progress(job_id: str) -> StreamingResponse:
 async def _run_generation_pipeline(
     job_id: str,
     project_id: str,
-    initial_state: dict,
+    initial_state: VideoGenerationState,
 ) -> None:
     """Background task: execute the LangGraph video generation pipeline."""
     from app.graph.builder import get_graph

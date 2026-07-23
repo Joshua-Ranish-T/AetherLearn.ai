@@ -9,10 +9,7 @@ node in the LangGraph workflow. Nodes return partial updates
 from __future__ import annotations
 
 import operator
-from typing import Annotated, Any
-
-from langgraph.graph.message import add_messages
-from typing_extensions import TypedDict
+from typing import Annotated, Any, TypedDict
 
 from app.schemas.content import ExtractedContent
 from app.schemas.lesson import LessonPlan

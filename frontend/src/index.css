@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 47% 5%;
+    --foreground: 210 40% 98%;
+    --card: 222 40% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 7%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 235 85% 65%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 215 28% 15%;
+    --secondary-foreground: 210 40% 85%;
+    --muted: 215 28% 12%;
+    --muted-foreground: 215 20% 55%;
+    --accent: 233 75% 59%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 215 28% 15%;
+    --input: 215 28% 12%;
+    --ring: 235 85% 65%;
+    --radius: 0.75rem;
+    --chart-1: 235 85% 65%;
+    --chart-2: 320 80% 60%;
+    --chart-3: 170 75% 50%;
+    --chart-4: 45 90% 65%;
+    --chart-5: 280 75% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background: radial-gradient(ellipse at top left, #1e2356 0%, #0d0f1e 40%, #0a0c1a 100%);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Glass morphism cards */
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl;
+  }
+  
+  .glass-hover {
+    @apply glass transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-primary/10;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #6172f3 0%, #e94560 100%);
+  }
+
+  /* Gradient border */
+  .gradient-border {
+    position: relative;
+    background: linear-gradient(var(--background), var(--background)) padding-box,
+                linear-gradient(135deg, #6172f3, #e94560) border-box;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+  }
+
+  /* Glow button */
+  .btn-glow {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+  
+  .btn-glow::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: radial-gradient(circle at center, rgba(99, 114, 243, 0.3) 0%, transparent 70%);
+  }
+  
+  .btn-glow:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Shimmer loading */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+  }
+
+  /* Stage indicator active */
+  .stage-active {
+    @apply relative;
+  }
+  .stage-active::before {
+    content: '';
+    @apply absolute inset-0 rounded-lg;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  /* Code block */
+  .code-block {
+    @apply font-mono text-sm bg-black/40 rounded-lg p-4 overflow-x-auto border border-white/10;
+  }
+
+  /* Scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/20 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-white/30;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+}

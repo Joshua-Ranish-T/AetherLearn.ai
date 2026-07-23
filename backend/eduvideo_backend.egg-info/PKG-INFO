@@ -1,0 +1,41 @@
+Metadata-Version: 2.4
+Name: eduvideo-backend
+Version: 1.0.0
+Summary: AI-Powered Educational Video Generation Platform — Backend
+License: MIT
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi>=0.111.0
+Requires-Dist: uvicorn[standard]>=0.30.0
+Requires-Dist: python-multipart>=0.0.9
+Requires-Dist: aiofiles>=23.2.1
+Requires-Dist: pydantic>=2.7.0
+Requires-Dist: pydantic-settings>=2.3.0
+Requires-Dist: google-generativeai>=0.7.0
+Requires-Dist: langchain-google-genai>=1.0.6
+Requires-Dist: langgraph>=0.2.0
+Requires-Dist: langchain-core>=0.2.10
+Requires-Dist: firebase-admin>=6.5.0
+Requires-Dist: pymupdf>=1.24.3
+Requires-Dist: pillow>=10.3.0
+Requires-Dist: pytesseract>=0.3.10
+Requires-Dist: easyocr>=1.7.1
+Requires-Dist: edge-tts>=6.1.10
+Requires-Dist: gtts>=2.5.1
+Requires-Dist: ffmpeg-python>=0.2.0
+Requires-Dist: structlog>=24.2.0
+Requires-Dist: httpx>=0.27.0
+Requires-Dist: python-dotenv>=1.0.1
+Requires-Dist: anyio>=4.4.0
+Requires-Dist: asyncio-throttle>=1.0.2
+Requires-Dist: tenacity>=8.3.0
+Requires-Dist: rich>=13.7.1
+Requires-Dist: click>=8.1.7
+Provides-Extra: dev
+Requires-Dist: pytest>=8.2.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.23.7; extra == "dev"
+Requires-Dist: pytest-cov>=5.0.0; extra == "dev"
+Requires-Dist: httpx>=0.27.0; extra == "dev"
+Requires-Dist: ruff>=0.4.7; extra == "dev"
+Requires-Dist: mypy>=1.10.0; extra == "dev"
+Requires-Dist: pre-commit>=3.7.1; extra == "dev"

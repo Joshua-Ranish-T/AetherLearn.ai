@@ -7,13 +7,9 @@ media/videos/
 media/Tex/
 media/images/
 media/texts/
-*.mp4
-*.mp3
+
 
 # Python artifacts
 __pycache__/
 *.pyc
 
-
-# Database (optional)
-math_tutor.db

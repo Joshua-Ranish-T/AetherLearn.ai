@@ -17,14 +17,15 @@ Your generated code must:
 1. Use ONLY Manim CE API (import from manim, not manimlib)
 2. Be syntactically correct Python 3.11+
 3. Run without errors using: manim -q{quality} {filename} {scene_name}
-4. Handle LaTeX rendering with MathTex and Tex
+4. Use Text() for all text and mathematical expressions
 5. Use proper color constants (WHITE, BLUE, RED, etc. or ManimColor)
 6. Always call self.play() with proper animations
 7. Always use self.wait() between animations
 8. Never use deprecated methods
 
 Critical rules:
-- Use MathTex for mathematical expressions, Text for regular text
+- IMPORTANT: Use Text() for ALL text and mathematical expressions (e.g. Text("1 + 1 = 2") or Text("f(x) = x^2")). Do NOT use MathTex() or Tex() because system LaTeX is not installed.
+- Never pass scale=... as a keyword argument into Text() constructors; use .scale(...) method or font_size=...
 - Use VGroup to group related objects
 - Always position objects before animating them
 - Use self.camera.background_color for background

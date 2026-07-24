@@ -1,14 +1,35 @@
 // Axios API client configuration
 import axios from 'axios';
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// Use relative URLs in development so requests go through Vite's proxy
+// (avoids cross-origin ERR_CONNECTION_RESET issues).
+// In production, set VITE_API_URL to the actual backend URL.
+const BASE_URL = import.meta.env.VITE_API_URL || '';
+
+// Storage files (videos, audio, transcripts) are served by the backend's
+// static file mount. Vite's SPA fallback intercepts /storage requests,
+// so we must point directly at the backend for binary file access.
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+/**
+ * Resolve a storage path (e.g. "/storage/projects/.../video.mp4")
+ * to a full URL pointing at the backend.
+ * Returns empty string for falsy inputs.
+ */
+export function resolveStorageUrl(path: string | undefined | null): string {
+  if (!path) return '';
+  // If it's already a full URL, return as-is
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  // Prepend backend URL for relative storage paths
+  return `${BACKEND_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+}
 
 export const apiClient = axios.create({
   baseURL: `${BASE_URL}/api/v1`,
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 30000,
+  timeout: 300000,
 });
 
 // Request interceptor
@@ -40,3 +61,4 @@ apiClient.interceptors.response.use(
 );
 
 export const SSE_BASE_URL = `${BASE_URL}/api/v1`;
+

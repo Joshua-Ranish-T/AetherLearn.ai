@@ -37,6 +37,14 @@ def configure_logging(log_level: str = "INFO", json_logs: bool = False) -> None:
         log_level: One of DEBUG, INFO, WARNING, ERROR, CRITICAL.
         json_logs: If True emit JSON lines; otherwise emit human-readable output.
     """
+    if sys.platform == "win32":
+        for stream in (sys.stdout, sys.stderr):
+            if hasattr(stream, "reconfigure"):
+                try:
+                    stream.reconfigure(encoding="utf-8", errors="replace")
+                except Exception:
+                    pass
+
     shared_processors: list[Processor] = [
         structlog.contextvars.merge_contextvars,
         _add_app_context,
@@ -71,7 +79,9 @@ def configure_logging(log_level: str = "INFO", json_logs: bool = False) -> None:
         ],
     )
 
-    handler = logging.StreamHandler(sys.stdout)
+    import io
+    utf8_stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    handler = logging.StreamHandler(utf8_stdout)
     handler.setFormatter(formatter)
 
     root_logger = logging.getLogger()

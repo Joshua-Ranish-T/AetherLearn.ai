@@ -9,15 +9,32 @@ This is NOT an LLM agent — it is a deterministic FFmpeg wrapper.
 from __future__ import annotations
 
 import os
+import re
+import shutil
 import subprocess
 import time
 from pathlib import Path
 
+from app.core.config import get_settings
 from app.core.exceptions import SynchronizationError
 from app.core.logging_config import get_logger
 from app.schemas.state import VideoGenerationState
 
 logger = get_logger(__name__)
+
+
+def get_ffmpeg_cmd() -> str:
+    """Get path to ffmpeg binary from PATH, config, or imageio_ffmpeg package."""
+    settings = get_settings()
+    if settings.ffmpeg_binary and shutil.which(settings.ffmpeg_binary):
+        return settings.ffmpeg_binary
+    if shutil.which("ffmpeg"):
+        return "ffmpeg"
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        return "ffmpeg"
 
 
 class SynchronizationService:
@@ -159,6 +176,10 @@ class SynchronizationService:
 
     def _run_ffmpeg(self, command: list[str]) -> bool:
         """Execute an FFmpeg command."""
+        ffmpeg_bin = get_ffmpeg_cmd()
+        if command and command[0] == "ffmpeg":
+            command[0] = ffmpeg_bin
+
         try:
             logger.debug("FFmpeg command", cmd=" ".join(command))
             result = subprocess.run(
@@ -170,7 +191,7 @@ class SynchronizationService:
             if result.returncode != 0:
                 logger.warning(
                     "FFmpeg failed",
-                    stderr=result.stderr[-500:],
+                    stderr=result.stderr[-500:] if result.stderr else "",
                     returncode=result.returncode,
                 )
                 return False
@@ -180,29 +201,45 @@ class SynchronizationService:
             return False
         except FileNotFoundError:
             raise SynchronizationError(
-                "FFmpeg not found. Please install FFmpeg and add it to PATH."
+                "FFmpeg binary could not be launched."
             )
         except Exception as exc:
             logger.error("FFmpeg error", error=str(exc))
             return False
 
     def _get_video_duration(self, video_path: str) -> float:
-        """Get video duration in seconds using ffprobe."""
+        """Get video duration in seconds using ffprobe or ffmpeg fallback."""
+        if shutil.which("ffprobe"):
+            try:
+                result = subprocess.run(
+                    [
+                        "ffprobe",
+                        "-v", "error",
+                        "-show_entries", "format=duration",
+                        "-of", "default=noprint_wrappers=1:nokey=1",
+                        video_path,
+                    ],
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                )
+                if result.returncode == 0 and result.stdout.strip():
+                    return float(result.stdout.strip())
+            except Exception:
+                pass
+
         try:
+            ffmpeg_bin = get_ffmpeg_cmd()
             result = subprocess.run(
-                [
-                    "ffprobe",
-                    "-v", "error",
-                    "-show_entries", "format=duration",
-                    "-of", "default=noprint_wrappers=1:nokey=1",
-                    video_path,
-                ],
+                [ffmpeg_bin, "-i", video_path],
                 capture_output=True,
                 text=True,
                 timeout=30,
             )
-            if result.returncode == 0 and result.stdout.strip():
-                return float(result.stdout.strip())
+            match = re.search(r"Duration:\s*(\d+):(\d+):(\d+\.\d+)", result.stderr or "")
+            if match:
+                hours, minutes, seconds = match.groups()
+                return float(hours) * 3600 + float(minutes) * 60 + float(seconds)
         except Exception:
             pass
         return 0.0

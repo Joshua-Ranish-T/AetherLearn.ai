@@ -3,6 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { CheckCircle2, XCircle, Loader2, Terminal, ArrowRight } from 'lucide-react'
 import { useJobProgress } from '@/hooks/useJobProgress'
+import { useQueryClient } from '@tanstack/react-query'
 import { useJobStatus } from '@/hooks/useProjects'
 import { PIPELINE_STAGES } from '@/types'
 import { cn, formatRelativeTime } from '@/lib/utils'
@@ -57,13 +58,15 @@ export function GenerationProgress() {
 
   const { currentStage, progressPercent, isComplete, hasError, errorMessage, events } = useJobProgress(jobId)
   const { data: job, refetch } = useJobStatus(jobId)
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     if (isComplete) {
       refetch()
+      queryClient.invalidateQueries({ queryKey: ['videos', projectId] })
       setTimeout(() => navigate(`/projects/${projectId}`), 2000)
     }
-  }, [isComplete, navigate, projectId, refetch])
+  }, [isComplete, navigate, projectId, refetch, queryClient])
 
   const getStageStatus = (stageId: string) => {
     if (!job) return 'pending'

@@ -1,0 +1,15 @@
+TRANSCRIPT: Unlocking the Pythagorean Theorem
+Generated: 2026-07-24 14:34 UTC
+============================================================
+
+[00:00 → 00:23] Scene 1: Introduction to Right Triangles
+Have you ever wondered how architects ensure a corner is perfectly square, or how a GPS calculates the shortest path between two points? It all starts here, with the humble right triangle. Notice that perfect square at the corner? That ninety-degree angle is the key that unlocks one of the most powerful tools in all of mathematics: the Pythagorean theorem.
+
+[00:23 → 00:43] Scene 2: Defining the Formula
+In any right triangle, we have two shorter sides called 'legs,' and the longest side—the one leaning directly across from our right angle—which we call the hypotenuse. We label these sides 'a', 'b', and 'c'. The theorem gives us a beautiful, elegant relationship: a squared plus b squared equals c squared.
+
+[00:43 → 01:04] Scene 3: Visualizing the Squares
+But why 'squared'? Imagine building a physical square out from each side of the triangle. If you calculate the area of the two smaller squares and add them together, they perfectly fill the space of the giant square attached to the hypotenuse. It’s not just a formula; it’s a geometric truth that has held steady for thousands of years.
+
+[01:04 → 01:24] Scene 4: Conclusion
+So, a squared plus b squared equals c squared. It’s a simple equation, yet it’s the secret language of navigation, design, and physics. Now that we’ve mastered the concept, are you ready to put it to work? Let’s see how we can use this to find a missing side length in the real world.

@@ -91,16 +91,23 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 def _check_system_dependencies() -> None:
     """Verify that required system tools (Manim, FFmpeg) are available."""
-    tools = {
-        "manim": "Manim CE — required for video rendering. Install: pip install manim",
-        "ffmpeg": "FFmpeg — required for video/audio sync. Install from ffmpeg.org",
-        "ffprobe": "FFprobe — part of FFmpeg package.",
-    }
-    for tool, install_hint in tools.items():
-        if not shutil.which(tool):
-            logger.warning(f"{tool} not found in PATH", hint=install_hint)
-        else:
-            logger.info(f"{tool} found", path=shutil.which(tool))
+    if shutil.which("manim"):
+        logger.info("manim found", path=shutil.which("manim"))
+    else:
+        logger.warning("manim not found in PATH", hint="Manim CE — required for video rendering. Install: pip install manim")
+
+    ffmpeg_path = shutil.which("ffmpeg")
+    if not ffmpeg_path:
+        try:
+            import imageio_ffmpeg
+            ffmpeg_path = imageio_ffmpeg.get_ffmpeg_exe()
+        except Exception:
+            pass
+
+    if ffmpeg_path:
+        logger.info("ffmpeg found", path=ffmpeg_path)
+    else:
+        logger.warning("ffmpeg not found in PATH", hint="FFmpeg — required for video/audio sync. Install from ffmpeg.org")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -133,6 +140,13 @@ def create_application() -> FastAPI:
 
     # ── Routers ───────────────────────────────────────────────────────────
     application.include_router(api_router)
+
+    # ── Static Files ──────────────────────────────────────────────────────
+    from fastapi.staticfiles import StaticFiles
+    import os
+    storage_dir = os.path.join(os.getcwd(), "data", "storage")
+    os.makedirs(storage_dir, exist_ok=True)
+    application.mount("/storage", StaticFiles(directory=storage_dir), name="storage")
 
     # ── Exception Handlers ────────────────────────────────────────────────
     @application.exception_handler(AppError)

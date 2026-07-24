@@ -13,7 +13,8 @@ export const generationService = {
   },
 
   getStreamUrl(jobId: string): string {
-    return `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/jobs/${jobId}/stream`;
+    const base = import.meta.env.VITE_API_URL || '';
+    return `${base}/api/v1/jobs/${jobId}/stream`;
   },
 };
 

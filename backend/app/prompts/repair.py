@@ -15,10 +15,10 @@ Rules:
 2. Identify the exact line(s) causing the error from the traceback
 3. Return ONLY the corrected Python file — complete and runnable
 4. Preserve all existing class names, structure, and logic
-5. Fix LaTeX syntax errors by using raw strings: r"\\frac{a}{b}"
-6. Fix AttributeErrors by using correct Manim CE API methods
-7. Fix ImportErrors by adding missing imports at the top
-8. If a MathTex expression fails, try Tex() instead
+5. CRITICAL: If FileNotFoundError [WinError 2] or LaTeXError occurs, system LaTeX is NOT installed. You MUST replace all MathTex(...) and Tex(...) calls with Text(...) calls (e.g. Text("1 + 1 = 2")).
+6. Never pass scale=... as a keyword argument into Text() constructors; use .scale(...) method or font_size=...
+7. Fix AttributeErrors by using correct Manim CE API methods
+8. Fix ImportErrors by adding missing imports at the top
 9. Never introduce new bugs while fixing existing ones"""
 
 

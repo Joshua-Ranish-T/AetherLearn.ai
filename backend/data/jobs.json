@@ -140,5 +140,450 @@
     ],
     "result_data": {},
     "graph_state_ref": ""
+  },
+  "536964f2-cb5c-411b-9ff9-fa34adbaf848": {
+    "id": "536964f2-cb5c-411b-9ff9-fa34adbaf848",
+    "project_id": "d04cc7ec-ec6f-4b36-86dc-56e5c0b54689",
+    "status": "pending",
+    "current_stage": "supervisor",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-23T17:31:16.316858+00:00",
+    "updated_at": "2026-07-23T17:31:16.385562+00:00",
+    "started_at": "2026-07-23T17:31:16.316858+00:00",
+    "completed_at": null,
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: text. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "d78a7e46-99b0-49cc-9ae5-af9c62bf9213": {
+    "id": "d78a7e46-99b0-49cc-9ae5-af9c62bf9213",
+    "project_id": "13aa0318-6ce8-454b-918c-60813559ac78",
+    "status": "failed",
+    "current_stage": "content_generation_agent",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Gemini API call failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 35.802575418s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 35\n}\n]",
+    "error_stage": "content_generation_agent",
+    "retry_count": 0,
+    "created_at": "2026-07-23T17:34:21.545319+00:00",
+    "updated_at": "2026-07-23T17:34:25.971929+00:00",
+    "started_at": "2026-07-23T17:34:21.545319+00:00",
+    "completed_at": "2026-07-23T17:34:25.970788+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: text. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "bcb0cc0f-3a57-4c35-bef1-b0421c4a9af9": {
+    "id": "bcb0cc0f-3a57-4c35-bef1-b0421c4a9af9",
+    "project_id": "31e9e5f0-6627-40bf-b60e-a488c58da23a",
+    "status": "pending",
+    "current_stage": "supervisor",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-23T17:35:07.922462+00:00",
+    "updated_at": "2026-07-23T17:35:08.002710+00:00",
+    "started_at": "2026-07-23T17:35:07.922462+00:00",
+    "completed_at": null,
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: text. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "124e04b0-bde9-4a22-8aec-73b72491ada5": {
+    "id": "124e04b0-bde9-4a22-8aec-73b72491ada5",
+    "project_id": "841f188e-499c-4426-997d-cd8b7803b8ae",
+    "status": "failed",
+    "current_stage": "content_generation_agent",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Gemini API call failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 23.596756983s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 23\n}\n]",
+    "error_stage": "content_generation_agent",
+    "retry_count": 0,
+    "created_at": "2026-07-23T17:35:34.790509+00:00",
+    "updated_at": "2026-07-23T17:35:36.701461+00:00",
+    "started_at": "2026-07-23T17:35:34.790509+00:00",
+    "completed_at": "2026-07-23T17:35:36.635905+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: text. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "7fab74cb-0328-4c55-949c-49d319b7e120": {
+    "id": "7fab74cb-0328-4c55-949c-49d319b7e120",
+    "project_id": "1ee865db-f979-429c-affe-a2ad9f30256e",
+    "status": "failed",
+    "current_stage": "content_generation_agent",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Gemini API call failed: 401 Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project. [reason: \"ACCESS_TOKEN_TYPE_UNSUPPORTED\"\nmetadata {\n  key: \"service\"\n  value: \"generativelanguage.googleapis.com\"\n}\nmetadata {\n  key: \"method\"\n  value: \"google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent\"\n}\n]",
+    "error_stage": "content_generation_agent",
+    "retry_count": 0,
+    "created_at": "2026-07-23T17:43:21.385934+00:00",
+    "updated_at": "2026-07-23T17:43:23.413664+00:00",
+    "started_at": "2026-07-23T17:43:21.385934+00:00",
+    "completed_at": "2026-07-23T17:43:23.411653+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "4f42cb88-4512-4d73-a3a4-b63370ac04af": {
+    "id": "4f42cb88-4512-4d73-a3a4-b63370ac04af",
+    "project_id": "a4c97939-68d2-4676-a724-3c4503496b3f",
+    "status": "failed",
+    "current_stage": "content_generation_agent",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Gemini API call failed: 401 Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project. [reason: \"ACCESS_TOKEN_TYPE_UNSUPPORTED\"\nmetadata {\n  key: \"service\"\n  value: \"generativelanguage.googleapis.com\"\n}\nmetadata {\n  key: \"method\"\n  value: \"google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent\"\n}\n]",
+    "error_stage": "content_generation_agent",
+    "retry_count": 0,
+    "created_at": "2026-07-23T17:47:22.234945+00:00",
+    "updated_at": "2026-07-23T17:47:23.933064+00:00",
+    "started_at": "2026-07-23T17:47:22.234945+00:00",
+    "completed_at": "2026-07-23T17:47:23.932047+00:00",
+    "duration_seconds": 0.0,
+    "logs": [],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "b1073675-371c-4bd5-ad05-205e6b573cb5": {
+    "id": "b1073675-371c-4bd5-ad05-205e6b573cb5",
+    "project_id": "a4c97939-68d2-4676-a724-3c4503496b3f",
+    "status": "failed",
+    "current_stage": "content_generation_agent",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Gemini API call failed: 401 Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project. [reason: \"ACCESS_TOKEN_TYPE_UNSUPPORTED\"\nmetadata {\n  key: \"service\"\n  value: \"generativelanguage.googleapis.com\"\n}\nmetadata {\n  key: \"method\"\n  value: \"google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent\"\n}\n]",
+    "error_stage": "content_generation_agent",
+    "retry_count": 0,
+    "created_at": "2026-07-23T17:49:55.536117+00:00",
+    "updated_at": "2026-07-23T17:49:56.723982+00:00",
+    "started_at": "2026-07-23T17:49:55.536117+00:00",
+    "completed_at": "2026-07-23T17:49:56.723982+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "c55ab8a0-888b-4da3-bb48-5f5fe3bad5dd": {
+    "id": "c55ab8a0-888b-4da3-bb48-5f5fe3bad5dd",
+    "project_id": "a4c97939-68d2-4676-a724-3c4503496b3f",
+    "status": "failed",
+    "current_stage": "content_generation_agent",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Gemini API call failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 59.03492828s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 59\n}\n]",
+    "error_stage": "content_generation_agent",
+    "retry_count": 0,
+    "created_at": "2026-07-23T17:56:59.029924+00:00",
+    "updated_at": "2026-07-23T17:57:01.451692+00:00",
+    "started_at": "2026-07-23T17:56:59.029924+00:00",
+    "completed_at": "2026-07-23T17:57:01.450576+00:00",
+    "duration_seconds": 0.0,
+    "logs": [],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "87e1688d-065d-4345-8354-36130534b7dc": {
+    "id": "87e1688d-065d-4345-8354-36130534b7dc",
+    "project_id": "a4c97939-68d2-4676-a724-3c4503496b3f",
+    "status": "failed",
+    "current_stage": "content_generation_agent",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Gemini API call failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 49.777550492s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 49\n}\n]",
+    "error_stage": "content_generation_agent",
+    "retry_count": 0,
+    "created_at": "2026-07-23T17:58:08.352546+00:00",
+    "updated_at": "2026-07-23T17:58:10.787756+00:00",
+    "started_at": "2026-07-23T17:58:08.352546+00:00",
+    "completed_at": "2026-07-23T17:58:10.786749+00:00",
+    "duration_seconds": 0.0,
+    "logs": [],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "a711ebac-ad17-4a55-885f-97a72a7cb44a": {
+    "id": "a711ebac-ad17-4a55-885f-97a72a7cb44a",
+    "project_id": "db5fe2d6-74eb-4b80-8068-cb8a3ce2ad19",
+    "status": "failed",
+    "current_stage": "content_generation_agent",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Gemini API call failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 59.097066337s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 59\n}\n]",
+    "error_stage": "content_generation_agent",
+    "retry_count": 0,
+    "created_at": "2026-07-23T18:09:58.163442+00:00",
+    "updated_at": "2026-07-23T18:10:02.259690+00:00",
+    "started_at": "2026-07-23T18:09:58.163442+00:00",
+    "completed_at": "2026-07-23T18:10:02.258705+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: text. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "c40984fd-125f-4826-9378-d9ea019b8ed4": {
+    "id": "c40984fd-125f-4826-9378-d9ea019b8ed4",
+    "project_id": "1ee865db-f979-429c-affe-a2ad9f30256e",
+    "status": "failed",
+    "current_stage": "",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-23T18:18:56.087695+00:00",
+    "updated_at": "2026-07-23T18:19:31.082338+00:00",
+    "started_at": "2026-07-23T18:18:56.087695+00:00",
+    "completed_at": "2026-07-23T18:19:31.082338+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "a4ce1a12-a5ee-4215-8045-53126027e42d": {
+    "id": "a4ce1a12-a5ee-4215-8045-53126027e42d",
+    "project_id": "b4c8252b-a7d8-48aa-9c45-054d51eff58e",
+    "status": "failed",
+    "current_stage": "synchronization_service",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "FFmpeg not found. Please install FFmpeg and add it to PATH.",
+    "error_stage": "synchronization_service",
+    "retry_count": 0,
+    "created_at": "2026-07-23T18:20:26.307576+00:00",
+    "updated_at": "2026-07-23T18:21:07.517215+00:00",
+    "started_at": "2026-07-23T18:20:26.307576+00:00",
+    "completed_at": "2026-07-23T18:21:07.517215+00:00",
+    "duration_seconds": 0.0,
+    "logs": [],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "f9f03f22-c7b5-447d-9d24-a48e575e29e0": {
+    "id": "f9f03f22-c7b5-447d-9d24-a48e575e29e0",
+    "project_id": "b4c8252b-a7d8-48aa-9c45-054d51eff58e",
+    "status": "failed",
+    "current_stage": "",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-23T18:24:25.782396+00:00",
+    "updated_at": "2026-07-23T18:24:50.592155+00:00",
+    "started_at": "2026-07-23T18:24:25.782396+00:00",
+    "completed_at": "2026-07-23T18:24:50.591154+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "c318a086-d17f-47bd-b04c-b26e7c2dfd98": {
+    "id": "c318a086-d17f-47bd-b04c-b26e7c2dfd98",
+    "project_id": "7881e909-4cb6-4b27-971d-26f96f01a0d4",
+    "status": "completed",
+    "current_stage": "finalize",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-23T18:26:23.815970+00:00",
+    "updated_at": "2026-07-23T18:26:52.743078+00:00",
+    "started_at": "2026-07-23T18:26:23.815970+00:00",
+    "completed_at": "2026-07-23T18:26:52.725299+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: text. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "294034bb-4396-40e4-a464-1d34889a46af": {
+    "id": "294034bb-4396-40e4-a464-1d34889a46af",
+    "project_id": "3207be43-4b03-4722-ba83-cd2551af4c6e",
+    "status": "completed",
+    "current_stage": "finalize",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-23T18:27:14.491252+00:00",
+    "updated_at": "2026-07-23T18:27:45.296236+00:00",
+    "started_at": "2026-07-23T18:27:14.491252+00:00",
+    "completed_at": "2026-07-23T18:27:45.277261+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: text. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "31ab35ef-3aed-4919-a2ee-a35506778f6a": {
+    "id": "31ab35ef-3aed-4919-a2ee-a35506778f6a",
+    "project_id": "08c32e2d-4b4d-4cd2-85a3-00a5050188b6",
+    "status": "completed",
+    "current_stage": "finalize",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-24T14:05:28.216711+00:00",
+    "updated_at": "2026-07-24T14:06:44.002022+00:00",
+    "started_at": "2026-07-24T14:05:28.216711+00:00",
+    "completed_at": "2026-07-24T14:06:43.995136+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "e8766254-898e-48a2-a44b-b3bf0d4507f5": {
+    "id": "e8766254-898e-48a2-a44b-b3bf0d4507f5",
+    "project_id": "980088f5-0a4d-4f80-ae56-2058fb9597fc",
+    "status": "failed",
+    "current_stage": "content_generation_agent",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Failed to parse Gemini response as JSON: Extra data: line 119 column 1 (char 6680)",
+    "error_stage": "content_generation_agent",
+    "retry_count": 0,
+    "created_at": "2026-07-24T14:27:33.354427+00:00",
+    "updated_at": "2026-07-24T14:27:41.922171+00:00",
+    "started_at": "2026-07-24T14:27:33.354427+00:00",
+    "completed_at": "2026-07-24T14:27:41.911866+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "f08672df-4d58-41ae-83d3-8aaf18f22e6b": {
+    "id": "f08672df-4d58-41ae-83d3-8aaf18f22e6b",
+    "project_id": "980088f5-0a4d-4f80-ae56-2058fb9597fc",
+    "status": "completed",
+    "current_stage": "finalize",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-24T14:33:45.299416+00:00",
+    "updated_at": "2026-07-24T14:34:29.077877+00:00",
+    "started_at": "2026-07-24T14:33:45.299416+00:00",
+    "completed_at": "2026-07-24T14:34:29.073795+00:00",
+    "duration_seconds": 0.0,
+    "logs": [],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "78dd726b-41e1-4f23-8b59-1737cb7b364e": {
+    "id": "78dd726b-41e1-4f23-8b59-1737cb7b364e",
+    "project_id": "e35cf13e-3b45-4d51-9c89-a582b0eb2600",
+    "status": "completed",
+    "current_stage": "finalize",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-24T14:35:25.788398+00:00",
+    "updated_at": "2026-07-24T14:36:19.630353+00:00",
+    "started_at": "2026-07-24T14:35:25.788398+00:00",
+    "completed_at": "2026-07-24T14:36:19.628950+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
   }
 }

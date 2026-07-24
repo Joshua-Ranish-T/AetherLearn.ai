@@ -1,0 +1,15 @@
+TRANSCRIPT: Unlocking the Pythagorean Theorem
+Generated: 2026-07-24 14:06 UTC
+============================================================
+
+[00:00 → 00:31] Scene 1: Introduction to Right Triangles
+Have you ever looked at a diagonal path and wondered exactly how long it is? Whether you're an architect or just trying to find the shortest route across a park, the secret lies in one of geometry's most elegant tools: the Pythagorean theorem. Meet the right triangle. It’s defined by that perfect ninety-degree corner, flanked by two 'legs'—a and b—and the longest side, the hypotenuse, sitting directly across from the right angle. But how do these three sides actually relate to one another?
+
+[00:31 → 00:58] Scene 2: The Formula
+This is where the magic happens. The theorem reveals a beautiful, constant harmony: if you take the square of each leg—a-squared and b-squared—and add them together, they perfectly equal the square of the hypotenuse, c-squared. It’s not just a random equation; it’s a universal law of space. Whenever you see that right angle, you know that a-squared plus b-squared will always, without fail, equal c-squared.
+
+[00:58 → 01:28] Scene 3: Concrete Example
+Let’s put this to the test with a classic example. Imagine a triangle with sides of three and four. If we square the three, we get nine; square the four, and we get sixteen. When we add them together, we reach twenty-five. Now, what number multiplied by itself gives us twenty-five? Exactly—five! It’s that satisfying moment when the math clicks into place, revealing the hypotenuse is exactly five units long.
+
+[01:28 → 01:50] Scene 4: Conclusion
+And there you have it: the key to unlocking the dimensions of right triangles. From the screens in our pockets to the bridges that span our cities, this theorem is woven into the fabric of the world around us. Now that you have this tool in your kit, keep looking for those right angles—you’ll be surprised at how often this ancient math helps you solve the problems of the modern world.

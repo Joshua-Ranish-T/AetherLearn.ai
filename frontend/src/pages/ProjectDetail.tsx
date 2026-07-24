@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Play, Download, Code2, FileText, Layers, Clock, RefreshCw, ArrowLeft, Sparkles } from 'lucide-react'
 import { projectsService } from '@/services/projectsService'
 import { videoService } from '@/services/generationService'
+import { resolveStorageUrl } from '@/services/api'
 import { useStartGeneration } from '@/hooks/useProjects'
 import { formatDuration, formatRelativeTime, getStatusBg, cn } from '@/lib/utils'
 
@@ -102,19 +103,19 @@ export function ProjectDetail() {
             </div>
             <div className="flex gap-2">
               {latestVideo.file_url && (
-                <a href={latestVideo.file_url} target="_blank" rel="noreferrer"
+                <a href={resolveStorageUrl(latestVideo.file_url)} target="_blank" rel="noreferrer"
                    className="glass px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 hover:bg-white/10">
                   <Download className="w-3 h-3" /> Download MP4
                 </a>
               )}
               {latestVideo.transcript_url && (
-                <a href={latestVideo.transcript_url} target="_blank" rel="noreferrer"
+                <a href={resolveStorageUrl(latestVideo.transcript_url)} target="_blank" rel="noreferrer"
                    className="glass px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 hover:bg-white/10">
                   <FileText className="w-3 h-3" /> Transcript
                 </a>
               )}
               {latestVideo.manim_script_url && (
-                <a href={latestVideo.manim_script_url} target="_blank" rel="noreferrer"
+                <a href={resolveStorageUrl(latestVideo.manim_script_url)} target="_blank" rel="noreferrer"
                    className="glass px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 hover:bg-white/10">
                   <Code2 className="w-3 h-3" /> Script
                 </a>

@@ -97,8 +97,10 @@ class TTSService:
                 f"concat=n={len(audio_paths)}:v=0:a=1[out]"
             )
 
+            from app.services.synchronization_service import get_ffmpeg_cmd
+
             command = [
-                "ffmpeg", "-y",
+                get_ffmpeg_cmd(), "-y",
                 *input_args,
                 "-filter_complex", filter_complex,
                 "-map", "[out]",
@@ -207,29 +209,47 @@ class TTSService:
 
     @staticmethod
     def _get_audio_duration(audio_path: str) -> float:
-        """Get audio file duration in seconds using ffprobe."""
+        """Get audio file duration in seconds using ffprobe or ffmpeg."""
+        import shutil
+        if shutil.which("ffprobe"):
+            try:
+                result = subprocess.run(
+                    [
+                        "ffprobe",
+                        "-v", "error",
+                        "-show_entries", "format=duration",
+                        "-of", "default=noprint_wrappers=1:nokey=1",
+                        audio_path,
+                    ],
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                )
+                if result.returncode == 0 and result.stdout.strip():
+                    return float(result.stdout.strip())
+            except Exception:
+                pass
+
         try:
+            from app.services.synchronization_service import get_ffmpeg_cmd
+            import re
+            ffmpeg_bin = get_ffmpeg_cmd()
             result = subprocess.run(
-                [
-                    "ffprobe",
-                    "-v", "error",
-                    "-show_entries", "format=duration",
-                    "-of", "default=noprint_wrappers=1:nokey=1",
-                    audio_path,
-                ],
+                [ffmpeg_bin, "-i", audio_path],
                 capture_output=True,
                 text=True,
                 timeout=30,
             )
-            if result.returncode == 0 and result.stdout.strip():
-                return float(result.stdout.strip())
+            match = re.search(r"Duration:\s*(\d+):(\d+):(\d+\.\d+)", result.stderr or "")
+            if match:
+                hours, minutes, seconds = match.groups()
+                return float(hours) * 3600 + float(minutes) * 60 + float(seconds)
         except Exception:
             pass
 
-        # Estimate based on word count (~130 words/minute)
+        # Estimate based on file size (~1 second per 8KB for MP3)
         try:
             text_size = Path(audio_path).stat().st_size
-            # Very rough estimate: 1 second per 8KB for MP3
             return max(1.0, text_size / 8000)
         except Exception:
             return 5.0

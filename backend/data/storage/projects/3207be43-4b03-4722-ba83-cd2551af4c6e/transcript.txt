@@ -1,0 +1,15 @@
+TRANSCRIPT: Understanding Basic Addition: 1 + 1 = 2
+Generated: 2026-07-23 18:27 UTC
+============================================================
+
+[00:00 → 00:14] Scene 1: The First Object
+Let’s start with something simple. Imagine you have one single, solitary blue circle sitting right here. It’s just one unit, standing all on its own. But what happens when we invite a friend to join it?
+
+[00:14 → 00:27] Scene 2: The Addition Operator
+See that plus sign? That is our mathematical bridge. It’s telling us that we aren't just looking at two separate things anymore; we are actively bringing them together to create a new, larger group.
+
+[00:27 → 00:41] Scene 3: The Equality
+Now, we use the equals sign. Think of this as a balance scale. Everything on the left must perfectly match what we find on the right. When we merge these circles, how many do we have now?
+
+[00:41 → 00:53] Scene 4: The Result
+Count them with me: one, two. There it is! By combining our two individual units, we’ve discovered the fundamental truth of arithmetic: one plus one will always equal two.

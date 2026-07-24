@@ -1,1 +1,112 @@
-{}
+{
+  "b69919db-f0bc-48f4-a316-de353716916b": {
+    "id": "b69919db-f0bc-48f4-a316-de353716916b",
+    "project_id": "7881e909-4cb6-4b27-971d-26f96f01a0d4",
+    "job_id": "c318a086-d17f-47bd-b04c-b26e7c2dfd98",
+    "title": "Understanding the Addition of One and One",
+    "duration_seconds": 13.04,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/7881e909-4cb6-4b27-971d-26f96f01a0d4/video.mp4",
+    "audio_url": "/storage/projects/7881e909-4cb6-4b27-971d-26f96f01a0d4/narration.mp3",
+    "transcript_url": "/storage/projects/7881e909-4cb6-4b27-971d-26f96f01a0d4/transcript.txt",
+    "manim_script_url": "/storage/projects/7881e909-4cb6-4b27-971d-26f96f01a0d4/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-23T18:26:52.699180+00:00",
+    "updated_at": "2026-07-23T18:26:52.699180+00:00",
+    "metadata": {
+      "subject": "Mathematics",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
+  },
+  "9583a1a6-dc00-4f23-a9f0-a5a085888fa1": {
+    "id": "9583a1a6-dc00-4f23-a9f0-a5a085888fa1",
+    "project_id": "3207be43-4b03-4722-ba83-cd2551af4c6e",
+    "job_id": "294034bb-4396-40e4-a464-1d34889a46af",
+    "title": "Understanding Basic Addition: 1 + 1 = 2",
+    "duration_seconds": 15.54,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/3207be43-4b03-4722-ba83-cd2551af4c6e/video.mp4",
+    "audio_url": "/storage/projects/3207be43-4b03-4722-ba83-cd2551af4c6e/narration.mp3",
+    "transcript_url": "/storage/projects/3207be43-4b03-4722-ba83-cd2551af4c6e/transcript.txt",
+    "manim_script_url": "/storage/projects/3207be43-4b03-4722-ba83-cd2551af4c6e/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-23T18:27:45.250630+00:00",
+    "updated_at": "2026-07-23T18:27:45.250630+00:00",
+    "metadata": {
+      "subject": "Mathematics",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
+  },
+  "f79beded-7ef2-495f-b393-b6f74621fb77": {
+    "id": "f79beded-7ef2-495f-b393-b6f74621fb77",
+    "project_id": "08c32e2d-4b4d-4cd2-85a3-00a5050188b6",
+    "job_id": "31ab35ef-3aed-4919-a2ee-a35506778f6a",
+    "title": "Unlocking the Pythagorean Theorem",
+    "duration_seconds": 3.04,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/08c32e2d-4b4d-4cd2-85a3-00a5050188b6/video.mp4",
+    "audio_url": "/storage/projects/08c32e2d-4b4d-4cd2-85a3-00a5050188b6/narration.mp3",
+    "transcript_url": "/storage/projects/08c32e2d-4b4d-4cd2-85a3-00a5050188b6/transcript.txt",
+    "manim_script_url": "/storage/projects/08c32e2d-4b4d-4cd2-85a3-00a5050188b6/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-24T14:06:43.928538+00:00",
+    "updated_at": "2026-07-24T14:06:43.928538+00:00",
+    "metadata": {
+      "subject": "math",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
+  },
+  "b5c85cd3-337d-4d60-b45e-ca9333ab327f": {
+    "id": "b5c85cd3-337d-4d60-b45e-ca9333ab327f",
+    "project_id": "980088f5-0a4d-4f80-ae56-2058fb9597fc",
+    "job_id": "f08672df-4d58-41ae-83d3-8aaf18f22e6b",
+    "title": "Unlocking the Pythagorean Theorem",
+    "duration_seconds": 2.04,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/980088f5-0a4d-4f80-ae56-2058fb9597fc/video.mp4",
+    "audio_url": "/storage/projects/980088f5-0a4d-4f80-ae56-2058fb9597fc/narration.mp3",
+    "transcript_url": "/storage/projects/980088f5-0a4d-4f80-ae56-2058fb9597fc/transcript.txt",
+    "manim_script_url": "/storage/projects/980088f5-0a4d-4f80-ae56-2058fb9597fc/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-24T14:34:29.049660+00:00",
+    "updated_at": "2026-07-24T14:34:29.049660+00:00",
+    "metadata": {
+      "subject": "math",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
+  },
+  "795977f7-d3a7-48aa-a6d1-5a880e4b321f": {
+    "id": "795977f7-d3a7-48aa-a6d1-5a880e4b321f",
+    "project_id": "e35cf13e-3b45-4d51-9c89-a582b0eb2600",
+    "job_id": "78dd726b-41e1-4f23-8b59-1737cb7b364e",
+    "title": "Mastering the Pythagorean Theorem",
+    "duration_seconds": 23.04,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/e35cf13e-3b45-4d51-9c89-a582b0eb2600/video.mp4",
+    "audio_url": "/storage/projects/e35cf13e-3b45-4d51-9c89-a582b0eb2600/narration.mp3",
+    "transcript_url": "/storage/projects/e35cf13e-3b45-4d51-9c89-a582b0eb2600/transcript.txt",
+    "manim_script_url": "/storage/projects/e35cf13e-3b45-4d51-9c89-a582b0eb2600/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-24T14:36:19.596623+00:00",
+    "updated_at": "2026-07-24T14:36:19.596623+00:00",
+    "metadata": {
+      "subject": "math",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
+  }
+}

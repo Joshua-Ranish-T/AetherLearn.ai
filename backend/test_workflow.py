@@ -1,13 +1,25 @@
 import asyncio
 import uuid
 import sys
+import os
+
+if sys.platform == "win32":
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            try:
+                stream.reconfigure(encoding="utf-8", errors="replace")
+            except Exception:
+                pass
+
+from app.core.logging_config import configure_logging, get_logger
+configure_logging()
+
 from app.graph.builder import get_compiled_graph
 from langgraph.checkpoint.memory import MemorySaver
 from app.core.firebase import initialize_firebase
 from app.schemas.state import create_initial_state
-import structlog
 
-logger = structlog.get_logger(__name__)
+logger = get_logger(__name__)
 
 async def run_test():
     logger.info("Initializing Firebase...")

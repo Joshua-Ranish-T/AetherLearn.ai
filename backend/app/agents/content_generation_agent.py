@@ -165,12 +165,25 @@ class ContentGenerationAgent:
     def _parse_json_response(self, raw: str) -> dict[str, Any]:
         """Extract and parse JSON from Gemini response."""
         raw = raw.strip()
-        # Strip markdown fences if present
-        if raw.startswith("```"):
-            lines = raw.split("\n")
-            start = 1
-            end = len(lines) - 1 if lines[-1].strip() == "```" else len(lines)
-            raw = "\n".join(lines[start:end])
+        
+        # If there are markdown fences, extract the content inside the first one
+        if "```" in raw:
+            import re
+            match = re.search(r"```(?:json)?\n(.*?)```", raw, re.DOTALL)
+            if match:
+                raw = match.group(1).strip()
+        
+        # In case there's still garbage around the JSON object
+        if raw.startswith("{") and not raw.endswith("}"):
+            last_brace = raw.rfind("}")
+            if last_brace != -1:
+                raw = raw[:last_brace+1]
+        elif not raw.startswith("{") and "{" in raw:
+            first_brace = raw.find("{")
+            last_brace = raw.rfind("}")
+            if first_brace != -1 and last_brace != -1:
+                raw = raw[first_brace:last_brace+1]
+                
         return json.loads(raw)
 
     def _build_lesson_plan(self, data: dict[str, Any]) -> LessonPlan:

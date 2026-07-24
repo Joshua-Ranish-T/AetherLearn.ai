@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Download, FileText, Code2, Volume2 } from 'lucide-react'
 import { videoService } from '@/services/generationService'
+import { resolveStorageUrl } from '@/services/api'
 import { formatDuration } from '@/lib/utils'
 
 export function VideoPreview() {
@@ -41,7 +42,7 @@ export function VideoPreview() {
             controls
             className="w-full rounded-2xl"
             style={{ maxHeight: '60vh' }}
-            src={video.file_url}
+            src={resolveStorageUrl(video.file_url)}
           >
             Your browser does not support video playback.
           </video>
@@ -60,7 +61,7 @@ export function VideoPreview() {
       {/* Downloads & metadata */}
       <div className="grid grid-cols-3 gap-4">
         {video.file_url && (
-          <a href={video.file_url} target="_blank" rel="noreferrer" className="glass-hover rounded-xl p-4 flex items-center gap-3">
+          <a href={resolveStorageUrl(video.file_url)} target="_blank" rel="noreferrer" className="glass-hover rounded-xl p-4 flex items-center gap-3">
             <div className="w-9 h-9 bg-primary/20 rounded-lg flex items-center justify-center">
               <Download className="w-4 h-4 text-primary" />
             </div>
@@ -71,7 +72,7 @@ export function VideoPreview() {
           </a>
         )}
         {video.transcript_url && (
-          <a href={video.transcript_url} target="_blank" rel="noreferrer" className="glass-hover rounded-xl p-4 flex items-center gap-3">
+          <a href={resolveStorageUrl(video.transcript_url)} target="_blank" rel="noreferrer" className="glass-hover rounded-xl p-4 flex items-center gap-3">
             <div className="w-9 h-9 bg-green-500/20 rounded-lg flex items-center justify-center">
               <FileText className="w-4 h-4 text-green-400" />
             </div>
@@ -82,7 +83,7 @@ export function VideoPreview() {
           </a>
         )}
         {video.manim_script_url && (
-          <a href={video.manim_script_url} target="_blank" rel="noreferrer" className="glass-hover rounded-xl p-4 flex items-center gap-3">
+          <a href={resolveStorageUrl(video.manim_script_url)} target="_blank" rel="noreferrer" className="glass-hover rounded-xl p-4 flex items-center gap-3">
             <div className="w-9 h-9 bg-yellow-500/20 rounded-lg flex items-center justify-center">
               <Code2 className="w-4 h-4 text-yellow-400" />
             </div>

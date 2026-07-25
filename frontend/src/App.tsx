@@ -7,13 +7,14 @@ import { ProjectDetail } from '@/pages/ProjectDetail'
 import { VideoPreview } from '@/pages/VideoPreview'
 import { History } from '@/pages/History'
 import { Settings } from '@/pages/Settings'
+import { TutorWorkspace } from '@/pages/TutorWorkspace'
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<TutorWorkspace />} />
+        <Route element={<Layout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="create" element={<CreateProject />} />
           <Route path="projects/:projectId" element={<ProjectDetail />} />
@@ -22,6 +23,8 @@ export default function App() {
           <Route path="history" element={<History />} />
           <Route path="settings" element={<Settings />} />
         </Route>
+        <Route path="/admin/*" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   )

@@ -26,7 +26,13 @@ export const projectsService = {
     return response.data;
   },
 
+  async explain(topic: string): Promise<{ explanation: string }> {
+    const response = await apiClient.post<{ explanation: string }>('/projects/explain', { topic });
+    return response.data;
+  },
+
   async delete(id: string): Promise<void> {
     await apiClient.delete(`/projects/${id}`);
   },
 };
+

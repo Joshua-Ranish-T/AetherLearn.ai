@@ -108,5 +108,115 @@
       "difficulty": "beginner",
       "scene_count": 4
     }
+  },
+  "c68dafc7-4fc1-459a-97a9-5a90390abf53": {
+    "id": "c68dafc7-4fc1-459a-97a9-5a90390abf53",
+    "project_id": "e35cf13e-3b45-4d51-9c89-a582b0eb2600",
+    "job_id": "d0306025-b2b4-49d8-b1be-84101df2a61e",
+    "title": "Unlocking the Pythagorean Theorem",
+    "duration_seconds": 61.23,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/e35cf13e-3b45-4d51-9c89-a582b0eb2600/video.mp4",
+    "audio_url": "/storage/projects/e35cf13e-3b45-4d51-9c89-a582b0eb2600/narration.mp3",
+    "transcript_url": "/storage/projects/e35cf13e-3b45-4d51-9c89-a582b0eb2600/transcript.txt",
+    "manim_script_url": "/storage/projects/e35cf13e-3b45-4d51-9c89-a582b0eb2600/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-24T16:17:17.284568+00:00",
+    "updated_at": "2026-07-24T16:17:17.284568+00:00",
+    "metadata": {
+      "subject": "math",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
+  },
+  "b830ce19-872f-4409-a44d-8a16cb223596": {
+    "id": "b830ce19-872f-4409-a44d-8a16cb223596",
+    "project_id": "b7d03b51-1ad0-492e-894b-96f9857602ff",
+    "job_id": "7eb367e0-bf88-4c8c-a199-20e0b9b033d2",
+    "title": "Demystifying Neural Networks",
+    "duration_seconds": 91.18,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/b7d03b51-1ad0-492e-894b-96f9857602ff/video.mp4",
+    "audio_url": "/storage/projects/b7d03b51-1ad0-492e-894b-96f9857602ff/narration.mp3",
+    "transcript_url": "/storage/projects/b7d03b51-1ad0-492e-894b-96f9857602ff/transcript.txt",
+    "manim_script_url": "/storage/projects/b7d03b51-1ad0-492e-894b-96f9857602ff/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-24T16:49:11.229083+00:00",
+    "updated_at": "2026-07-24T16:49:11.229083+00:00",
+    "metadata": {
+      "subject": "Artificial Intelligence",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
+  },
+  "33c0399d-8af0-4975-9122-461a24714f98": {
+    "id": "33c0399d-8af0-4975-9122-461a24714f98",
+    "project_id": "83ec553e-5940-4199-b075-871d38be74fc",
+    "job_id": "e9d225fa-f65e-4f38-89b8-94eb96a0d641",
+    "title": "Solving Linear Equations: 2x + 3 = 0",
+    "duration_seconds": 71.19,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/83ec553e-5940-4199-b075-871d38be74fc/video.mp4",
+    "audio_url": "/storage/projects/83ec553e-5940-4199-b075-871d38be74fc/narration.mp3",
+    "transcript_url": "/storage/projects/83ec553e-5940-4199-b075-871d38be74fc/transcript.txt",
+    "manim_script_url": "/storage/projects/83ec553e-5940-4199-b075-871d38be74fc/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-24T17:42:23.338249+00:00",
+    "updated_at": "2026-07-24T17:42:23.338249+00:00",
+    "metadata": {
+      "subject": "Algebra",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
+  },
+  "7da05252-4c58-41ac-89d4-d056351a0d91": {
+    "id": "7da05252-4c58-41ac-89d4-d056351a0d91",
+    "project_id": "3afa81e0-5a07-42dc-9a25-26d8477dbff6",
+    "job_id": "5e1ee9a6-bcee-4d0c-bf47-ce424b853783",
+    "title": "Calculating the Area of a Circle with Radius 2",
+    "duration_seconds": 57.67,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/3afa81e0-5a07-42dc-9a25-26d8477dbff6/video.mp4",
+    "audio_url": "/storage/projects/3afa81e0-5a07-42dc-9a25-26d8477dbff6/narration.mp3",
+    "transcript_url": "/storage/projects/3afa81e0-5a07-42dc-9a25-26d8477dbff6/transcript.txt",
+    "manim_script_url": "/storage/projects/3afa81e0-5a07-42dc-9a25-26d8477dbff6/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-25T06:22:48.227650+00:00",
+    "updated_at": "2026-07-25T06:22:48.227650+00:00",
+    "metadata": {
+      "subject": "Geometry",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
+  },
+  "20a3676c-35d5-4f88-9038-fc788a243d86": {
+    "id": "20a3676c-35d5-4f88-9038-fc788a243d86",
+    "project_id": "b54379fc-aa9f-4421-9f27-f089adb02ef4",
+    "job_id": "a54373c5-80d3-4918-b25c-869f6bccee87",
+    "title": "Understanding Artificial Intelligence and RAG Pipelines",
+    "duration_seconds": 82.05,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/b54379fc-aa9f-4421-9f27-f089adb02ef4/video.mp4",
+    "audio_url": "/storage/projects/b54379fc-aa9f-4421-9f27-f089adb02ef4/narration.mp3",
+    "transcript_url": "/storage/projects/b54379fc-aa9f-4421-9f27-f089adb02ef4/transcript.txt",
+    "manim_script_url": "/storage/projects/b54379fc-aa9f-4421-9f27-f089adb02ef4/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-25T06:35:17.998530+00:00",
+    "updated_at": "2026-07-25T06:35:17.998530+00:00",
+    "metadata": {
+      "subject": "physics",
+      "difficulty": "intermediate",
+      "scene_count": 4
+    }
   }
 }

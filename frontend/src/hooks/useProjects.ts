@@ -96,7 +96,8 @@ export function useJobStatus(jobId: string | null) {
     enabled: !!jobId,
     refetchInterval: (query) => {
       const status = query.state.data?.status;
-      return status === 'running' || status === 'pending' ? 3000 : false;
+      return status === 'running' || status === 'pending' ? 1000 : false;
     },
   });
 }
+

@@ -585,5 +585,293 @@
     ],
     "result_data": {},
     "graph_state_ref": ""
+  },
+  "561d57cd-2a97-48bf-ac70-8af25b0f5038": {
+    "id": "561d57cd-2a97-48bf-ac70-8af25b0f5038",
+    "project_id": "6c6dd507-4645-4f1a-bdc3-8d6564bfbf5d",
+    "status": "failed",
+    "current_stage": "synchronization_service",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "No scene videos available for synchronization.",
+    "error_stage": "synchronization_service",
+    "retry_count": 0,
+    "created_at": "2026-07-24T16:03:27.807363+00:00",
+    "updated_at": "2026-07-24T16:03:58.582331+00:00",
+    "started_at": "2026-07-24T16:03:27.807363+00:00",
+    "completed_at": "2026-07-24T16:03:58.582331+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "d0306025-b2b4-49d8-b1be-84101df2a61e": {
+    "id": "d0306025-b2b4-49d8-b1be-84101df2a61e",
+    "project_id": "e35cf13e-3b45-4d51-9c89-a582b0eb2600",
+    "status": "completed",
+    "current_stage": "finalize",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-24T16:15:17.523444+00:00",
+    "updated_at": "2026-07-24T16:17:17.343423+00:00",
+    "started_at": "2026-07-24T16:15:17.523444+00:00",
+    "completed_at": "2026-07-24T16:17:17.341391+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "a442d8c7-dd3a-4752-8bcc-dafecb91c10c": {
+    "id": "a442d8c7-dd3a-4752-8bcc-dafecb91c10c",
+    "project_id": "b7d03b51-1ad0-492e-894b-96f9857602ff",
+    "status": "failed",
+    "current_stage": "narration_agent",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "`AudioResult` is not fully defined; you should define `Any`, then call `AudioResult.model_rebuild()`.\n\nFor further information visit https://errors.pydantic.dev/2.12/u/class-not-fully-defined",
+    "error_stage": "narration_agent",
+    "retry_count": 0,
+    "created_at": "2026-07-24T16:27:43.916702+00:00",
+    "updated_at": "2026-07-24T16:28:06.694655+00:00",
+    "started_at": "2026-07-24T16:27:43.916702+00:00",
+    "completed_at": "2026-07-24T16:28:06.694655+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "25fc1393-509f-4e85-aa86-67a97fcfe41d": {
+    "id": "25fc1393-509f-4e85-aa86-67a97fcfe41d",
+    "project_id": "b7d03b51-1ad0-492e-894b-96f9857602ff",
+    "status": "failed",
+    "current_stage": "synchronization_service",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Failed to produce any muxed scene videos.",
+    "error_stage": "synchronization_service",
+    "retry_count": 0,
+    "created_at": "2026-07-24T16:30:22.454066+00:00",
+    "updated_at": "2026-07-24T16:33:32.138446+00:00",
+    "started_at": "2026-07-24T16:30:22.454066+00:00",
+    "completed_at": "2026-07-24T16:33:32.138446+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "498507b4-4808-41d7-8b02-7f0d9db212c3": {
+    "id": "498507b4-4808-41d7-8b02-7f0d9db212c3",
+    "project_id": "b7d03b51-1ad0-492e-894b-96f9857602ff",
+    "status": "failed",
+    "current_stage": "content_generation_agent",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Failed to parse Gemini response as JSON: Extra data: line 175 column 1 (char 6400)",
+    "error_stage": "content_generation_agent",
+    "retry_count": 0,
+    "created_at": "2026-07-24T16:44:32.479480+00:00",
+    "updated_at": "2026-07-24T16:44:40.203347+00:00",
+    "started_at": "2026-07-24T16:44:32.479480+00:00",
+    "completed_at": "2026-07-24T16:44:40.203347+00:00",
+    "duration_seconds": 0.0,
+    "logs": [],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "7eb367e0-bf88-4c8c-a199-20e0b9b033d2": {
+    "id": "7eb367e0-bf88-4c8c-a199-20e0b9b033d2",
+    "project_id": "b7d03b51-1ad0-492e-894b-96f9857602ff",
+    "status": "completed",
+    "current_stage": "finalize",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-24T16:46:58.199135+00:00",
+    "updated_at": "2026-07-24T16:49:11.281648+00:00",
+    "started_at": "2026-07-24T16:46:58.199135+00:00",
+    "completed_at": "2026-07-24T16:49:11.280172+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "8151671c-ccfe-4058-ac95-535cfbf17ce5": {
+    "id": "8151671c-ccfe-4058-ac95-535cfbf17ce5",
+    "project_id": "f3af1476-3fd3-449b-9571-e4087f7fb484",
+    "status": "failed",
+    "current_stage": "supervisor",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Input text is too short. Please provide at least 10 characters.",
+    "error_stage": "supervisor",
+    "retry_count": 0,
+    "created_at": "2026-07-24T17:34:00.317188+00:00",
+    "updated_at": "2026-07-24T17:34:00.604167+00:00",
+    "started_at": "2026-07-24T17:34:00.317188+00:00",
+    "completed_at": "2026-07-24T17:34:00.602130+00:00",
+    "duration_seconds": 0.0,
+    "logs": [],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "64802971-650a-482c-ab86-32a4eb8db538": {
+    "id": "64802971-650a-482c-ab86-32a4eb8db538",
+    "project_id": "83ec553e-5940-4199-b075-871d38be74fc",
+    "status": "failed",
+    "current_stage": "synchronization_service",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "Failed to produce any muxed scene videos.",
+    "error_stage": "synchronization_service",
+    "retry_count": 0,
+    "created_at": "2026-07-24T17:35:10.749593+00:00",
+    "updated_at": "2026-07-24T17:36:18.115894+00:00",
+    "started_at": "2026-07-24T17:35:10.749593+00:00",
+    "completed_at": "2026-07-24T17:36:18.115894+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: text. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "e9d225fa-f65e-4f38-89b8-94eb96a0d641": {
+    "id": "e9d225fa-f65e-4f38-89b8-94eb96a0d641",
+    "project_id": "83ec553e-5940-4199-b075-871d38be74fc",
+    "status": "completed",
+    "current_stage": "finalize",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-24T17:40:44.689628+00:00",
+    "updated_at": "2026-07-24T17:42:23.354350+00:00",
+    "started_at": "2026-07-24T17:40:44.689628+00:00",
+    "completed_at": "2026-07-24T17:42:23.354350+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: text. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "7802371a-f369-44f7-891c-638bb4b0f92e": {
+    "id": "7802371a-f369-44f7-891c-638bb4b0f92e",
+    "project_id": "f100c4d7-8d1c-418b-adc4-8e37f9bed779",
+    "status": "pending",
+    "current_stage": "supervisor",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-24T18:32:10.711551+00:00",
+    "updated_at": "2026-07-24T18:32:11.007821+00:00",
+    "started_at": "2026-07-24T18:32:10.711551+00:00",
+    "completed_at": null,
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "5e1ee9a6-bcee-4d0c-bf47-ce424b853783": {
+    "id": "5e1ee9a6-bcee-4d0c-bf47-ce424b853783",
+    "project_id": "3afa81e0-5a07-42dc-9a25-26d8477dbff6",
+    "status": "completed",
+    "current_stage": "finalize",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-25T06:21:01.292165+00:00",
+    "updated_at": "2026-07-25T06:22:48.304373+00:00",
+    "started_at": "2026-07-25T06:21:01.292165+00:00",
+    "completed_at": "2026-07-25T06:22:48.301663+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "a54373c5-80d3-4918-b25c-869f6bccee87": {
+    "id": "a54373c5-80d3-4918-b25c-869f6bccee87",
+    "project_id": "b54379fc-aa9f-4421-9f27-f089adb02ef4",
+    "status": "completed",
+    "current_stage": "finalize",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-25T06:32:25.848810+00:00",
+    "updated_at": "2026-07-25T06:35:18.049576+00:00",
+    "started_at": "2026-07-25T06:32:25.848810+00:00",
+    "completed_at": "2026-07-25T06:35:18.046580+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: pdf. OCR required: True"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
   }
 }

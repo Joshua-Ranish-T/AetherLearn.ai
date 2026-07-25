@@ -1,15 +1,15 @@
-TRANSCRIPT: Mastering the Pythagorean Theorem
-Generated: 2026-07-24 14:36 UTC
+TRANSCRIPT: Unlocking the Pythagorean Theorem
+Generated: 2026-07-24 16:15 UTC
 ============================================================
 
-[00:00 → 00:28] Scene 1: Introduction to Right Triangles
-Have you ever wondered how architects ensure a building stands perfectly straight, or how navigators calculate the shortest path across a map? It all begins with a simple, yet profound shape: the right triangle. Notice that perfect ninety-degree corner—the anchor of our geometry. We label the two shorter sides that form this corner as 'a' and 'b', while the longest side, stretching across from the angle, is the 'hypotenuse,' which we call 'c'.
+[00:00 → 00:15] Scene 1: Introduction to Right Triangles
+Have you ever looked at a room and wondered how to find the exact diagonal distance from corner to corner? It feels like a puzzle, doesn't it? The key to unlocking this mystery is the humble right triangle, the cornerstone of geometry.
 
-[00:28 → 00:55] Scene 2: Visualizing the Squares
-But here is where the magic happens. Imagine building a physical square off each side of this triangle. If you were to take the area of the square attached to side 'a' and add it to the area of the square attached to side 'b', something incredible occurs. They fit perfectly, piece by piece, into the area of that large square attached to the hypotenuse. It’s not just a coincidence; it’s a universal truth of space.
+[00:15 → 00:35] Scene 2: Visualizing the Squares
+Imagine we build a perfect square off each side of our triangle. Here is the magic: if you take the area of the two smaller squares attached to the legs, they combine to fit perfectly inside the area of the largest square—the one attached to the hypotenuse. It’s not just a coincidence; it’s a fundamental truth of our universe.
 
-[00:55 → 01:17] Scene 3: The Formula
-Mathematicians captured this physical beauty in a concise, powerful language: the Pythagorean theorem. We express this relationship as a squared plus b squared equals c squared. It’s elegant, isn't it? This simple equation is the key that unlocks the ability to measure the unknown, turning a spatial mystery into a solvable problem.
+[00:35 → 00:51] Scene 3: The Formula
+We capture this elegant relationship with a simple, powerful formula: 'a' squared plus 'b' squared equals 'c' squared. It’s a shorthand for the harmony between these three sides, allowing us to calculate unknown distances with absolute precision.
 
-[01:17 → 01:48] Scene 4: Conclusion
-Let’s put this to the test. If our legs measure three and four units, what happens to our hypotenuse? Squaring three gives us nine, and squaring four gives us sixteen. Added together, they total twenty-five—and the square root of twenty-five is five. Just like that, you've mastered the 3-4-5 triangle. Whether you're building a deck or solving a complex proof, remember: this theorem is your constant companion for finding the truth in any triangle.
+[00:51 → 01:01] Scene 4: Conclusion
+This relationship holds true for every right triangle you will ever encounter. Now that you have the key, are you ready to see how it works in practice?

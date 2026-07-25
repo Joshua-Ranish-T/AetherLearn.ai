@@ -1,0 +1,15 @@
+TRANSCRIPT: Solving Linear Equations: 2x + 3 = 0
+Generated: 2026-07-24 17:41 UTC
+============================================================
+
+[00:00 → 00:20] Scene 1: Introduction
+Welcome! Today, we're going to solve the linear equation 2x + 3 = 0. Think of an equation like a perfectly balanced scale: whatever we do to one side, we must do to the other to keep that delicate equilibrium. Our mission? To uncover the hidden value of x.
+
+[00:20 → 00:39] Scene 2: Subtracting Constants
+To get x by itself, we need to peel away the layers surrounding it. We see a plus three, so how do we undo that? By using its inverse: subtraction. If we subtract three from both sides, we maintain our balance, leaving us with 2x equals negative three.
+
+[00:39 → 00:56] Scene 3: Isolating the Variable
+We’re almost there! Currently, x is being multiplied by two. To isolate our variable, we perform the inverse of multiplication: division. By dividing both sides by two, we effectively clear the path to find x's true identity.
+
+[00:56 → 01:11] Scene 4: Final Result
+And there it is. After simplifying, we find that x equals negative 1.5. You've successfully navigated the steps to balance the equation and solve for the unknown. Great work!

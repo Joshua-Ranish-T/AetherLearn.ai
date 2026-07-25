@@ -128,7 +128,7 @@ Requirements:
 - Generate 4-8 scenes based on content complexity
 - Each scene should be 10-30 seconds
 - Objects list must include ALL visual elements for the scene
-- Animations list must correspond to objects
+- Animations list must correspond to objects. Plan for continuous, progressive visual engagement rather than static screens.
 - voice_segment must sound like an experienced teacher speaking naturally
 - Use LaTeX notation for all math (double-escaped for JSON: \\\\frac, \\\\int, etc.)
 - mathematical_expressions must be valid LaTeX

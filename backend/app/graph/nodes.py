@@ -168,9 +168,13 @@ def manim_execution_node(state: VideoGenerationState) -> dict[str, Any]:
         log_status = "completed" if success else "warning"
         log_msg = "Manim render succeeded" if success else f"Manim render failed: {result.error_message}"
 
+        # Get scene videos populated during execute()
+        scene_videos = service.get_last_scene_videos()
+
         return {
             "execution_result": result,
             "execution_successful": success,
+            "scene_videos": scene_videos,
             "current_stage": "manim_execution_service",
             "stage_logs": [_log_entry("manim_execution_service", log_status, log_msg)],
         }
@@ -242,6 +246,39 @@ def narration_agent_node(state: VideoGenerationState) -> dict[str, Any]:
             "error_message": str(exc),
             "error_stage": "narration_agent",
             "stage_logs": [_log_entry("narration_agent", "error", str(exc))],
+        }
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Duration Correction Node (NEW)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def duration_correction_node(state: VideoGenerationState) -> dict[str, Any]:
+    """Pads or trims raw Manim scene videos to match TTS audio durations."""
+    from app.services.duration_correction_service import DurationCorrectionService
+
+    logger.info("Duration correction node executing", project_id=state.get("project_id"))
+    service = DurationCorrectionService()
+    try:
+        scene_videos = state.get("scene_videos", [])
+        scene_audios = state.get("scene_audios", [])
+        updated_videos = service.process_scenes(scene_videos, scene_audios)
+        
+        return {
+            "scene_videos": updated_videos,
+            "duration_correction_completed": True,
+            "current_stage": "duration_correction",
+            "stage_logs": [
+                _log_entry("duration_correction", "completed", "Scene videos duration corrected")
+            ]
+        }
+    except Exception as exc:
+        logger.exception("Duration correction node failed", error=str(exc))
+        return {
+            "has_error": True,
+            "error_message": str(exc),
+            "error_stage": "duration_correction",
+            "stage_logs": [_log_entry("duration_correction", "error", str(exc))],
         }
 
 

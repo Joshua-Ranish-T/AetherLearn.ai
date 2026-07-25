@@ -4,31 +4,26 @@
 
 @layer base {
   :root {
-    --background: 222 47% 5%;
-    --foreground: 210 40% 98%;
-    --card: 222 40% 8%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 7%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 235 85% 65%;
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 130 85% 45%; /* Vibrant Green */
     --primary-foreground: 210 40% 98%;
-    --secondary: 215 28% 15%;
-    --secondary-foreground: 210 40% 85%;
-    --muted: 215 28% 12%;
-    --muted-foreground: 215 20% 55%;
-    --accent: 233 75% 59%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 130 85% 45%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 75% 55%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 215 28% 15%;
-    --input: 215 28% 12%;
-    --ring: 235 85% 65%;
-    --radius: 0.75rem;
-    --chart-1: 235 85% 65%;
-    --chart-2: 320 80% 60%;
-    --chart-3: 170 75% 50%;
-    --chart-4: 45 90% 65%;
-    --chart-5: 280 75% 60%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 130 85% 45%;
+    --radius: 1rem;
   }
 }
 
@@ -39,7 +34,8 @@
   
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background: radial-gradient(ellipse at top left, #1e2356 0%, #0d0f1e 40%, #0a0c1a 100%);
+    /* Clean, airy iOS-like background */
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
     min-height: 100vh;
   }
 
@@ -49,28 +45,78 @@
 }
 
 @layer components {
-  /* Glass morphism cards */
-  .glass {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl;
+  /* iOS 26 Glassmorphism Panels */
+  .glass-panel {
+    background-color: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(40px) saturate(150%);
+    -webkit-backdrop-filter: blur(40px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08), 0 0 15px rgba(255, 255, 255, 0.5) inset;
+    border-radius: 24px;
   }
   
-  .glass-hover {
-    @apply glass transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-primary/10;
+  .glass-header {
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(30px) saturate(150%);
+    -webkit-backdrop-filter: blur(30px) saturate(150%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+  }
+
+  /* Chatbot bubbles */
+  .chat-bubble-user {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    border-radius: 20px 20px 4px 20px;
+  }
+
+  .chat-bubble-ai {
+    background-color: rgba(230, 250, 235, 0.85); /* Very soft green */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 15px rgba(27, 194, 55, 0.05);
+    border-radius: 20px 20px 20px 4px;
+  }
+
+  .floating-element {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .floating-element:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 45px -10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.6) inset;
+  }
+  
+  .interactive-glow {
+    transition: all 0.2s ease;
+  }
+  
+  .interactive-glow:hover {
+    box-shadow: 0px 0px 20px rgba(27, 194, 55, 0.4);
+    transform: scale(1.02);
+  }
+  
+  .neon-border:focus-within {
+    box-shadow: 0 0 0 2px rgba(27, 194, 55, 0.2);
+    border-color: rgba(27, 194, 55, 0.5);
   }
 
   /* Gradient text */
   .gradient-text {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #6172f3 0%, #e94560 100%);
+    background-image: linear-gradient(135deg, #10b981 0%, #34d399 100%);
   }
 
-  /* Gradient border */
-  .gradient-border {
-    position: relative;
-    background: linear-gradient(var(--background), var(--background)) padding-box,
-                linear-gradient(135deg, #6172f3, #e94560) border-box;
-    border: 1px solid transparent;
-    border-radius: var(--radius);
+  /* 3D Green Globe (for static elements if any) */
+  .green-globe {
+    background: radial-gradient(circle at 35% 25%, #a7f3d0, #10b981 40%, #065f46 95%);
+    box-shadow: 
+      inset -8px -8px 15px rgba(0,0,0,0.1), 
+      inset 8px 8px 15px rgba(255,255,255,0.8),
+      0 15px 35px rgba(16, 185, 129, 0.2);
   }
 
   /* Glow button */
@@ -81,38 +127,11 @@
   .btn-glow::before {
     content: '';
     @apply absolute inset-0 opacity-0 transition-opacity duration-300;
-    background: radial-gradient(circle at center, rgba(99, 114, 243, 0.3) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(255,255,255, 0.2) 0%, transparent 70%);
   }
   
   .btn-glow:hover::before {
     @apply opacity-100;
-  }
-
-  /* Shimmer loading */
-  .shimmer {
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.05) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 1.5s linear infinite;
-  }
-
-  /* Stage indicator active */
-  .stage-active {
-    @apply relative;
-  }
-  .stage-active::before {
-    content: '';
-    @apply absolute inset-0 rounded-lg;
-    animation: glow 2s ease-in-out infinite alternate;
-  }
-
-  /* Code block */
-  .code-block {
-    @apply font-mono text-sm bg-black/40 rounded-lg p-4 overflow-x-auto border border-white/10;
   }
 
   /* Scrollbar styles */
@@ -124,10 +143,20 @@
     @apply bg-transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-white/20 rounded-full;
+    @apply bg-gray-300 rounded-full border-2 border-transparent bg-clip-padding;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-white/30;
+    @apply bg-gray-400;
+  }
+
+  /* Terminal log styling */
+  .terminal-panel {
+    background-color: rgba(15, 23, 42, 0.95); /* Slate 900 for high contrast logs */
+    color: #e2e8f0;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
   }
 }
 

@@ -1,72 +1,84 @@
 from manim import *
 import numpy as np
+from typing import Optional
+
+
+from manim import *
+import numpy as np
 
 # ── Configuration ─────────────────────────────────
 BACKGROUND_COLOR = "#1a1a2e"
 HIGHLIGHT_COLOR = "#e94560"
-ACCENT_COLOR = "#0f3460"
 TEXT_COLOR = WHITE
 
-class PythagoreanTheoremVideo(Scene):
+
+# ── Scene 1: Introduction to Right Triangles — target: 15.14 seconds ──
+class Scene01(Scene):
     def construct(self):
         self.camera.background_color = BACKGROUND_COLOR
         
-        self.scene_01_intro()
-        self.clear()
-        self.scene_02_visualizing()
-        self.clear()
-        self.scene_03_formula()
-        self.clear()
-        self.scene_04_conclusion()
-
-    def scene_01_intro(self):
-        title = Text("Right-Angled Triangle", color=TEXT_COLOR).to_edge(UP)
+        triangle = Polygon(LEFT*2 + DOWN*1.5, RIGHT*2 + DOWN*1.5, LEFT*2 + UP*1.5, color=TEXT_COLOR)
+        right_angle = Square(side_length=0.3).shift(LEFT*1.7 + DOWN*1.2)
         
-        # Triangle vertices
-        A = np.array([-2, -1, 0])
-        B = np.array([2, -1, 0])
-        C = np.array([-2, 2, 0])
+        label_a = Text("a", font_size=36).next_to(triangle, LEFT)
+        label_b = Text("b", font_size=36).next_to(triangle, DOWN)
+        label_c = Text("c", font_size=36, color=HIGHLIGHT_COLOR).next_to(triangle, UR, buff=0.1)
         
-        triangle = Polygon(A, B, C, color=TEXT_COLOR)
-        right_angle = Square(side_length=0.4, color=TEXT_COLOR).shift(np.array([-1.6, -0.6, 0]))
+        labels = VGroup(label_a, label_b, label_c)
         
-        label_a = Text("a", color=TEXT_COLOR).next_to(C, LEFT)
-        label_b = Text("b", color=TEXT_COLOR).next_to(B, DOWN)
-        label_c = Text("c", color=TEXT_COLOR).next_to(np.array([0, 0.5, 0]), UR)
-        
-        self.play(Write(title))
-        self.play(Create(triangle), Create(right_angle))
-        self.play(Write(label_a), Write(label_b), Write(label_c))
+        self.play(Create(triangle), Create(right_angle), run_time=3)
         self.wait(2)
+        self.play(FadeIn(labels), run_time=2)
+        self.wait(8.14)
 
-    def scene_02_visualizing(self):
-        # Triangle base
-        tri = Polygon([-2, -1, 0], [2, -1, 0], [-2, 2, 0], color=TEXT_COLOR)
+
+# ── Scene 2: Visualizing the Squares — target: 20.69 seconds ──
+class Scene02(Scene):
+    def construct(self):
+        self.camera.background_color = BACKGROUND_COLOR
         
-        sq_a = Square(side_length=3, color=BLUE).shift(LEFT * 3.5 + UP * 0.5)
-        sq_b = Square(side_length=4, color=GREEN).shift(DOWN * 3)
-        sq_c = Square(side_length=5, color=RED).rotate(np.arctan(3/4)).shift(RIGHT * 1.5 + UP * 0.5)
+        sq_a = Square(color=BLUE, fill_opacity=0.5).scale(0.5).shift(LEFT*2)
+        sq_b = Square(color=GREEN, fill_opacity=0.5).scale(0.5).shift(DOWN*2)
+        sq_c = Square(color=HIGHLIGHT_COLOR, fill_opacity=0.5).scale(0.5).shift(UP*1 + RIGHT*1)
         
-        label_a2 = Text("a^2", color=BLUE).move_to(sq_a.get_center())
-        label_b2 = Text("b^2", color=GREEN).move_to(sq_b.get_center())
-        label_c2 = Text("c^2", color=RED).move_to(sq_c.get_center())
+        text_a = Text("a^2", font_size=24).move_to(sq_a)
+        text_b = Text("b^2", font_size=24).move_to(sq_b)
+        text_c = Text("c^2", font_size=24).move_to(sq_c)
         
-        self.play(GrowFromCenter(sq_a), GrowFromCenter(sq_b), GrowFromCenter(sq_c))
-        self.play(Write(label_a2), Write(label_b2), Write(label_c2))
+        squares = VGroup(sq_a, sq_b, sq_c)
+        labels = VGroup(text_a, text_b, text_c)
+        
+        self.play(GrowFromCenter(squares), FadeIn(labels), run_time=3)
         self.wait(2)
-        self.play(sq_a.animate.move_to(sq_c.get_center()), sq_b.animate.move_to(sq_c.get_center()))
-        self.wait(2)
-
-    def scene_03_formula(self):
-        equation = Text("a^2 + b^2 = c^2", color=HIGHLIGHT_COLOR).scale(2.0)
-        self.play(Write(equation))
-        self.wait(3)
-
-    def scene_04_conclusion(self):
-        eq1 = Text("3^2 + 4^2 = 5^2", color=TEXT_COLOR).shift(UP)
-        eq2 = Text("9 + 16 = 25", color=HIGHLIGHT_COLOR).shift(DOWN)
         
-        self.play(FadeIn(eq1))
-        self.wait(1)
-        self.play(FadeIn(eq2))
-        self.wait(3)
+        # Transform a and b into c
+        self.play(
+            Transform(sq_a, sq_c.copy()),
+            Transform(sq_b, sq_c.copy()),
+            run_time=4
+        )
+        self.wait(11.69)
+
+
+# ── Scene 3: The Formula — target: 15.5 seconds ──
+class Scene03(Scene):
+    def construct(self):
+        self.camera.background_color = BACKGROUND_COLOR
+        
+        formula = Text("a^2 + b^2 = c^2", font_size=72, color=HIGHLIGHT_COLOR)
+        
+        self.play(Write(formula), run_time=3)
+        self.wait(12.5)
+
+
+# ── Scene 4: Conclusion — target: 9.7 seconds ──
+class Scene04(Scene):
+    def construct(self):
+        self.camera.background_color = BACKGROUND_COLOR
+        
+        formula = Text("a^2 + b^2 = c^2", font_size=48, color=HIGHLIGHT_COLOR).shift(UP*1)
+        text = Text("Ready to solve?", font_size=48, color=TEXT_COLOR)
+        
+        self.add(formula)
+        self.play(FadeIn(text), run_time=2)
+        self.wait(7.7)

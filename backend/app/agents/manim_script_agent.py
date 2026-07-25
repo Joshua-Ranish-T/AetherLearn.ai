@@ -3,6 +3,11 @@ Manim Script Generation Agent.
 
 Converts a structured storyboard into executable Manim CE Python code.
 Uses Gemini Pro with a specialized system prompt for code generation.
+
+Key change: reads state.scene_audios (populated by narration_agent before
+this node runs) and overrides each scene's estimated_duration_seconds with
+the REAL measured TTS audio duration. This makes Gemini generate animation
+timing that actually matches the audio.
 """
 
 from __future__ import annotations
@@ -19,6 +24,7 @@ from app.core.logging_config import get_logger
 from app.prompts.manim_generation import MANIM_SYSTEM_PROMPT, build_manim_script_prompt
 from app.schemas.lesson import LessonPlan, StoryboardScene
 from app.schemas.manim import ManimScene, ManimScript
+from app.schemas.narration import SceneAudio
 from app.schemas.state import VideoGenerationState
 from app.utils.file_utils import write_text_file, ensure_dir
 
@@ -33,7 +39,8 @@ from typing import Optional
 class ManimScriptAgent:
     """
     Converts a storyboard into executable Manim CE code.
-    Writes the script to disk and returns the ManimScript model.
+    Injects real per-scene audio durations from scene_audios into the
+    prompt so Gemini generates animations of the correct length.
     """
 
     def __init__(self) -> None:
@@ -52,6 +59,7 @@ class ManimScriptAgent:
     def run(self, state: VideoGenerationState) -> dict:
         """
         Generate Manim script from storyboard.
+        Overrides estimated_duration_seconds with real audio durations.
 
         Returns:
             Partial state update with manim_script and manim_script_file_path.
@@ -63,6 +71,8 @@ class ManimScriptAgent:
                 context={"state_keys": list(state.keys())},
             )
 
+        scene_audios: list[SceneAudio] = state.get("scene_audios", [])
+
         project_id = state.get("project_id", "unknown")
         render_quality = state.get("render_quality", "medium_quality")
         render_dir = state.get("render_output_dir", "./renders")
@@ -71,12 +81,13 @@ class ManimScriptAgent:
             "Manim script agent executing",
             project_id=project_id,
             scenes=len(lesson_plan.storyboard),
+            using_real_audio_durations=len(scene_audios) > 0,
         )
 
-        # ── Build storyboard JSON for prompt ──────────────────────────────
-        storyboard_data = [
-            scene.model_dump() for scene in lesson_plan.storyboard
-        ]
+        # ── Build storyboard JSON with real audio durations ───────────────
+        storyboard_data = self._build_storyboard_with_real_durations(
+            lesson_plan.storyboard, scene_audios
+        )
         storyboard_json = json.dumps(storyboard_data, indent=2, default=str)
 
         # ── Build prompt ───────────────────────────────────────────────────
@@ -154,6 +165,54 @@ class ManimScriptAgent:
     # Private helpers
     # ─────────────────────────────────────────────────────────────────────
 
+    def _build_storyboard_with_real_durations(
+        self,
+        storyboard: list[StoryboardScene],
+        scene_audios: list[SceneAudio],
+    ) -> list[dict]:
+        """
+        Build storyboard data list with estimated_duration_seconds overridden
+        by real TTS-measured audio durations, and include word_timestamps for alignment.
+        """
+        # Build lookups from scene_number
+        audio_duration_by_scene: dict[int, float] = {}
+        word_timestamps_by_scene: dict[int, list[dict]] = {}
+        
+        for sa in scene_audios:
+            if sa.duration_seconds > 0:
+                audio_duration_by_scene[sa.scene_number] = sa.duration_seconds
+            if sa.word_timestamps:
+                word_timestamps_by_scene[sa.scene_number] = sa.word_timestamps
+
+        result = []
+        for scene in storyboard:
+            data = scene.model_dump()
+            if scene.scene_number in audio_duration_by_scene:
+                real_duration = audio_duration_by_scene[scene.scene_number]
+                data["estimated_duration_seconds"] = real_duration
+                data["_duration_source"] = "ffprobe_measured"
+            else:
+                data["_duration_source"] = "estimated_fallback"
+                
+            if scene.scene_number in word_timestamps_by_scene:
+                data["word_timestamps"] = word_timestamps_by_scene[scene.scene_number]
+                
+            result.append(data)
+
+        if audio_duration_by_scene:
+            logger.info(
+                "Storyboard durations overridden with real audio durations",
+                scenes_updated=len(audio_duration_by_scene),
+                durations={k: round(v, 2) for k, v in audio_duration_by_scene.items()},
+            )
+        else:
+            logger.warning(
+                "No real audio durations available — using storyboard estimates. "
+                "Sync may be imprecise."
+            )
+
+        return result
+
     def _clean_code(self, raw: str) -> str:
         """Strip markdown fences and non-code content from Gemini output."""
         raw = raw.strip()
@@ -201,14 +260,9 @@ class ManimScriptAgent:
     def _find_main_scene_class(
         self, code: str, scenes: list[ManimScene]
     ) -> str:
-        """Find the combined/main scene class to render."""
-        # Prefer CombinedVideoScene or similar
-        for candidate in ["CombinedVideoScene", "MainScene", "FullVideo"]:
-            if candidate in code:
-                return candidate
-        # Fall back to last scene class
+        """Find the main scene class (usually Scene01 in our per-scene structure)."""
         if scenes:
-            return scenes[-1].class_name
+            return scenes[0].class_name
         return "Scene01"
 
     def _wrap_in_fallback_scene(self, code: str, title: str) -> str:

@@ -1,0 +1,15 @@
+TRANSCRIPT: Demystifying Neural Networks
+Generated: 2026-07-24 16:47 UTC
+============================================================
+
+[00:00 → 00:22] Scene 1: Introduction to Neurons
+Have you ever wondered how a machine learns to see, read, or even think? It all begins with a single, elegant concept: the artificial neuron. Inspired by the biological cells in our own brains, this node acts as the fundamental building block of modern artificial intelligence. But how does a simple circle turn data into intelligence?
+
+[00:22 → 00:45] Scene 2: Weights and Biases
+To process information, each input is assigned a 'weight'—a measure of its importance—before being summed up with a 'bias' to shift the result. Think of it like a recipe: the weight is the amount of spice you add, and the bias is the baseline heat of the oven. It’s through this precise mathematical balancing act that the neuron decides what information is truly worth passing forward.
+
+[00:45 → 01:08] Scene 3: Network Architecture
+Of course, one neuron can't do much on its own. But when we stack them into layers—an input layer to receive data, hidden layers to process complexity, and an output layer to deliver a result—we create a neural network. This architecture allows the system to untangle patterns far too intricate for any human to map out manually.
+
+[01:08 → 01:31] Scene 4: Learning Process
+But how does it actually get better? It learns through trial and error. By constantly adjusting those weights based on its mistakes, the network fine-tunes its internal logic. It’s a process of iterative refinement, transforming raw data into reliable insight. And that, in essence, is how a machine learns to understand our world.

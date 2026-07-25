@@ -4,6 +4,9 @@ LangGraph conditional edge routing functions.
 These pure functions inspect the current state and return the name
 of the next node to execute. They contain NO business logic —
 only routing decisions based on state flags.
+
+Routing updated for timeline-based synchronization:
+Content Generation -> Narration Agent -> Manim Script Agent -> Manim Execution Service -> Duration Correction Service -> Synchronization Service
 """
 
 from __future__ import annotations
@@ -39,7 +42,18 @@ def route_after_ocr(state: VideoGenerationState) -> str:
 def route_after_content_generation(state: VideoGenerationState) -> str:
     """
     After Content Generation Agent:
-    - Always proceed to Manim script generation
+    - Always proceed to Narration generation (audio-first pipeline)
+    - Route to error handler on failure
+    """
+    if state.get("has_error"):
+        return "error_handler"
+    return "narration_agent"
+
+
+def route_after_narration(state: VideoGenerationState) -> str:
+    """
+    After Narration Agent:
+    - Proceed to Manim Script Generation (with real audio durations)
     - Route to error handler on failure
     """
     if state.get("has_error"):
@@ -61,12 +75,12 @@ def route_after_manim_script(state: VideoGenerationState) -> str:
 def route_after_execution(state: VideoGenerationState) -> str:
     """
     After Manim Execution Service:
-    - If successful: proceed to narration generation
+    - If successful: proceed to duration correction
     - If failed and retries remain: proceed to repair agent
     - If failed and retries exhausted: route to error handler
     """
     if state.get("execution_successful"):
-        return "narration_agent"
+        return "duration_correction"
 
     retry_count = state.get("repair_retry_count", 0)
     max_retries = state.get("max_repair_retries", 3)
@@ -88,9 +102,9 @@ def route_after_repair(state: VideoGenerationState) -> str:
     return "manim_execution_service"
 
 
-def route_after_narration(state: VideoGenerationState) -> str:
+def route_after_duration_correction(state: VideoGenerationState) -> str:
     """
-    After Narration Agent:
+    After Duration Correction Service:
     - Proceed to synchronization service
     - Route to error handler on failure
     """

@@ -1,0 +1,15 @@
+TRANSCRIPT: Understanding Artificial Intelligence and RAG Pipelines
+Generated: 2026-07-25 06:32 UTC
+============================================================
+
+[00:00 → 00:15] Scene 1: Introduction to RAG
+Welcome. Today, we’re peeling back the curtain on one of the most transformative concepts in modern technology: Retrieval-Augmented Generation, or RAG. But why does this acronym matter, and how is it changing the way machines think?
+
+[00:15 → 00:36] Scene 2: The Open Book Analogy
+Think of a standard AI as a student taking a high-stakes exam entirely from memory. It's brilliant, but prone to 'hallucinations' when its training data falls short. RAG changes the rules of the game: it gives that student an open-book policy, allowing it to consult a trusted library of information before answering your question.
+
+[00:36 → 00:58] Scene 3: Vector Embeddings
+But how does the AI find the right page in that massive library? It uses vector embeddings. We translate complex text into numerical coordinates in a multi-dimensional space. This allows the system to look past simple keywords and find the deeper, semantic meaning behind your query—matching concepts, not just letters.
+
+[00:58 → 01:21] Scene 4: Synthesis
+Finally, the AI merges your query with the relevant facts it just retrieved, synthesizing a response that is both creative and factually grounded. By bridging the gap between vast internal knowledge and external data, RAG is the key to building AI applications that are not just powerful, but truly reliable. Let’s dive into how you can build your own.

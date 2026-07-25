@@ -140,7 +140,7 @@ class TTSService:
     # ─────────────────────────────────────────────────────────────────────
 
     def _generate_edge_tts(self, text: str, output_path: str) -> AudioResult:
-        """Generate audio using Microsoft Edge TTS."""
+        """Generate audio using Microsoft Edge TTS, capturing word timestamps."""
         try:
             import edge_tts
         except ImportError:
@@ -148,10 +148,9 @@ class TTSService:
             return self._generate_gtts(text, output_path)
 
         try:
-            # edge-tts is async — run in event loop
             loop = asyncio.new_event_loop()
             try:
-                loop.run_until_complete(
+                word_timestamps = loop.run_until_complete(
                     self._async_edge_tts(text, output_path, self.voice)
                 )
             finally:
@@ -164,6 +163,7 @@ class TTSService:
                 duration_seconds=duration,
                 tts_engine="edge-tts",
                 voice=self.voice,
+                word_timestamps=word_timestamps,
             )
         except Exception as exc:
             logger.warning(
@@ -174,11 +174,27 @@ class TTSService:
             return self._generate_gtts(text, output_path)
 
     @staticmethod
-    async def _async_edge_tts(text: str, output_path: str, voice: str) -> None:
-        """Async edge-tts call."""
+    async def _async_edge_tts(text: str, output_path: str, voice: str) -> list[dict]:
+        """Async edge-tts call returning word timestamps."""
         import edge_tts
         communicate = edge_tts.Communicate(text=text, voice=voice)
-        await communicate.save(output_path)
+        
+        word_timestamps = []
+        with open(output_path, "wb") as file:
+            async for chunk in communicate.stream():
+                if chunk["type"] == "audio":
+                    file.write(chunk["data"])
+                elif chunk["type"] == "WordBoundary":
+                    # offset and duration are in 100-nanosecond units
+                    start_sec = chunk["offset"] / 10_000_000
+                    dur_sec = chunk["duration"] / 10_000_000
+                    word_timestamps.append({
+                        "word": chunk["text"],
+                        "start_time": start_sec,
+                        "end_time": start_sec + dur_sec
+                    })
+                    
+        return word_timestamps
 
     def _generate_gtts(self, text: str, output_path: str) -> AudioResult:
         """Generate audio using Google TTS."""

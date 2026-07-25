@@ -1,7 +1,0 @@
-pyproject.toml
-app/__init__.py
-eduvideo_backend.egg-info/PKG-INFO
-eduvideo_backend.egg-info/SOURCES.txt
-eduvideo_backend.egg-info/dependency_links.txt
-eduvideo_backend.egg-info/requires.txt
-eduvideo_backend.egg-info/top_level.txt

@@ -1,0 +1,15 @@
+TRANSCRIPT: Calculating the Area of a Circle with Radius 2
+Generated: 2026-07-25 06:21 UTC
+============================================================
+
+[00:00 → 00:12] Scene 1: Introduction
+Have you ever wondered how we measure the space inside a perfect curve? Today, we’re going to uncover that mystery by calculating the area of a circle with a radius of exactly two units.
+
+[00:12 → 00:26] Scene 2: The Formula
+To find that area, we turn to a classic mathematical tool: the formula A equals pi r-squared. But why do we square the radius? It’s our way of translating a one-dimensional line into two-dimensional space.
+
+[00:26 → 00:40] Scene 3: Substitution
+Now, let’s put this into practice. Since our radius is two, we simply substitute that value into our formula. It’s like fitting the final piece into a puzzle—replacing the variable with our known dimension.
+
+[00:40 → 00:57] Scene 4: Final Calculation
+When we square our two, we get four, leaving us with four times pi. If we use the standard decimal approximation for pi, we arrive at approximately 12.57 square units. And just like that, we’ve measured the space inside the circle!

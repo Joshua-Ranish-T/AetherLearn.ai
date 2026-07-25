@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, File, Form, HTTPException, Response, UploadFile, status
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 
 from app.core.config import get_settings
 from app.core.exceptions import NotFoundError, DatabaseError, InputError
@@ -29,6 +30,41 @@ logger = get_logger(__name__)
 router = APIRouter(prefix="/projects", tags=["Projects"])
 
 settings = get_settings()
+
+
+class ExplainRequest(BaseModel):
+    topic: str
+
+
+@router.post("/explain", status_code=status.HTTP_200_OK)
+async def explain_topic(payload: ExplainRequest) -> dict:
+    """Generate an interactive tutor explanation of a topic using Gemini."""
+    try:
+        import google.generativeai as genai
+        genai.configure(api_key=settings.gemini_api_key)
+        model = genai.GenerativeModel(settings.gemini_fast_model or settings.gemini_model)
+        prompt = (
+            f"You are EduVideo AI, an expert, encouraging, and highly intelligent math and science AI tutor. "
+            f"The user wants to learn about:\n\n'{payload.topic}'\n\n"
+            f"Provide a clear, engaging, structured explanation (around 150-200 words) using clean markdown formatting (bolding key concepts, using bullet points). "
+            f"Explain the intuitive visual idea behind this concept. "
+            f"End your response by stating that you are constructing a custom 3D animated video lesson to demonstrate this step-by-step right now!"
+        )
+        res = model.generate_content(prompt)
+        return {"explanation": res.text}
+    except Exception as exc:
+        logger.warning("Gemini explain failed, using fallback explanation", error=str(exc))
+        return {
+            "explanation": (
+                f"### Understanding **{payload.topic}**\n\n"
+                f"This is a fundamental concept in mathematics and science that helps us model and visualize dynamic relationships. "
+                f"By examining the underlying geometry and rate of change, complex ideas become intuitive and easy to grasp.\n\n"
+                f"**Key Intuition:**\n"
+                f"- **Visual Representation:** Translating abstract symbols into geometric transformations.\n"
+                f"- **Step-by-Step Evolution:** Observing how components interact dynamically over time.\n\n"
+                f"*I am constructing a rich 3D animated video lesson to demonstrate this step-by-step right now! Watch the terminal logs below as the scenes are rendered.*"
+            )
+        }
 
 
 @router.post("", response_model=ProjectResponse, status_code=status.HTTP_201_CREATED)

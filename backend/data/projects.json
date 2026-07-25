@@ -296,7 +296,96 @@
     "input_file_url": "",
     "status": "completed",
     "created_at": "2026-07-24T14:35:25.736451+00:00",
-    "updated_at": "2026-07-24T14:36:19.613402+00:00",
+    "updated_at": "2026-07-24T16:17:17.320971+00:00",
     "metadata": {}
+  },
+  "6c6dd507-4645-4f1a-bdc3-8d6564bfbf5d": {
+    "id": "6c6dd507-4645-4f1a-bdc3-8d6564bfbf5d",
+    "title": "pythogorean theorem",
+    "description": "",
+    "input_type": "topic",
+    "input_text": "pythogorean theorem",
+    "input_file_url": "",
+    "status": "failed",
+    "created_at": "2026-07-24T16:03:27.715457+00:00",
+    "updated_at": "2026-07-24T16:03:58.604479+00:00",
+    "metadata": {}
+  },
+  "b7d03b51-1ad0-492e-894b-96f9857602ff": {
+    "id": "b7d03b51-1ad0-492e-894b-96f9857602ff",
+    "title": "Neural Network ",
+    "description": "",
+    "input_type": "topic",
+    "input_text": "Neural Network ",
+    "input_file_url": "",
+    "status": "completed",
+    "created_at": "2026-07-24T16:27:43.846719+00:00",
+    "updated_at": "2026-07-24T16:49:11.273579+00:00",
+    "metadata": {}
+  },
+  "f3af1476-3fd3-449b-9571-e4087f7fb484": {
+    "id": "f3af1476-3fd3-449b-9571-e4087f7fb484",
+    "title": "2x+3=0;",
+    "description": "",
+    "input_type": "text",
+    "input_text": "2x+3=0;",
+    "input_file_url": "",
+    "status": "failed",
+    "created_at": "2026-07-24T17:34:00.262919+00:00",
+    "updated_at": "2026-07-24T17:34:00.614929+00:00",
+    "metadata": {}
+  },
+  "83ec553e-5940-4199-b075-871d38be74fc": {
+    "id": "83ec553e-5940-4199-b075-871d38be74fc",
+    "title": "equation",
+    "description": "",
+    "input_type": "text",
+    "input_text": "solve 2x+3=0;",
+    "input_file_url": "",
+    "status": "completed",
+    "created_at": "2026-07-24T17:35:10.688366+00:00",
+    "updated_at": "2026-07-24T17:42:23.354350+00:00",
+    "metadata": {}
+  },
+  "f100c4d7-8d1c-418b-adc4-8e37f9bed779": {
+    "id": "f100c4d7-8d1c-418b-adc4-8e37f9bed779",
+    "title": "area of circle ?",
+    "description": "",
+    "input_type": "topic",
+    "input_text": "area of circle ?",
+    "input_file_url": "",
+    "status": "running",
+    "created_at": "2026-07-24T18:32:10.491141+00:00",
+    "updated_at": "2026-07-24T18:32:11.042177+00:00",
+    "metadata": {}
+  },
+  "3afa81e0-5a07-42dc-9a25-26d8477dbff6": {
+    "id": "3afa81e0-5a07-42dc-9a25-26d8477dbff6",
+    "title": "area of circle r=2?",
+    "description": "",
+    "input_type": "topic",
+    "input_text": "area of circle r=2?",
+    "input_file_url": "",
+    "status": "completed",
+    "created_at": "2026-07-25T06:21:01.181449+00:00",
+    "updated_at": "2026-07-25T06:22:48.289797+00:00",
+    "metadata": {}
+  },
+  "b54379fc-aa9f-4421-9f27-f089adb02ef4": {
+    "id": "b54379fc-aa9f-4421-9f27-f089adb02ef4",
+    "title": "do some visualisation on this",
+    "description": "do some visualisation on this",
+    "input_type": "pdf",
+    "input_text": "",
+    "input_file_url": "/storage/uploads/eafffe91-21aa-4238-a25a-bf23177826b6.pdf",
+    "status": "completed",
+    "created_at": "2026-07-25T06:32:25.761239+00:00",
+    "updated_at": "2026-07-25T06:35:18.039250+00:00",
+    "metadata": {
+      "original_filename": "Joshua_Ranish_T_Resume_23-7.pdf",
+      "file_size_bytes": 141810,
+      "content_type": "application/pdf",
+      "local_path": "renders\\uploads\\upload_12368.pdf"
+    }
   }
 }

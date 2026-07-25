@@ -4,6 +4,7 @@ Narration generation schemas.
 
 from __future__ import annotations
 
+from typing import Any
 from pydantic import BaseModel, Field
 
 
@@ -73,3 +74,55 @@ class AudioResult(BaseModel):
     error_message: str = Field(default="")
     tts_engine: str = Field(default="")
     voice: str = Field(default="")
+    word_timestamps: list[dict[str, Any]] | None = Field(
+        default=None,
+        description="List of dicts with 'word', 'start_time', 'end_time' keys (in seconds)"
+    )
+
+
+# ── Per-scene tracking (used by the timeline-based sync pipeline) ──────────────
+
+class SceneAudio(BaseModel):
+    """
+    Audio generated for a single storyboard scene.
+    Duration is measured by ffprobe — never trusted from the TTS API.
+    """
+    scene_id: str = Field(description="Scene identifier, e.g. 'scene_01'")
+    scene_number: int
+    scene_title: str = Field(default="")
+    text: str = Field(description="Narration text that was synthesised")
+    audio_path: str = Field(description="Absolute path to the generated .mp3 file")
+    duration_seconds: float = Field(
+        description="Actual audio duration measured by ffprobe"
+    )
+    word_timestamps: list[dict[str, Any]] | None = Field(
+        default=None,
+        description="Word-level timestamps from TTS engine (Part B)"
+    )
+    animation_cues: dict[str, float] = Field(
+        default_factory=dict,
+        description="Key animation triggers mapped to their exact timestamp in seconds"
+    )
+
+
+class SceneVideo(BaseModel):
+    """
+    Per-scene video artefacts produced during rendering and correction.
+    """
+    scene_id: str = Field(description="Scene identifier, e.g. 'scene_01'")
+    scene_number: int
+    class_name: str = Field(description="Manim Scene subclass name, e.g. 'Scene01Intro'")
+    raw_video_path: str = Field(
+        default="",
+        description="Path to the video rendered directly by Manim (may be shorter/longer than audio)"
+    )
+    padded_video_path: str | None = Field(
+        default=None,
+        description="Path after freeze-frame padding / trim to match audio duration"
+    )
+    final_muxed_path: str | None = Field(
+        default=None,
+        description="Path after muxing padded video + scene audio into a single MP4"
+    )
+    render_success: bool = Field(default=False)
+    error_message: str = Field(default="")

@@ -1,9 +1,9 @@
 """
 Synchronization Service.
 
-Merges rendered Manim animation video with narration audio and
-optional subtitles using FFmpeg to produce the final MP4.
-This is NOT an LLM agent — it is a deterministic FFmpeg wrapper.
+Merges each padded scene video with its corresponding audio track,
+then concatenates all scenes sequentially into the final educational video.
+Uses FFmpeg for all media operations.
 """
 
 from __future__ import annotations
@@ -12,13 +12,14 @@ import os
 import re
 import shutil
 import subprocess
-import time
+import tempfile
 from pathlib import Path
 
 from app.core.config import get_settings
 from app.core.exceptions import SynchronizationError
 from app.core.logging_config import get_logger
 from app.schemas.state import VideoGenerationState
+from app.schemas.narration import SceneAudio, SceneVideo
 
 logger = get_logger(__name__)
 
@@ -39,81 +40,90 @@ def get_ffmpeg_cmd() -> str:
 
 class SynchronizationService:
     """
-    Combines Manim video + narration audio → final educational video.
-    Uses FFmpeg for all media operations.
+    Combines padded Manim scene videos + scene audio → final educational video.
     """
 
-    FFMPEG_TIMEOUT = 300  # 5 minutes
+    FFMPEG_TIMEOUT = 300  # 5 minutes per operation
 
     def synchronize(self, state: VideoGenerationState) -> dict:
         """
-        Merge animation video with audio narration.
-
-        Args:
-            state: LangGraph state with execution_result and narration_script.
+        Merge per-scene padded video with audio, then concat all scenes.
 
         Returns:
-            Partial state update with video_file_path and video_duration_seconds.
+            Partial state update with video_file_path, video_duration_seconds,
+            and updated scene_videos.
         """
-        from app.schemas.narration import NarrationScript
-        from app.schemas.manim import ExecutionResult
-
-        execution_result: ExecutionResult | None = state.get("execution_result")
-        narration_script: NarrationScript | None = state.get("narration_script")
+        scene_videos: list[SceneVideo] = state.get("scene_videos", [])
+        scene_audios: list[SceneAudio] = state.get("scene_audios", [])
         project_id = state.get("project_id", "unknown")
         render_dir = state.get("render_output_dir", "./renders")
 
-        if not execution_result or not execution_result.primary_output:
+        if not scene_videos:
             raise SynchronizationError(
-                "No rendered video file available for synchronization.",
+                "No scene videos available for synchronization.",
                 context={"project_id": project_id},
             )
 
-        video_input = execution_result.primary_output
-        if not Path(video_input).exists():
-            raise SynchronizationError(
-                f"Video file not found: {video_input}",
-                context={"path": video_input},
-            )
-
-        # Output path for final video
         output_dir = Path(render_dir) / project_id / "final"
         output_dir.mkdir(parents=True, exist_ok=True)
         final_video_path = str(output_dir / "final_video.mp4")
 
-        # Determine if we have narration audio
-        audio_path = ""
-        if narration_script and narration_script.combined_audio_path:
-            if Path(narration_script.combined_audio_path).exists():
-                audio_path = narration_script.combined_audio_path
-
         logger.info(
             "Synchronization service executing",
-            video_input=video_input,
-            audio_path=audio_path or "none",
+            scenes=len(scene_videos),
             output=final_video_path,
         )
 
-        if audio_path:
-            success = self._merge_video_audio(
-                video_path=video_input,
-                audio_path=audio_path,
-                output_path=final_video_path,
-            )
-        else:
-            # No audio — just copy/transcode the video
-            success = self._transcode_video(
-                video_path=video_input,
-                output_path=final_video_path,
-            )
+        muxed_paths = []
 
-        if not success:
+        # 1. Mux each scene
+        for i, sv in enumerate(scene_videos):
+            if not sv.padded_video_path or not Path(sv.padded_video_path).exists():
+                logger.warning(
+                    "Skipping scene muxing due to missing padded video",
+                    scene_id=sv.scene_id,
+                )
+                continue
+
+            matching_audio = None
+            if i < len(scene_audios) and scene_audios[i].audio_path and Path(scene_audios[i].audio_path).exists():
+                matching_audio = scene_audios[i]
+
+            muxed_path = str(output_dir / f"{sv.scene_id}_muxed.mp4")
+
+            if matching_audio:
+                success = self._merge_video_audio(
+                    video_path=sv.padded_video_path,
+                    audio_path=matching_audio.audio_path,
+                    output_path=muxed_path,
+                )
+            else:
+                success = self._transcode_video(
+                    video_path=sv.padded_video_path,
+                    output_path=muxed_path,
+                )
+
+            if success and Path(muxed_path).exists():
+                sv.final_muxed_path = muxed_path
+                muxed_paths.append(muxed_path)
+            else:
+                logger.error("Failed to mux scene", scene_id=sv.scene_id)
+
+        if not muxed_paths:
             raise SynchronizationError(
-                "FFmpeg failed to produce the final video.",
-                context={"video_input": video_input, "audio_path": audio_path},
+                "Failed to produce any muxed scene videos.",
+                context={"project_id": project_id},
             )
 
-        # Get final video duration
+        # 2. Concat all scenes
+        success = self._concat_videos(muxed_paths, final_video_path)
+
+        if not success or not Path(final_video_path).exists():
+            raise SynchronizationError(
+                "FFmpeg failed to concatenate final video.",
+                context={"muxed_paths": muxed_paths},
+            )
+
         duration = self._get_video_duration(final_video_path)
 
         logger.info(
@@ -125,6 +135,7 @@ class SynchronizationService:
         return {
             "video_file_path": final_video_path,
             "video_duration_seconds": duration,
+            "scene_videos": scene_videos,
         }
 
     # ─────────────────────────────────────────────────────────────────────
@@ -142,23 +153,18 @@ class SynchronizationService:
             "ffmpeg", "-y",
             "-i", video_path,
             "-i", audio_path,
-            # Map video from input 0, audio from input 1
             "-map", "0:v:0",
             "-map", "1:a:0",
-            # Re-encode to ensure compatibility
             "-c:v", "libx264",
             "-preset", "fast",
             "-crf", "22",
             "-c:a", "aac",
             "-b:a", "192k",
-            # Align audio/video duration
             "-shortest",
-            # Ensure proper timestamps
             "-avoid_negative_ts", "make_zero",
             "-movflags", "+faststart",
             output_path,
         ]
-
         return self._run_ffmpeg(command)
 
     def _transcode_video(self, video_path: str, output_path: str) -> bool:
@@ -173,6 +179,39 @@ class SynchronizationService:
             output_path,
         ]
         return self._run_ffmpeg(command)
+
+    def _concat_videos(self, video_paths: list[str], output_path: str) -> bool:
+        """Concatenate multiple videos into one using the concat demuxer."""
+        if len(video_paths) == 1:
+            shutil.copy2(video_paths[0], output_path)
+            return True
+
+        # Create concat text file
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
+            for p in video_paths:
+                # FFmpeg requires forward slashes and escaping for file paths in concat demuxer
+                safe_path = Path(p).resolve().as_posix()
+                f.write(f"file '{safe_path}'\n")
+            concat_file = f.name
+
+        command = [
+            "ffmpeg", "-y",
+            "-f", "concat",
+            "-safe", "0",
+            "-i", concat_file,
+            "-c", "copy",
+            "-movflags", "+faststart",
+            output_path,
+        ]
+        
+        success = self._run_ffmpeg(command)
+        
+        try:
+            os.remove(concat_file)
+        except Exception:
+            pass
+            
+        return success
 
     def _run_ffmpeg(self, command: list[str]) -> bool:
         """Execute an FFmpeg command."""

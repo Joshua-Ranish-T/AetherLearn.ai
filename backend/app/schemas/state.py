@@ -14,7 +14,7 @@ from typing import Annotated, Any, TypedDict
 from app.schemas.content import ExtractedContent
 from app.schemas.lesson import LessonPlan
 from app.schemas.manim import ExecutionResult, ManimScript
-from app.schemas.narration import NarrationScript
+from app.schemas.narration import NarrationScript, SceneAudio, SceneVideo
 
 
 class VideoGenerationState(TypedDict, total=False):
@@ -40,9 +40,10 @@ class VideoGenerationState(TypedDict, total=False):
     requires_ocr: bool        # True when input is PDF / image / handwritten
     ocr_completed: bool
     content_generated: bool
+    narration_completed: bool       # now set BEFORE manim rendering
     manim_script_generated: bool
     execution_successful: bool
-    narration_completed: bool
+    duration_correction_completed: bool
     synchronization_completed: bool
 
     # ── Retry tracking ────────────────────────────────────────────────────
@@ -55,6 +56,13 @@ class VideoGenerationState(TypedDict, total=False):
     manim_script: ManimScript | None
     execution_result: ExecutionResult | None
     narration_script: NarrationScript | None
+
+    # ── Per-scene timeline artefacts ──────────────────────────────────────
+    # SceneAudio is populated by narration_agent BEFORE manim rendering.
+    # SceneVideo is populated by manim_execution_service and then
+    # updated by duration_correction_service and synchronization_service.
+    scene_audios: list[SceneAudio]   # one per storyboard scene, ordered
+    scene_videos: list[SceneVideo]   # one per storyboard scene, ordered
 
     # ── File paths (local) ────────────────────────────────────────────────
     render_output_dir: str
@@ -103,7 +111,6 @@ def create_initial_state(
     max_repair_retries: int = 3,
 ) -> VideoGenerationState:
     """Factory function that creates a fully initialized state object."""
-    import uuid
     return VideoGenerationState(
         project_id=project_id,
         job_id=job_id,
@@ -115,9 +122,10 @@ def create_initial_state(
         requires_ocr=False,
         ocr_completed=False,
         content_generated=False,
+        narration_completed=False,
         manim_script_generated=False,
         execution_successful=False,
-        narration_completed=False,
+        duration_correction_completed=False,
         synchronization_completed=False,
         repair_retry_count=0,
         max_repair_retries=max_repair_retries,
@@ -126,6 +134,8 @@ def create_initial_state(
         manim_script=None,
         execution_result=None,
         narration_script=None,
+        scene_audios=[],
+        scene_videos=[],
         render_output_dir=render_output_dir,
         video_file_path="",
         audio_file_path="",

@@ -1,5 +1,5 @@
 """
-EduVideo Platform — FastAPI Application Entry Point.
+AetherLearn.ai Platform — FastAPI Application Entry Point.
 
 Startup sequence:
 1. Configure logging
@@ -48,7 +48,7 @@ logger = get_logger(__name__)
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Application lifespan — run startup checks, init Firebase, warm up graph."""
     logger.info(
-        "Starting EduVideo Platform",
+        "Starting AetherLearn.ai Platform",
         version=settings.app_version,
         env=settings.app_env,
     )
@@ -76,12 +76,12 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     except Exception as exc:
         logger.error("LangGraph initialization failed", error=str(exc))
 
-    logger.info("EduVideo Platform is ready", host=settings.api_host, port=settings.api_port)
+    logger.info("AetherLearn.ai Platform is ready", host=settings.api_host, port=settings.api_port)
 
     yield  # ── Application runs here ──────────────────────────────────────
 
     # ── Cleanup ────────────────────────────────────────────────────────────
-    logger.info("Shutting down EduVideo Platform")
+    logger.info("Shutting down AetherLearn.ai Platform")
     try:
         from app.core.firebase import shutdown_firebase
         shutdown_firebase()

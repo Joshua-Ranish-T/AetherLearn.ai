@@ -262,5 +262,27 @@
       "difficulty": "intermediate",
       "scene_count": 4
     }
+  },
+  "da52b36d-e892-445d-83b3-0b4e049de567": {
+    "id": "da52b36d-e892-445d-83b3-0b4e049de567",
+    "project_id": "959ac808-d396-499f-bdf9-5135272831b3",
+    "job_id": "c46f3987-2bc2-4cbc-a80b-79a9836a8228",
+    "title": "Understanding the Value of sin 30 Degrees",
+    "duration_seconds": 68.19,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/959ac808-d396-499f-bdf9-5135272831b3/video.mp4",
+    "audio_url": "/storage/projects/959ac808-d396-499f-bdf9-5135272831b3/narration.mp3",
+    "transcript_url": "/storage/projects/959ac808-d396-499f-bdf9-5135272831b3/transcript.txt",
+    "manim_script_url": "/storage/projects/959ac808-d396-499f-bdf9-5135272831b3/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-25T10:47:00.096825+00:00",
+    "updated_at": "2026-07-25T10:47:00.096825+00:00",
+    "metadata": {
+      "subject": "Trigonometry",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
   }
 }

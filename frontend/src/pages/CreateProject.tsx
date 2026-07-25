@@ -269,12 +269,12 @@ export function CreateProject() {
                 whileTap={{ scale: 0.98 }}
                 onClick={handleSubmit}
                 disabled={isLoading}
-                className="btn-glow bg-gradient-to-r from-primary to-purple-hot text-white px-8 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 shadow-lg disabled:opacity-70"
+                className="btn-glow bg-[#1BC237] hover:bg-[#18a830] text-white px-8 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-[#1BC237]/30 disabled:opacity-70 transition-all"
               >
                 {isLoading ? (
                   <><Loader2 className="w-4 h-4 animate-spin" /> Generating...</>
                 ) : (
-                  <><span>🚀</span> Generate Video</>
+                  <>Generate Video</>
                 )}
               </motion.button>
             </div>

@@ -10,7 +10,7 @@ const PAGE_TITLES: Record<string, string> = {
 
 export function Header() {
   const location = useLocation()
-  const title = PAGE_TITLES[location.pathname] ?? 'EduVideo Platform'
+  const title = PAGE_TITLES[location.pathname] ?? 'AetherLearn.ai Platform'
 
   return (
     <header className="h-14 border-b border-white/10 bg-black/10 backdrop-blur-md flex items-center justify-between px-6 shrink-0">

@@ -1,0 +1,15 @@
+TRANSCRIPT: Understanding the Value of sin 30 Degrees
+Generated: 2026-07-25 10:42 UTC
+============================================================
+
+[00:00 → 00:16] Scene 1: The Equilateral Triangle
+In trigonometry, we often memorize values like sin 30 degrees as if they were arbitrary facts. But what if we could derive them ourselves? Let’s start with a simple, elegant shape: an equilateral triangle where every side has a length of two.
+
+[00:16 → 00:34] Scene 2: Bisecting the Triangle
+Now, observe what happens when we drop a perpendicular line from the top vertex to the base. By bisecting that top angle, we’ve sliced our triangle into two perfect, identical right-angled triangles. And look closely—that top corner is now exactly 30 degrees.
+
+[00:34 → 00:50] Scene 3: Defining the Sides
+Because we bisected the base, the side opposite our 30-degree angle has been halved to exactly one. Meanwhile, our hypotenuse remains a steady two. We now have all the components we need to unlock the secret of this trigonometric ratio.
+
+[00:50 → 01:07] Scene 4: Final Calculation
+Recall that sine is simply the ratio of the opposite side to the hypotenuse. With our values of one and two, the math becomes effortless: one divided by two gives us one-half. And there it is—the reason why sin 30 degrees is exactly 0.5.

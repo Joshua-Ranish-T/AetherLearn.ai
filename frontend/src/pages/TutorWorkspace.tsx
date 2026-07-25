@@ -7,38 +7,39 @@ import { projectsService } from '@/services/projectsService';
 import { resolveStorageUrl } from '@/services/api';
 import BackgroundShader from '@/components/BackgroundShader';
 import ThreeJSWidget from '@/components/ThreeJSWidget';
+import { ChatMarkdown } from '@/components/ChatMarkdown';
 
 export function TutorWorkspace() {
   const [input, setInput] = useState('');
   const [chatHistory, setChatHistory] = useState<{ role: 'user' | 'ai', content: string | React.ReactNode }[]>(() => {
     try {
-      const saved = localStorage.getItem('eduvideo_chat_history');
+      const saved = localStorage.getItem('aetherlearn_chat_history');
       return saved ? JSON.parse(saved) : [];
     } catch { return []; }
   });
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
   
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(() => {
-    return localStorage.getItem('eduvideo_project_id') || null;
+    return localStorage.getItem('aetherlearn_project_id') || null;
   });
   const [currentJobId, setCurrentJobId] = useState<string | null>(() => {
-    return localStorage.getItem('eduvideo_job_id') || null;
+    return localStorage.getItem('aetherlearn_job_id') || null;
   });
 
   useEffect(() => {
     try {
-      localStorage.setItem('eduvideo_chat_history', JSON.stringify(chatHistory));
+      localStorage.setItem('aetherlearn_chat_history', JSON.stringify(chatHistory));
     } catch {}
   }, [chatHistory]);
 
   useEffect(() => {
-    if (currentProjectId) localStorage.setItem('eduvideo_project_id', currentProjectId);
-    else localStorage.removeItem('eduvideo_project_id');
+    if (currentProjectId) localStorage.setItem('aetherlearn_project_id', currentProjectId);
+    else localStorage.removeItem('aetherlearn_project_id');
   }, [currentProjectId]);
 
   useEffect(() => {
-    if (currentJobId) localStorage.setItem('eduvideo_job_id', currentJobId);
-    else localStorage.removeItem('eduvideo_job_id');
+    if (currentJobId) localStorage.setItem('aetherlearn_job_id', currentJobId);
+    else localStorage.removeItem('aetherlearn_job_id');
   }, [currentJobId]);
   
   const createProject = useCreateProject();
@@ -99,9 +100,9 @@ export function TutorWorkspace() {
     setCurrentJobId(null);
     setInput('');
     setAttachedFile(null);
-    localStorage.removeItem('eduvideo_chat_history');
-    localStorage.removeItem('eduvideo_project_id');
-    localStorage.removeItem('eduvideo_job_id');
+    localStorage.removeItem('aetherlearn_chat_history');
+    localStorage.removeItem('aetherlearn_project_id');
+    localStorage.removeItem('aetherlearn_job_id');
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,41 +115,37 @@ export function TutorWorkspace() {
     if ((!input.trim() && !attachedFile) || isGenerating) return;
     
     const userQuery = input.trim() || `Analyze attached file: ${attachedFile?.name}`;
+    const currentFile = attachedFile;
     setInput('');
+    setAttachedFile(null);
     setChatHistory(prev => [...prev, { role: 'user', content: userQuery }]);
     
-    // Immediate chatbot tutor explanation
-    let explanationText = `Sure! Let's explore **${userQuery}**. This is a key concept that helps us understand dynamic scientific and mathematical relationships.\n\n*I am constructing your custom 3D animated video lesson now! Watch the terminal logs below as the scenes are rendered step-by-step.*`;
+    let explanationText = `Sure! Let's explore **${userQuery}**. This is a key concept that helps us understand dynamic scientific and mathematical relationships.\n\n*✨ I am constructing your custom 3D animated Manim video lesson now! Watch the terminal logs below as the scenes are rendered step-by-step.*`;
     
     try {
-      const res = await projectsService.explain(userQuery);
-      if (res && res.explanation) {
-        explanationText = res.explanation;
-      }
-    } catch (err) {
-      // Fallback explanation already set
-    }
-
-    setChatHistory(prev => [
-      ...prev, 
-      { 
-        role: 'ai', 
-        content: explanationText
-      }
-    ]);
-
-    try {
       let projectId: string;
-      if (attachedFile) {
+      if (currentFile) {
         const formData = new FormData();
         formData.append('title', userQuery.substring(0, 40) + (userQuery.length > 40 ? '...' : ''));
         formData.append('description', userQuery);
-        formData.append('input_type', attachedFile.type === 'application/pdf' ? 'pdf' : 'image');
-        formData.append('file', attachedFile);
+        formData.append('input_type', currentFile.type === 'application/pdf' ? 'pdf' : 'image');
+        formData.append('file', currentFile);
         const project = await createWithFile.mutateAsync(formData);
         projectId = project.id;
-        setAttachedFile(null);
+        if (project.metadata && typeof project.metadata.explanation === 'string') {
+          explanationText = project.metadata.explanation;
+        } else {
+          try {
+            const res = await projectsService.explain(`Analyze file: ${currentFile.name} regarding: ${userQuery}`);
+            if (res && res.explanation) explanationText = res.explanation;
+          } catch {}
+        }
       } else {
+        try {
+          const res = await projectsService.explain(userQuery);
+          if (res && res.explanation) explanationText = res.explanation;
+        } catch {}
+
         const project = await createProject.mutateAsync({
           title: userQuery.substring(0, 40) + (userQuery.length > 40 ? '...' : ''),
           input_type: 'topic',
@@ -157,12 +154,20 @@ export function TutorWorkspace() {
         projectId = project.id;
       }
       
+      setChatHistory(prev => [
+        ...prev, 
+        { 
+          role: 'ai', 
+          content: explanationText
+        }
+      ]);
+      
       setCurrentProjectId(projectId);
       
       const newJob = await startGeneration.mutateAsync({ project_id: projectId });
       setCurrentJobId(newJob.id);
     } catch (err) {
-      setChatHistory(prev => [...prev, { role: 'ai', content: `Sorry, there was an error starting the video generation.` }]);
+      setChatHistory(prev => [...prev, { role: 'ai', content: `Sorry, there was an error processing your request and starting the video generation.` }]);
     }
   };
 
@@ -181,11 +186,13 @@ export function TutorWorkspace() {
       <div className="relative z-20 flex flex-col h-full w-full">
         {/* TopNavBar */}
         <nav className="flex justify-between items-center w-full px-md py-sm sticky top-0 z-50 glass-header shadow-sm transition-all duration-300">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-green-600 rounded-md flex items-center justify-center shadow-lg">
-              <span className="material-symbols-outlined text-white text-[24px]">school</span>
-            </div>
-            <span className="text-headline-md font-headline-md text-primary tracking-tighter drop-shadow-sm">EduVideo AI</span>
+          <div className="flex items-center gap-2.5">
+            <h1 className="text-2xl font-extrabold tracking-tighter flex items-baseline drop-shadow-2xs">
+              <span className="text-slate-900 font-black">Aether</span>
+              <span className="text-[#1BC237] font-black">Learn</span>
+              <span className="text-slate-500 font-light text-lg ml-0.5">.ai</span>
+            </h1>
+            <span className="text-[10px] font-extrabold text-emerald-900 bg-[#d1f4d9]/90 border border-[#6ED987]/70 px-2.5 py-0.5 rounded-full tracking-widest uppercase shadow-2xs">Tutor</span>
           </div>
           
           <div className="hidden md:flex gap-6 items-center">
@@ -255,21 +262,33 @@ export function TutorWorkspace() {
 
               {chatHistory.map((msg, idx) => (
                 <div key={idx} className={`flex animate-slide-up ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`} style={{ animationDelay: `${idx * 0.1}s` }}>
-                  <div className={`p-4 max-w-[85%] transition-transform hover:-translate-y-0.5 ${
+                  <div className={`p-4 md:p-5 max-w-[90%] md:max-w-[85%] transition-all ${
                     msg.role === 'user' 
                       ? 'chat-bubble-user' 
-                      : 'chat-bubble-ai interactive-glow'
+                      : 'chat-bubble-ai w-full'
                   }`}>
                     {msg.role === 'ai' && (
-                      <div className="flex items-center gap-2 mb-3 border-b border-gray-200/50 pb-2">
-                        <span className={`material-symbols-outlined text-primary ${isGenerating && idx === chatHistory.length - 1 ? 'animate-spin' : ''}`}>
-                          {isGenerating && idx === chatHistory.length - 1 ? 'autorenew' : 'auto_awesome'}
+                      <div className="flex items-center justify-between mb-3 border-b border-[#6ED987]/30 pb-2.5">
+                        <span className="text-sm tracking-tight flex items-baseline gap-0.5">
+                          <span className="text-slate-900 font-extrabold">Aether</span>
+                          <span className="text-[#1BC237] font-extrabold">Learn</span>
+                          <span className="text-slate-500 font-light text-xs">.ai</span>
+                          <span className="text-[10px] font-bold text-emerald-800 bg-[#d1f4d9]/80 border border-[#6ED987]/50 px-2 py-0.2 rounded ml-2 uppercase">Tutor</span>
                         </span>
-                        <span className="font-bold text-primary">EduVideo AI Tutor</span>
+                        {isGenerating && idx === chatHistory.length - 1 && (
+                          <span className="text-xs text-emerald-700 font-semibold animate-pulse flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-[#1BC237] animate-ping" />
+                            Rendering...
+                          </span>
+                        )}
                       </div>
                     )}
-                    <div className={msg.role === 'user' ? 'text-gray-800 font-medium' : 'text-gray-800 leading-relaxed whitespace-pre-wrap'}>
-                      {msg.content}
+                    <div className={msg.role === 'user' ? 'text-gray-900 font-medium text-sm md:text-base' : 'w-full'}>
+                      {msg.role === 'user' ? (
+                        msg.content
+                      ) : (
+                        <ChatMarkdown content={typeof msg.content === 'string' ? msg.content : ''} />
+                      )}
                     </div>
                   </div>
                 </div>

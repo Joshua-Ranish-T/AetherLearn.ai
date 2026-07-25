@@ -44,7 +44,7 @@ async def explain_topic(payload: ExplainRequest) -> dict:
         genai.configure(api_key=settings.gemini_api_key)
         model = genai.GenerativeModel(settings.gemini_fast_model or settings.gemini_model)
         prompt = (
-            f"You are EduVideo AI, an expert, encouraging, and highly intelligent math and science AI tutor chatbot (like ChatGPT/GPT-4). "
+            f"You are AetherLearn.ai, an expert, encouraging, and highly intelligent math and science AI tutor chatbot (like ChatGPT/GPT-4). "
             f"The user is asking or talking about:\n\n'{payload.topic}'\n\n"
             f"Instructions:\n"
             f"1. Respond directly and thoroughly to the user's prompt just like a powerful AI chatbot tutor.\n"
@@ -160,6 +160,45 @@ async def create_project_with_file(
         logger.warning("Firebase upload failed, using local path", error=str(exc))
         file_url = tmp_path  # Fall back to local path
 
+    # Extract text using OCR service for immediate chatbot tutor explanation
+    extracted_text = ""
+    explanation_text = ""
+    try:
+        from app.services.ocr_service import OCRService
+        ocr = OCRService()
+        if content_type == "application/pdf" or input_type == "pdf":
+            ext_res = ocr.extract_from_pdf(tmp_path)
+        else:
+            ext_res = ocr.extract_from_image(tmp_path)
+        extracted_text = ext_res.raw_text
+        
+        import google.generativeai as genai
+        genai.configure(api_key=settings.gemini_api_key)
+        model = genai.GenerativeModel(settings.gemini_fast_model or settings.gemini_model)
+        prompt = (
+            f"You are AetherLearn.ai, an expert, encouraging, and highly intelligent math and science AI tutor chatbot (like ChatGPT/GPT-4). "
+            f"The user uploaded a document or math problem with the following extracted content:\n\n"
+            f"'{extracted_text}'\n\n"
+            f"User query/note: '{description or title}'\n\n"
+            f"Instructions:\n"
+            f"1. Respond directly and thoroughly just like a powerful AI chatbot tutor.\n"
+            f"2. If it is a math question, calculation, geometry problem, or equation, solve it step-by-step, showing all work and explaining the logic clearly.\n"
+            f"3. Use clean markdown formatting (bold text, bullet points, code blocks, or LaTeX equations like $$\\sin(\\theta) = ...$$ or inline $\\theta$).\n"
+            f"4. At the very end of your response, add a brief note on a new line: '*✨ I am also initializing a custom 3D animated Manim video lesson to visualize this concept for you in the player!*'"
+        )
+        res = model.generate_content(prompt)
+        explanation_text = res.text
+    except Exception as exc:
+        logger.warning("Failed to extract or explain uploaded file", error=str(exc))
+        explanation_text = (
+            f"### Analyzing Uploaded Content: **{file.filename}**\n\n"
+            f"I have received your uploaded document and am analyzing its concepts and problem structure.\n\n"
+            f"**Next Steps:**\n"
+            f"- **Extracting Mathematics:** Identifying equations, diagrams, and relationships.\n"
+            f"- **Visualizing in 3D:** Building a dynamic step-by-step video walkthrough.\n\n"
+            f"*✨ I am initializing your custom 3D animated Manim video lesson in the player now! Watch the terminal logs for live rendering updates.*"
+        )
+
     # Create project
     try:
         repo = ProjectRepository()
@@ -174,6 +213,8 @@ async def create_project_with_file(
                     "file_size_bytes": len(content),
                     "content_type": content_type,
                     "local_path": tmp_path,
+                    "extracted_text": extracted_text,
+                    "explanation": explanation_text,
                 },
             }
         )

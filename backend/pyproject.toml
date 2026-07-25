@@ -3,7 +3,7 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "eduvideo-backend"
+name = "aetherlearn-backend"
 version = "1.0.0"
 description = "AI-Powered Educational Video Generation Platform — Backend"
 readme = "README.md"

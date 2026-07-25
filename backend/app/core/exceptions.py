@@ -1,5 +1,5 @@
 """
-Custom exception hierarchy for the EduVideo platform.
+Custom exception hierarchy for the AetherLearn.ai platform.
 
 Every exception carries:
 - A human-readable message

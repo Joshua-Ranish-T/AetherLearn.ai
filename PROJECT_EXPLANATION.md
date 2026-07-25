@@ -1,6 +1,6 @@
-# 🎓 EduVideo / MathTutor AI: The Complete Architecture & Deep-Dive Explanation
+# 🎓 AetherLearn.ai / MathTutor AI: The Complete Architecture & Deep-Dive Explanation
 
-Welcome to the comprehensive technical and intuitive guide to **EduVideo (MathTutor AI)** — an advanced, autonomous AI platform that converts abstract scientific topics, textbooks, PDFs, and mathematical questions into high-definition, lip-synced 3D animated video lessons.
+Welcome to the comprehensive technical and intuitive guide to **AetherLearn.ai (MathTutor AI)** — an advanced, autonomous AI platform that converts abstract scientific topics, textbooks, PDFs, and mathematical questions into high-definition, lip-synced 3D animated video lessons.
 
 ---
 
@@ -15,7 +15,7 @@ Normally, producing a 3D animated educational video requires an entire productio
 4. A **Quality Control Inspector** to catch visual bugs or syntax errors.
 5. A **Video Editor** to cut, trim, and synchronize the animations with the voiceover.
 
-**EduVideo automates this entire Hollywood studio using Artificial Intelligence.**
+**AetherLearn.ai automates this entire Hollywood studio using Artificial Intelligence.**
 When you type a topic or upload a PDF/image, our system spawns an autonomous team of AI agents governed by a **LangGraph State Machine**. Each agent performs its job sequentially, communicating via a shared memory state, automatically repairing its own errors, and delivering a finalized MP4 video directly to your browser—all in real time!
 
 ---
@@ -98,7 +98,7 @@ graph LR
 
 ## 🎨 4. Deep-Dive: The Manim CE 3D Animation Engine (The Core Engine)
 
-This is the most technically sophisticated part of the EduVideo platform. How do we turn conversational text into frame-accurate mathematical animations?
+This is the most technically sophisticated part of the AetherLearn.ai platform. How do we turn conversational text into frame-accurate mathematical animations?
 
 ### What is Manim CE?
 **Manim (Mathematical Animation Engine)** is an open-source Python library originally created by 3Blue1Brown (Grant Sanderson) and maintained by the Community Edition (CE) team. Unlike traditional 3D animation software (like Blender or Maya) where artists drag and drop objects with a mouse, Manim creates animations **programmatically through code**. You write Python classes that define geometric shapes, LaTeX equations, coordinate axes, and camera transformations (e.g., `self.play(Write(equation), run_time=2)`).
@@ -108,7 +108,7 @@ This is the most technically sophisticated part of the EduVideo platform. How do
 ### 🔥 Masterclass Architectural Feature #1: Audio-Driven Animation Timing
 In most AI video generators, animation code is generated independently of audio, leading to videos where the narrator is still talking while the animation has already finished (or vice versa). 
 
-**EduVideo solves this through an "Audio-First" feedback loop:**
+**AetherLearn.ai solves this through an "Audio-First" feedback loop:**
 1. Notice in our graph topology that **Narration Agent runs BEFORE Manim Script Agent**.
 2. When `NarrationAgent` synthesizes the MP3 voiceovers, it stores the exact measured durations (e.g., Scene 01 = 4.82 seconds, Scene 02 = 12.45 seconds) inside the LangGraph state variable `state["scene_audios"]`.
 3. When `ManimScriptAgent` runs, it dynamically injects these **real audio durations** into Gemini's system prompt! 
@@ -121,7 +121,7 @@ Imagine you ask the AI to generate a 3-minute video with 6 complex scenes. If th
 *   If a minor syntax error occurred in Scene 05, the entire 3-minute video would fail to render!
 *   You would waste massive amounts of CPU/GPU rendering time re-computing scenes that already worked.
 
-**How EduVideo executes cleanly (`manim_execution_service.py`):**
+**How AetherLearn.ai executes cleanly (`manim_execution_service.py`):**
 Instead of rendering one massive video, our execution service parses the Python script using AST/regex, isolates each individual `Scene` subclass (`Scene01`, `Scene02`, `Scene03`), and launches **separate Python subprocesses** for each scene:
 ```bash
 manim -ql -v WARNING manim_script.py Scene01 --media_dir ./renders
@@ -132,7 +132,7 @@ This produces individual raw video clips (`scene_01_raw.mp4`, `scene_02_raw.mp4`
 ---
 
 ### 🔥 Masterclass Architectural Feature #3: Self-Healing Code (`RepairAgent`)
-When an AI model generates complex mathematical code, syntax errors, missing LaTeX imports, or overlapping geometry errors can occur. EduVideo features an autonomous self-healing loop:
+When an AI model generates complex mathematical code, syntax errors, missing LaTeX imports, or overlapping geometry errors can occur. AetherLearn.ai features an autonomous self-healing loop:
 
 ```mermaid
 sequenceDiagram
@@ -174,6 +174,6 @@ While your 3D video is being compiled in the background (which can take 30 to 60
 
 ## 🏆 Summary: Why This Project is Extraordinary
 
-EduVideo represents a paradigm shift in educational content creation:
+AetherLearn.ai represents a paradigm shift in educational content creation:
 *   **For Students & Educators**: It turns dry equations and static textbook PDFs into vibrant, immersive 3D video lessons that explain concepts intuitively.
 *   **For Developers & Engineers**: It demonstrates a production-grade implementation of **Agentic AI Workflow Orchestration**—combining LangGraph state machines, multi-modal LLM prompting, audio-driven duration timing, per-scene subprocess isolation, autonomous error repairing, and real-time streaming into a unified, resilient architecture.

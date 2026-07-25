@@ -85,8 +85,13 @@ export function Dashboard() {
       {/* Hero section */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">
-            Welcome to <span className="gradient-text">EduVideo</span>
+          <h1 className="text-2xl font-bold flex items-baseline gap-1.5">
+            <span>Welcome to</span>
+            <span className="flex items-baseline tracking-tight">
+              <span className="text-slate-900 dark:text-white font-black">Aether</span>
+              <span className="text-[#1BC237] font-black">Learn</span>
+              <span className="text-slate-400 font-light text-xl ml-0.5">.ai</span>
+            </span>
           </h1>
           <p className="text-muted-foreground mt-1">Convert educational content into animated videos with AI</p>
         </div>

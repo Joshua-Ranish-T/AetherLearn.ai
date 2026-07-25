@@ -19,7 +19,8 @@ Rules:
 6. Never pass scale=... as a keyword argument into Text() constructors; use .scale(...) method or font_size=...
 7. Fix AttributeErrors by using correct Manim CE API methods
 8. Fix ImportErrors by adding missing imports at the top
-9. Never introduce new bugs while fixing existing ones"""
+9. Never introduce new bugs while fixing existing ones
+10. Preserve non-text visual elements (axes, shapes, ValueTrackers, updaters) and motion when patching — only touch the erroring lines."""
 
 
 def build_repair_prompt(

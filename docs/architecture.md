@@ -1,6 +1,6 @@
 # Architecture Overview
 
-The EduVideo Platform follows a modular, agentic architecture. The backend is built with FastAPI and LangGraph, separating the generation logic into distinct deterministic services and non-deterministic LLM agents.
+The AetherLearn.ai Platform follows a modular, agentic architecture. The backend is built with FastAPI and LangGraph, separating the generation logic into distinct deterministic services and non-deterministic LLM agents.
 
 ## System Diagram
 

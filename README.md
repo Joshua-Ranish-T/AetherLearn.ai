@@ -1,6 +1,6 @@
-# EduVideo Platform — AI Educational Video Generator
+# AetherLearn.ai Platform — AI Educational Video Generator
 
-The EduVideo Platform is a complete, production-ready system that leverages Google's Gemini 1.5 Pro to automatically convert raw educational content (like text, PDFs, or handwritten notes) into high-quality, fully animated, and narrated Manim videos.
+The AetherLearn.ai Platform is a complete, production-ready system that leverages Google's Gemini 1.5 Pro to automatically convert raw educational content (like text, PDFs, or handwritten notes) into high-quality, fully animated, and narrated Manim videos.
 
 This is a modern, modular rewrite of the previous monolithic AI Tutor project, adopting standard software engineering practices.
 

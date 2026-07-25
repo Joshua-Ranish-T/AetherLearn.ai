@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     )
 
     # ── Application ───────────────────────────────────────────────────────
-    app_name: str = Field(default="EduVideo Platform")
+    app_name: str = Field(default="AetherLearn.ai Platform")
     app_version: str = Field(default="1.0.0")
     app_env: Literal["development", "staging", "production"] = Field(default="development")
     debug: bool = Field(default=True)

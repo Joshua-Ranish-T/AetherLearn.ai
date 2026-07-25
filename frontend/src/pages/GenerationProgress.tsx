@@ -96,7 +96,7 @@ export function GenerationProgress() {
             </div>
             <div className="h-2 bg-white/10 rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-gradient-to-r from-primary to-purple-hot rounded-full"
+                className="h-full bg-[#1BC237] shadow-sm shadow-[#1BC237]/40 rounded-full"
                 animate={{ width: `${progressPercent}%` }}
                 transition={{ duration: 0.5 }}
               />

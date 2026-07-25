@@ -25,14 +25,15 @@ export function Sidebar() {
       transition={{ duration: 0.4, ease: 'easeOut' }}
       className="w-64 shrink-0 flex flex-col border-r border-white/10 bg-black/20 backdrop-blur-xl"
     >
-      {/* Logo */}
-      <div className="flex items-center gap-3 px-6 py-5 border-b border-white/10">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-purple-hot flex items-center justify-center shadow-lg shadow-primary/30">
-          <Video className="w-5 h-5 text-white" />
-        </div>
+      {/* Brand */}
+      <div className="flex items-center px-6 py-5 border-b border-white/10">
         <div>
-          <h1 className="text-sm font-bold gradient-text">EduVideo</h1>
-          <p className="text-xs text-muted-foreground">AI Platform</p>
+          <h1 className="text-xl font-extrabold tracking-tight flex items-baseline">
+            <span className="text-white font-black drop-shadow-sm">Aether</span>
+            <span className="text-[#1BC237] font-black drop-shadow-sm">Learn</span>
+            <span className="text-emerald-400/80 font-light text-base ml-0.5">.ai</span>
+          </h1>
+          <p className="text-[10px] font-bold text-emerald-400/70 uppercase tracking-widest mt-0.5">AI Platform</p>
         </div>
       </div>
 

@@ -17,7 +17,7 @@ def _add_app_context(
     logger: Any, method_name: str, event_dict: EventDict
 ) -> EventDict:
     """Inject application-level context into every log record."""
-    event_dict.setdefault("app", "eduvideo")
+    event_dict.setdefault("app", "aetherlearn")
     return event_dict
 
 

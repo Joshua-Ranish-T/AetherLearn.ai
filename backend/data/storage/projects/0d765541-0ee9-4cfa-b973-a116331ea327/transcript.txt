@@ -1,0 +1,15 @@
+TRANSCRIPT: Unlocking the Area of a Trapezium
+Generated: 2026-07-25 07:13 UTC
+============================================================
+
+[00:00 → 00:24] Scene 1: Introduction to Trapezium
+Have you ever looked at a shape and wondered how we measure the space trapped inside its walls? Today, we’re tackling the trapezium—a fascinating four-sided figure defined by at least one pair of parallel sides. Let’s label those parallel bases 'a' and 'b', and the perpendicular distance between them—our height—as 'h'. But how do we turn these three measurements into a single area?
+
+[00:24 → 00:45] Scene 2: The Doubling Transformation
+Here is where the magic happens. What if we didn't try to measure the trapezium as it is? Instead, let’s take an exact copy, rotate it 180 degrees, and tuck it neatly against the original. Suddenly, our two awkward trapeziums have transformed into something much more familiar: a perfect parallelogram.
+
+[00:45 → 01:08] Scene 3: Calculating Area
+Now, look at our new shape. The base is no longer just 'a' or just 'b'—it’s the sum of both, 'a plus b'. The height, however, remains 'h'. Since we know the area of a parallelogram is simply base times height, the area of this combined shape is simply (a plus b) multiplied by h. But wait—is that our final answer?
+
+[01:08 → 01:30] Scene 4: Final Formula Reveal
+Not quite! Remember, we created a double-sized shape. Since we only need the area of one trapezium, we simply cut our result in half. And there it is: the area is 'a plus b' divided by two, all multiplied by the height. It’s elegant, it’s logical, and now, it’s yours to use.

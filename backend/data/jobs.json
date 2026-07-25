@@ -873,5 +873,181 @@
     ],
     "result_data": {},
     "graph_state_ref": ""
+  },
+  "6899b566-7328-4627-b71f-82f7b89b8cd5": {
+    "id": "6899b566-7328-4627-b71f-82f7b89b8cd5",
+    "project_id": "0d765541-0ee9-4cfa-b973-a116331ea327",
+    "status": "completed",
+    "current_stage": "finalize",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-25T07:12:55.093710+00:00",
+    "updated_at": "2026-07-25T07:17:08.733524+00:00",
+    "started_at": "2026-07-25T07:12:55.093710+00:00",
+    "completed_at": "2026-07-25T07:17:08.568595+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      },
+      {
+        "type": "log",
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Supervisor: routing determined",
+        "timestamp": "2026-07-25T07:12:55.248149+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "content_generation_agent",
+        "status": "completed",
+        "message": "Lesson plan created with 4 scenes",
+        "timestamp": "2026-07-25T07:13:02.820986+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "narration_agent",
+        "status": "completed",
+        "message": "Narration audio generated",
+        "timestamp": "2026-07-25T07:13:22.908613+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "manim_script_agent",
+        "status": "completed",
+        "message": "Manim script generated",
+        "timestamp": "2026-07-25T07:13:28.203790+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "manim_execution_service",
+        "status": "completed",
+        "message": "Manim render succeeded",
+        "timestamp": "2026-07-25T07:16:39.705914+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "duration_correction",
+        "status": "completed",
+        "message": "Scene videos duration corrected",
+        "timestamp": "2026-07-25T07:16:40.487237+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "synchronization_service",
+        "status": "completed",
+        "message": "Final MP4 created: renders\\0d765541-0ee9-4cfa-b973-a116331ea327\\final\\final_video.mp4",
+        "timestamp": "2026-07-25T07:17:08.305418+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "finalize",
+        "status": "completed",
+        "message": "Video fdb40021-7d8e-4faa-9668-8814002fc0e8 created and uploaded",
+        "timestamp": "2026-07-25T07:17:08.622679+00:00"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
+  },
+  "ab52212c-29e3-447a-b7ae-07ef43399529": {
+    "id": "ab52212c-29e3-447a-b7ae-07ef43399529",
+    "project_id": "9a191e12-d8d0-491c-a901-c23f10a2b1bd",
+    "status": "completed",
+    "current_stage": "finalize",
+    "stages_completed": [],
+    "progress_percent": 0.0,
+    "error_message": "",
+    "error_stage": "",
+    "retry_count": 0,
+    "created_at": "2026-07-25T07:22:03.071023+00:00",
+    "updated_at": "2026-07-25T07:25:02.160053+00:00",
+    "started_at": "2026-07-25T07:22:03.071023+00:00",
+    "completed_at": "2026-07-25T07:25:02.081983+00:00",
+    "duration_seconds": 0.0,
+    "logs": [
+      {
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Input validated. Type: topic. OCR required: False"
+      },
+      {
+        "type": "log",
+        "stage": "supervisor",
+        "status": "completed",
+        "message": "Supervisor: routing determined",
+        "timestamp": "2026-07-25T07:22:03.271978+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "content_generation_agent",
+        "status": "completed",
+        "message": "Lesson plan created with 4 scenes",
+        "timestamp": "2026-07-25T07:22:10.049111+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "narration_agent",
+        "status": "completed",
+        "message": "Narration audio generated",
+        "timestamp": "2026-07-25T07:22:27.788176+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "manim_script_agent",
+        "status": "completed",
+        "message": "Manim script generated",
+        "timestamp": "2026-07-25T07:22:32.320520+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "manim_execution_service",
+        "status": "warning",
+        "message": "Manim render failed: Render failed for scenes: ['scene_01']",
+        "timestamp": "2026-07-25T07:23:45.244054+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "repair_agent",
+        "status": "completed",
+        "message": "Repair attempt #1 applied",
+        "timestamp": "2026-07-25T07:23:51.390409+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "manim_execution_service",
+        "status": "completed",
+        "message": "Manim render succeeded",
+        "timestamp": "2026-07-25T07:24:43.082571+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "duration_correction",
+        "status": "completed",
+        "message": "Scene videos duration corrected",
+        "timestamp": "2026-07-25T07:24:46.150065+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "synchronization_service",
+        "status": "completed",
+        "message": "Final MP4 created: renders\\9a191e12-d8d0-491c-a901-c23f10a2b1bd\\final\\final_video.mp4",
+        "timestamp": "2026-07-25T07:25:02.018303+00:00"
+      },
+      {
+        "type": "log",
+        "stage": "finalize",
+        "status": "completed",
+        "message": "Video 972b4af1-eb24-476b-a924-673690ad9442 created and uploaded",
+        "timestamp": "2026-07-25T07:25:02.113780+00:00"
+      }
+    ],
+    "result_data": {},
+    "graph_state_ref": ""
   }
 }

@@ -218,5 +218,49 @@
       "difficulty": "intermediate",
       "scene_count": 4
     }
+  },
+  "fdb40021-7d8e-4faa-9668-8814002fc0e8": {
+    "id": "fdb40021-7d8e-4faa-9668-8814002fc0e8",
+    "project_id": "0d765541-0ee9-4cfa-b973-a116331ea327",
+    "job_id": "6899b566-7328-4627-b71f-82f7b89b8cd5",
+    "title": "Unlocking the Area of a Trapezium",
+    "duration_seconds": 90.1,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/0d765541-0ee9-4cfa-b973-a116331ea327/video.mp4",
+    "audio_url": "/storage/projects/0d765541-0ee9-4cfa-b973-a116331ea327/narration.mp3",
+    "transcript_url": "/storage/projects/0d765541-0ee9-4cfa-b973-a116331ea327/transcript.txt",
+    "manim_script_url": "/storage/projects/0d765541-0ee9-4cfa-b973-a116331ea327/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-25T07:17:08.489315+00:00",
+    "updated_at": "2026-07-25T07:17:08.489315+00:00",
+    "metadata": {
+      "subject": "Geometry",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
+  },
+  "972b4af1-eb24-476b-a924-673690ad9442": {
+    "id": "972b4af1-eb24-476b-a924-673690ad9442",
+    "project_id": "9a191e12-d8d0-491c-a901-c23f10a2b1bd",
+    "job_id": "ab52212c-29e3-447a-b7ae-07ef43399529",
+    "title": "Understanding the Definite Integral: Area Under a Curve",
+    "duration_seconds": 95.7,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/9a191e12-d8d0-491c-a901-c23f10a2b1bd/video.mp4",
+    "audio_url": "/storage/projects/9a191e12-d8d0-491c-a901-c23f10a2b1bd/narration.mp3",
+    "transcript_url": "/storage/projects/9a191e12-d8d0-491c-a901-c23f10a2b1bd/transcript.txt",
+    "manim_script_url": "/storage/projects/9a191e12-d8d0-491c-a901-c23f10a2b1bd/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-25T07:25:02.073971+00:00",
+    "updated_at": "2026-07-25T07:25:02.073971+00:00",
+    "metadata": {
+      "subject": "math",
+      "difficulty": "intermediate",
+      "scene_count": 4
+    }
   }
 }

@@ -1,0 +1,15 @@
+TRANSCRIPT: Understanding the Definite Integral: Area Under a Curve
+Generated: 2026-07-25 07:22 UTC
+============================================================
+
+[00:00 → 00:20] Scene 1: Defining the Goal
+Welcome. Today, we’re setting out to solve a classic problem: how do we calculate the exact area trapped beneath a smooth, winding curve? Think of the definite integral not as a daunting symbol, but as a powerful tool—a way to capture the space between a function and the x-axis, bounded by two points, 'a' and 'b'.
+
+[00:20 → 00:47] Scene 2: Riemann Sums
+But how do we measure something so irregular? We start by breaking the problem down into shapes we already understand: rectangles. Notice what happens as we increase their number. By making each rectangle thinner and more numerous, the jagged gaps disappear, and our approximation begins to hug the curve with incredible precision. Isn't it fascinating how adding simple pieces can reveal the truth of a complex shape?
+
+[00:47 → 01:11] Scene 3: The Limit Process
+Now, imagine pushing this process to its logical extreme. What happens when the width of these rectangles shrinks toward zero? The sum transforms. We move from a finite approximation into the elegant realm of the definite integral. That long, stylized 'S' symbol is our mathematical bridge, representing an infinite sum of infinitely thin slices.
+
+[01:11 → 01:35] Scene 4: Fundamental Theorem
+Remarkably, we don't have to add up infinite rectangles every time. The Fundamental Theorem of Calculus gifts us a shortcut: by finding the antiderivative, we can evaluate the area simply by looking at the difference between the endpoints. It connects the rate of change to the accumulation of area, turning a complex geometric puzzle into a straightforward calculation.

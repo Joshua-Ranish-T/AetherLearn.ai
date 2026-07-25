@@ -10,21 +10,50 @@ import ThreeJSWidget from '@/components/ThreeJSWidget';
 
 export function TutorWorkspace() {
   const [input, setInput] = useState('');
-  const [chatHistory, setChatHistory] = useState<{ role: 'user' | 'ai', content: string | React.ReactNode }[]>([]);
+  const [chatHistory, setChatHistory] = useState<{ role: 'user' | 'ai', content: string | React.ReactNode }[]>(() => {
+    try {
+      const saved = localStorage.getItem('eduvideo_chat_history');
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
+  });
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
   
-  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
-  const [currentJobId, setCurrentJobId] = useState<string | null>(null);
+  const [currentProjectId, setCurrentProjectId] = useState<string | null>(() => {
+    return localStorage.getItem('eduvideo_project_id') || null;
+  });
+  const [currentJobId, setCurrentJobId] = useState<string | null>(() => {
+    return localStorage.getItem('eduvideo_job_id') || null;
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('eduvideo_chat_history', JSON.stringify(chatHistory));
+    } catch {}
+  }, [chatHistory]);
+
+  useEffect(() => {
+    if (currentProjectId) localStorage.setItem('eduvideo_project_id', currentProjectId);
+    else localStorage.removeItem('eduvideo_project_id');
+  }, [currentProjectId]);
+
+  useEffect(() => {
+    if (currentJobId) localStorage.setItem('eduvideo_job_id', currentJobId);
+    else localStorage.removeItem('eduvideo_job_id');
+  }, [currentJobId]);
   
   const createProject = useCreateProject();
   const createWithFile = useCreateProjectWithFile();
   const startGeneration = useStartGeneration();
   
   const { data: job } = useJobStatus(currentJobId);
-  const { data: videos } = useQuery({
+  const { data: videos, refetch: refetchVideos } = useQuery({
     queryKey: ['videos', currentProjectId],
     queryFn: () => videoService.getByProject(currentProjectId!),
     enabled: !!currentProjectId,
+    refetchInterval: (query) => {
+      const hasVideos = query.state.data && query.state.data.length > 0;
+      return (job?.status === 'running' || job?.status === 'pending' || job?.status === 'completed') && !hasVideos ? 1500 : false;
+    },
   });
 
   const latestVideo = videos?.[0];
@@ -41,6 +70,12 @@ export function TutorWorkspace() {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatHistory]);
+
+  useEffect(() => {
+    if (job?.status === 'completed') {
+      refetchVideos();
+    }
+  }, [job?.status, refetchVideos]);
 
   // Sync completion message
   useEffect(() => {
@@ -64,6 +99,9 @@ export function TutorWorkspace() {
     setCurrentJobId(null);
     setInput('');
     setAttachedFile(null);
+    localStorage.removeItem('eduvideo_chat_history');
+    localStorage.removeItem('eduvideo_project_id');
+    localStorage.removeItem('eduvideo_job_id');
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {

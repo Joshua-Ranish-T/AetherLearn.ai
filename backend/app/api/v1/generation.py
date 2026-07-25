@@ -141,8 +141,25 @@ async def _run_generation_pipeline(
         }
 
         # Stream graph execution
+        from app.database.repositories.job_repository import JobRepository
+        job_repo = JobRepository()
         async for event in graph.astream(initial_state, config=config):
             logger.debug("Graph event", event_keys=list(event.keys()))
+            for node_name, node_output in event.items():
+                if isinstance(node_output, dict):
+                    stage = node_output.get("current_stage")
+                    if stage:
+                        try:
+                            job_repo.update_stage(job_id, stage)
+                        except Exception as exc:
+                            logger.warning("Failed to update stage in background task", error=str(exc))
+                    stage_logs = node_output.get("stage_logs")
+                    if stage_logs and isinstance(stage_logs, list):
+                        for log_entry in stage_logs:
+                            try:
+                                job_repo.append_log(job_id, log_entry)
+                            except Exception as exc:
+                                logger.warning("Failed to append log in background task", error=str(exc))
 
         logger.info("Pipeline completed", job_id=job_id)
     except Exception as exc:

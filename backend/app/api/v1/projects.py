@@ -38,31 +38,53 @@ class ExplainRequest(BaseModel):
 
 @router.post("/explain", status_code=status.HTTP_200_OK)
 async def explain_topic(payload: ExplainRequest) -> dict:
-    """Generate an interactive tutor explanation of a topic using Gemini."""
+    """Generate an interactive tutor explanation or step-by-step problem solution using Gemini."""
     try:
         import google.generativeai as genai
         genai.configure(api_key=settings.gemini_api_key)
         model = genai.GenerativeModel(settings.gemini_fast_model or settings.gemini_model)
         prompt = (
-            f"You are EduVideo AI, an expert, encouraging, and highly intelligent math and science AI tutor. "
-            f"The user wants to learn about:\n\n'{payload.topic}'\n\n"
-            f"Provide a clear, engaging, structured explanation (around 150-200 words) using clean markdown formatting (bolding key concepts, using bullet points). "
-            f"Explain the intuitive visual idea behind this concept. "
-            f"End your response by stating that you are constructing a custom 3D animated video lesson to demonstrate this step-by-step right now!"
+            f"You are EduVideo AI, an expert, encouraging, and highly intelligent math and science AI tutor chatbot (like ChatGPT/GPT-4). "
+            f"The user is asking or talking about:\n\n'{payload.topic}'\n\n"
+            f"Instructions:\n"
+            f"1. Respond directly and thoroughly to the user's prompt just like a powerful AI chatbot tutor.\n"
+            f"2. If the user asks a math question, calculation, or equation (e.g., '2+2 = ?', calculus, algebra, physics problem), explicitly solve it step-by-step, showing all work and explaining the logic clearly.\n"
+            f"3. If they ask for a conceptual explanation, provide a clear, engaging, structured breakdown using clean markdown formatting (bold text, bullet points, code or LaTeX equations if helpful).\n"
+            f"4. At the very end of your response, add a brief note on a new line: '*✨ I am also initializing a custom 3D animated Manim video lesson to visualize this concept for you in the player!*'"
         )
         res = model.generate_content(prompt)
         return {"explanation": res.text}
     except Exception as exc:
         logger.warning("Gemini explain failed, using fallback explanation", error=str(exc))
+        # Simple evaluation/fallback check for basic math queries like "2+2=?"
+        topic_clean = payload.topic.strip()
+        if any(char in topic_clean for char in ['+', '-', '*', '/', '=']) and len(topic_clean) < 30:
+            try:
+                # safe evaluation for simple math in fallback
+                import re
+                expr = re.sub(r'[^0-9+\-*/.]', '', topic_clean.split('=')[0])
+                val = eval(expr) if expr else "a calculated result"
+                return {
+                    "explanation": (
+                        f"### Step-by-Step Solution for **{payload.topic}**\n\n"
+                        f"To solve this problem, we evaluate the expression directly:\n\n"
+                        f"**Result:** `{val}`\n\n"
+                        f"**Explanation:** When we combine these quantities in basic arithmetic, we group the terms together to get **{val}**.\n\n"
+                        f"*✨ I am also initializing a custom 3D animated Manim video lesson to visualize this concept for you in the player!*"
+                    )
+                }
+            except Exception:
+                pass
+
         return {
             "explanation": (
                 f"### Understanding **{payload.topic}**\n\n"
-                f"This is a fundamental concept in mathematics and science that helps us model and visualize dynamic relationships. "
-                f"By examining the underlying geometry and rate of change, complex ideas become intuitive and easy to grasp.\n\n"
-                f"**Key Intuition:**\n"
-                f"- **Visual Representation:** Translating abstract symbols into geometric transformations.\n"
-                f"- **Step-by-Step Evolution:** Observing how components interact dynamically over time.\n\n"
-                f"*I am constructing a rich 3D animated video lesson to demonstrate this step-by-step right now! Watch the terminal logs below as the scenes are rendered.*"
+                f"This is an important concept in mathematics and science that helps us model and understand relationships. "
+                f"By examining the underlying rules and structure, complex ideas become intuitive and easy to grasp.\n\n"
+                f"**Key Takeaways:**\n"
+                f"- **Structured Logic:** Breaking down the problem into smaller, understandable steps.\n"
+                f"- **Visual Connection:** Connecting symbols and equations to real-world or geometric intuition.\n\n"
+                f"*✨ I am also initializing a custom 3D animated Manim video lesson to visualize this concept for you in the player!*"
             )
         }
 

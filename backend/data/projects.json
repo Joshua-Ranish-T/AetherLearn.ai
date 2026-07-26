@@ -423,5 +423,93 @@
     "created_at": "2026-07-25T10:42:25.949407+00:00",
     "updated_at": "2026-07-25T10:47:00.123269+00:00",
     "metadata": {}
+  },
+  "8bd054e1-421d-4a0d-9642-27d35ab786d3": {
+    "id": "8bd054e1-421d-4a0d-9642-27d35ab786d3",
+    "title": "area of square s - 5",
+    "description": "",
+    "input_type": "topic",
+    "input_text": "area of square s - 5",
+    "input_file_url": "",
+    "status": "running",
+    "created_at": "2026-07-25T12:09:51.158963+00:00",
+    "updated_at": "2026-07-25T12:09:52.194024+00:00",
+    "metadata": {}
+  },
+  "62ff9ebd-9f51-460c-9f86-4e40e6581414": {
+    "id": "62ff9ebd-9f51-460c-9f86-4e40e6581414",
+    "title": "area of square a = 5",
+    "description": "",
+    "input_type": "topic",
+    "input_text": "area of square a = 5",
+    "input_file_url": "",
+    "status": "running",
+    "created_at": "2026-07-25T12:22:54.662104+00:00",
+    "updated_at": "2026-07-25T12:22:54.864740+00:00",
+    "metadata": {}
+  },
+  "a587a154-7310-497a-9b94-0c7cd51a5e3d": {
+    "id": "a587a154-7310-497a-9b94-0c7cd51a5e3d",
+    "title": "Area of square a = 3",
+    "description": "",
+    "input_type": "topic",
+    "input_text": "Area of square a = 3",
+    "input_file_url": "",
+    "status": "completed",
+    "created_at": "2026-07-25T12:35:15.079954+00:00",
+    "updated_at": "2026-07-25T12:37:19.081480+00:00",
+    "metadata": {}
+  },
+  "fd4d959d-c55c-4b97-bcde-a7e0e6177bce": {
+    "id": "fd4d959d-c55c-4b97-bcde-a7e0e6177bce",
+    "user_id": "local_dev_user",
+    "title": "Test Project",
+    "description": "",
+    "input_type": "text",
+    "input_text": "Generate exactly 1 simple scene explaining 1+1=2.",
+    "input_file_url": "",
+    "status": "pending",
+    "created_at": "2026-07-25T14:36:40.879025+00:00",
+    "updated_at": "2026-07-25T14:36:40.879025+00:00",
+    "metadata": {}
+  },
+  "d045045e-8f69-4ddf-9408-22e81390f028": {
+    "id": "d045045e-8f69-4ddf-9408-22e81390f028",
+    "user_id": "local_dev_user",
+    "title": "Test Project",
+    "description": "",
+    "input_type": "text",
+    "input_text": "Generate exactly 1 simple scene explaining 1+1=2.",
+    "input_file_url": "",
+    "status": "failed",
+    "created_at": "2026-07-25T14:37:26.352412+00:00",
+    "updated_at": "2026-07-25T15:00:44.336996+00:00",
+    "metadata": {}
+  },
+  "028beaf6-7f4f-40d4-8a80-b6c65c8da364": {
+    "id": "028beaf6-7f4f-40d4-8a80-b6c65c8da364",
+    "user_id": "local_dev_user",
+    "title": "area of circle ?",
+    "description": "",
+    "input_type": "topic",
+    "input_text": "area of circle ?",
+    "input_file_url": "",
+    "status": "completed",
+    "created_at": "2026-07-26T12:06:42.069124+00:00",
+    "updated_at": "2026-07-26T12:10:04.866561+00:00",
+    "metadata": {}
+  },
+  "dd780ba3-4a9b-4c6b-9368-e1730b3d1c62": {
+    "id": "dd780ba3-4a9b-4c6b-9368-e1730b3d1c62",
+    "user_id": "local_dev_user",
+    "title": "differential equation visualization",
+    "description": "",
+    "input_type": "topic",
+    "input_text": "differential equation visualization",
+    "input_file_url": "",
+    "status": "completed",
+    "created_at": "2026-07-26T12:57:17.708301+00:00",
+    "updated_at": "2026-07-26T13:00:47.642383+00:00",
+    "metadata": {}
   }
 }

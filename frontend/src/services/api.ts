@@ -1,5 +1,5 @@
-// Axios API client configuration
 import axios from 'axios';
+import { auth } from '../lib/firebase';
 
 // Use relative URLs in development so requests go through Vite's proxy
 // (avoids cross-origin ERR_CONNECTION_RESET issues).
@@ -34,7 +34,17 @@ export const apiClient = axios.create({
 
 // Request interceptor
 apiClient.interceptors.request.use(
-  (config) => {
+  async (config) => {
+    try {
+      if (auth && auth.currentUser) {
+        const token = await auth.currentUser.getIdToken();
+        config.headers.Authorization = `Bearer ${token}`;
+      } else {
+        config.headers.Authorization = `Bearer mock_dev_token`;
+      }
+    } catch (e) {
+      console.warn('Could not attach auth token:', e);
+    }
     return config;
   },
   (error) => Promise.reject(error)

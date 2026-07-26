@@ -121,11 +121,11 @@ export function CreateProject() {
                   className={cn(
                     'flex items-center gap-4 p-4 rounded-xl border text-left transition-all',
                     selectedType === type
-                      ? 'bg-primary/15 border-primary/50 shadow-md shadow-primary/10'
-                      : 'glass border-white/10 hover:border-white/20'
+                      ? 'bg-primary/15 border-primary/50 shadow-md shadow-primary/10 text-slate-800'
+                      : 'glass border-slate-200 hover:border-green-500/40 text-slate-700 shadow-sm'
                   )}
                 >
-                  <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center shrink-0', selectedType === type ? 'bg-primary/20' : 'bg-white/10')}>
+                  <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm', selectedType === type ? 'bg-primary/20 text-primary' : 'bg-slate-100 border border-slate-200/60 text-slate-500')}>
                     <Icon className={cn('w-5 h-5', selectedType === type ? 'text-primary' : 'text-muted-foreground')} />
                   </div>
                   <div className="flex-1">
@@ -153,7 +153,7 @@ export function CreateProject() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g., Introduction to Calculus: Derivatives"
-                className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all"
+                className="w-full bg-white border border-slate-200 shadow-sm rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-slate-800 placeholder:text-slate-400"
               />
             </div>
 
@@ -163,8 +163,8 @@ export function CreateProject() {
                 <div
                   {...getRootProps()}
                   className={cn(
-                    'mt-2 border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all',
-                    isDragActive ? 'border-primary bg-primary/10' : 'border-white/20 hover:border-white/40',
+                    'mt-2 border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all shadow-sm',
+                    isDragActive ? 'border-primary bg-primary/10' : 'border-slate-300 hover:border-primary/50 bg-white/60',
                     uploadedFile && 'border-green-500/50 bg-green-500/5'
                   )}
                 >
@@ -202,14 +202,14 @@ export function CreateProject() {
                       ? 'e.g., Explain the Pythagorean theorem with proof and real-world applications'
                       : 'Paste your educational content here...'
                   }
-                  className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all resize-none"
+                  className="w-full bg-white border border-slate-200 shadow-sm rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none text-slate-800 placeholder:text-slate-400"
                 />
                 <p className="text-xs text-muted-foreground text-right">{inputText.length} chars</p>
               </div>
             )}
 
             <div className="flex justify-between mt-4">
-              <button onClick={() => setStep(1)} className="glass px-4 py-2.5 rounded-xl text-sm">Back</button>
+              <button onClick={() => setStep(1)} className="glass px-5 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100 transition-colors">Back</button>
               <button
                 onClick={() => setStep(3)}
                 disabled={!title || (isFileInput ? !uploadedFile : !inputText)}
@@ -232,11 +232,11 @@ export function CreateProject() {
                     key={value}
                     onClick={() => setQuality(value)}
                     className={cn(
-                      'p-4 rounded-xl border text-center transition-all',
-                      quality === value ? 'bg-primary/15 border-primary/50' : 'glass border-white/10'
+                      'p-4 rounded-xl border text-center transition-all shadow-sm',
+                      quality === value ? 'bg-primary/15 border-primary/50 text-slate-800' : 'glass border-slate-200 text-slate-600 hover:border-green-500/40'
                     )}
                   >
-                    <p className="font-medium text-sm">{label}</p>
+                    <p className="font-semibold text-sm">{label}</p>
                     <p className="text-xs text-muted-foreground mt-1">{desc}</p>
                   </button>
                 ))}

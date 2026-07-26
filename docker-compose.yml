@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: eduvideo-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=production
+      - USE_FIREBASE=true
+      - REQUIRE_AUTH=true
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}
+      - FIREBASE_STORAGE_BUCKET=${FIREBASE_STORAGE_BUCKET}
+      - FIREBASE_CREDENTIALS_JSON=${FIREBASE_CREDENTIALS_JSON}
+      - CORS_ORIGINS=${CORS_ORIGINS:-["*"]}
+    volumes:
+      - backend-renders:/app/renders
+      - backend-storage:/app/data/storage
+
+volumes:
+  backend-renders:
+  backend-storage:

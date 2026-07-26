@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: eduvideo-backend
+    env: docker
+    region: oregon
+    plan: standard
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: USE_FIREBASE
+        value: true
+      - key: REQUIRE_AUTH
+        value: true
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: FIREBASE_CREDENTIALS_JSON
+        sync: false
+      - key: CORS_ORIGINS
+        value: '["*"]'

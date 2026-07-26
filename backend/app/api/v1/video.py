@@ -7,11 +7,12 @@ Endpoints:
 
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import RedirectResponse
 
 from app.core.exceptions import NotFoundError, DatabaseError
 from app.core.logging_config import get_logger
+from app.core.auth import get_current_user
 from app.database.repositories.video_repository import VideoRepository
 from app.schemas.project import VideoResponse
 
@@ -20,11 +21,15 @@ router = APIRouter(tags=["Videos"])
 
 
 @router.get("/videos", response_model=list[VideoResponse])
-async def list_videos(limit: int = 20) -> list[VideoResponse]:
+async def list_videos(
+    limit: int = 20,
+    user: dict = Depends(get_current_user),
+) -> list[VideoResponse]:
     """List all generated videos, most recent first."""
     try:
+        user_id = user.get("uid", "local_dev_user") if user else "local_dev_user"
         repo = VideoRepository()
-        items = repo.list_all(limit=limit)
+        items = repo.list_all(limit=limit, user_id=user_id)
         return [VideoResponse(**item) for item in items]
     except DatabaseError as exc:
         raise HTTPException(
@@ -34,7 +39,10 @@ async def list_videos(limit: int = 20) -> list[VideoResponse]:
 
 
 @router.get("/video/{video_id}", response_model=VideoResponse)
-async def get_video(video_id: str) -> VideoResponse:
+async def get_video(
+    video_id: str,
+    user: dict = Depends(get_current_user),
+) -> VideoResponse:
     """Get video metadata and download URLs."""
     try:
         repo = VideoRepository()
@@ -50,7 +58,10 @@ async def get_video(video_id: str) -> VideoResponse:
 
 
 @router.get("/project/{project_id}/videos", response_model=list[VideoResponse])
-async def get_project_videos(project_id: str) -> list[VideoResponse]:
+async def get_project_videos(
+    project_id: str,
+    user: dict = Depends(get_current_user),
+) -> list[VideoResponse]:
     """Get all videos generated for a project."""
     try:
         repo = VideoRepository()
@@ -64,7 +75,10 @@ async def get_project_videos(project_id: str) -> list[VideoResponse]:
 
 
 @router.get("/video/{video_id}/download")
-async def download_video(video_id: str) -> RedirectResponse:
+async def download_video(
+    video_id: str,
+    user: dict = Depends(get_current_user),
+) -> RedirectResponse:
     """Redirect to the signed Firebase Storage download URL."""
     try:
         repo = VideoRepository()

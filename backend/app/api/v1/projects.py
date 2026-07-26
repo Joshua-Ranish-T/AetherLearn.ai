@@ -9,13 +9,14 @@ Endpoints:
 
 from __future__ import annotations
 
-from fastapi import APIRouter, File, Form, HTTPException, Response, UploadFile, status
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Response, UploadFile, status
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from app.core.config import get_settings
 from app.core.exceptions import NotFoundError, DatabaseError, InputError
 from app.core.logging_config import get_logger
+from app.core.auth import get_current_user, get_optional_user
 from app.database.repositories.project_repository import ProjectRepository
 from app.database.repositories.job_repository import JobRepository
 from app.database.repositories.video_repository import VideoRepository
@@ -37,7 +38,10 @@ class ExplainRequest(BaseModel):
 
 
 @router.post("/explain", status_code=status.HTTP_200_OK)
-async def explain_topic(payload: ExplainRequest) -> dict:
+async def explain_topic(
+    payload: ExplainRequest,
+    user: dict = Depends(get_current_user),
+) -> dict:
     """Generate an interactive tutor explanation or step-by-step problem solution using Gemini."""
     try:
         import google.generativeai as genai
@@ -60,16 +64,32 @@ async def explain_topic(payload: ExplainRequest) -> dict:
         topic_clean = payload.topic.strip()
         if any(char in topic_clean for char in ['+', '-', '*', '/', '=']) and len(topic_clean) < 30:
             try:
-                # safe evaluation for simple math in fallback
+                # safe evaluation for simple math in fallback using AST (no eval, no exponentiation hangs)
+                import ast
+                import operator
                 import re
                 expr = re.sub(r'[^0-9+\-*/.]', '', topic_clean.split('=')[0])
-                val = eval(expr) if expr else "a calculated result"
+                
+                def _safe_eval(node):
+                    if isinstance(node, str):
+                        return _safe_eval(ast.parse(node, mode='eval').body)
+                    elif isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+                        return node.value
+                    elif isinstance(node, ast.BinOp):
+                        left = _safe_eval(node.left)
+                        right = _safe_eval(node.right)
+                        ops = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul, ast.Div: operator.truediv}
+                        if type(node.op) in ops:
+                            return ops[type(node.op)](left, right)
+                    raise ValueError("Unsupported expression")
+
+                val = _safe_eval(expr) if expr else "a calculated result"
                 return {
                     "explanation": (
                         f"### Step-by-Step Solution for **{payload.topic}**\n\n"
                         f"To solve this problem, we evaluate the expression directly:\n\n"
                         f"**Result:** `{val}`\n\n"
-                        f"**Explanation:** When we combine these quantities in basic arithmetic, we group the terms together to get **{val}**.\n\n"
+                        f"**Explanation:** Combining these terms gives **{val}**.\n\n"
                         f"*✨ I am also initializing a custom 3D animated Manim video lesson to visualize this concept for you in the player!*"
                     )
                 }
@@ -78,8 +98,11 @@ async def explain_topic(payload: ExplainRequest) -> dict:
 
         return {
             "explanation": (
-                f"### Understanding **{payload.topic}**\n\n"
-                f"This is an important concept in mathematics and science that helps us model and understand relationships. "
+                f"### Understanding: **{payload.topic}**\n\n"
+                f"Let's explore this concept step-by-step. In mathematics and science, mastering **{payload.topic}** involves understanding its core principles and how it connects to real-world applications.\n\n"
+                f"1. **Core Concept:** Define the fundamental parameters and equations governing the system.\n"
+                f"2. **Step-by-Step Breakdown:** Analyze each variable independently before combining them into the final solution.\n"
+                f"3. **Intuition:** Why does this happen? Think of it like a balancing scale—when one side changes, the system adapts to maintain equilibrium.\n\n"
                 f"By examining the underlying rules and structure, complex ideas become intuitive and easy to grasp.\n\n"
                 f"**Key Takeaways:**\n"
                 f"- **Structured Logic:** Breaking down the problem into smaller, understandable steps.\n"
@@ -90,12 +113,17 @@ async def explain_topic(payload: ExplainRequest) -> dict:
 
 
 @router.post("", response_model=ProjectResponse, status_code=status.HTTP_201_CREATED)
-async def create_project(payload: ProjectCreate) -> ProjectResponse:
+async def create_project(
+    payload: ProjectCreate,
+    user: dict = Depends(get_current_user),
+) -> ProjectResponse:
     """Create a new educational video project."""
     try:
+        user_id = user.get("uid", "local_dev_user") if user else "local_dev_user"
         repo = ProjectRepository()
         doc = repo.create(
             {
+                "user_id": user_id,
                 "title": payload.title,
                 "description": payload.description,
                 "input_type": payload.input_type.value,
@@ -117,8 +145,10 @@ async def create_project_with_file(
     description: str = Form(default=""),
     input_type: str = Form(...),
     file: UploadFile = File(...),
+    user: dict = Depends(get_current_user),
 ) -> ProjectResponse:
     """Create a project by uploading a PDF or image file."""
+    user_id = user.get("uid", "local_dev_user") if user else "local_dev_user"
     # Validate file type
     allowed_types = {
         "application/pdf": "pdf",
@@ -137,7 +167,8 @@ async def create_project_with_file(
     # Save file locally first
     suffix = Path(file.filename or "upload").suffix or ".bin"
     tmp_dir = ensure_dir(str(settings.render_output_path / "uploads"))
-    tmp_path = str(tmp_dir / f"upload_{os.getpid()}{suffix}")
+    import uuid
+    tmp_path = str(tmp_dir / f"upload_{uuid.uuid4()}{suffix}")
 
     try:
         content = await file.read()
@@ -151,9 +182,8 @@ async def create_project_with_file(
 
     # Upload to Firebase Storage
     file_url = ""
+    storage = StorageService()
     try:
-        storage = StorageService()
-        import uuid
         storage_path = f"uploads/{uuid.uuid4()}{suffix}"
         file_url = storage.upload_file(tmp_path, storage_path, content_type=content_type)
     except Exception as exc:
@@ -204,6 +234,7 @@ async def create_project_with_file(
         repo = ProjectRepository()
         doc = repo.create(
             {
+                "user_id": user_id,
                 "title": title,
                 "description": description,
                 "input_type": input_type,
@@ -218,8 +249,12 @@ async def create_project_with_file(
                 },
             }
         )
+        if file_url != tmp_path:
+            storage.cleanup_local_file(tmp_path)
         return ProjectResponse(**doc)
     except DatabaseError as exc:
+        if file_url != tmp_path:
+            storage.cleanup_local_file(tmp_path)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=exc.to_dict(),
@@ -227,11 +262,16 @@ async def create_project_with_file(
 
 
 @router.get("", response_model=ProjectListResponse)
-async def list_projects(limit: int = 20, offset: int = 0) -> ProjectListResponse:
+async def list_projects(
+    limit: int = 20,
+    offset: int = 0,
+    user: dict = Depends(get_current_user),
+) -> ProjectListResponse:
     """List all projects, most recent first."""
     try:
+        user_id = user.get("uid", "local_dev_user") if user else "local_dev_user"
         repo = ProjectRepository()
-        items = repo.list_all(limit=limit, offset=offset)
+        items = repo.list_all(limit=limit, offset=offset, user_id=user_id)
         return ProjectListResponse(
             items=[ProjectResponse(**item) for item in items],
             total=len(items),
@@ -246,7 +286,10 @@ async def list_projects(limit: int = 20, offset: int = 0) -> ProjectListResponse
 
 
 @router.get("/{project_id}", response_model=ProjectResponse)
-async def get_project(project_id: str) -> ProjectResponse:
+async def get_project(
+    project_id: str,
+    user: dict = Depends(get_current_user),
+) -> ProjectResponse:
     """Get a project by ID."""
     try:
         repo = ProjectRepository()
@@ -262,7 +305,10 @@ async def get_project(project_id: str) -> ProjectResponse:
 
 
 @router.delete("/{project_id}", status_code=status.HTTP_204_NO_CONTENT, response_class=Response, response_model=None)
-async def delete_project(project_id: str) -> None:
+async def delete_project(
+    project_id: str,
+    user: dict = Depends(get_current_user),
+) -> None:
     """Delete a project and its associated jobs."""
     try:
         repo = ProjectRepository()

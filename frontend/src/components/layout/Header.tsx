@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom'
 import { Bell, Zap } from 'lucide-react'
+import { UserMenu } from '@/components/auth/UserMenu'
 
 const PAGE_TITLES: Record<string, string> = {
   '/dashboard': 'Dashboard',
@@ -23,6 +24,7 @@ export function Header() {
         <button className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors">
           <Bell className="w-4 h-4 text-muted-foreground" />
         </button>
+        <UserMenu />
       </div>
     </header>
   )

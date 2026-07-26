@@ -13,17 +13,18 @@ import json
 from datetime import datetime, timezone
 from typing import AsyncIterator
 
-from fastapi import APIRouter, BackgroundTasks, HTTPException, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse
 
 from app.core.config import get_settings
 from app.core.exceptions import NotFoundError, DatabaseError
 from app.core.logging_config import get_logger
+from app.core.auth import get_current_user
 from app.database.repositories.job_repository import JobRepository
 from app.database.repositories.project_repository import ProjectRepository
 from app.database.repositories.video_repository import VideoRepository
 from app.schemas.project import GenerationRequest, JobResponse, ProgressEvent
-from app.schemas.state import VideoGenerationState, create_initial_state
+from app.graph.state import VideoGenerationState, create_initial_state
 
 logger = get_logger(__name__)
 router = APIRouter(tags=["Generation"])
@@ -35,6 +36,7 @@ settings = get_settings()
 async def start_generation(
     payload: GenerationRequest,
     background_tasks: BackgroundTasks,
+    user: dict = Depends(get_current_user),
 ) -> JobResponse:
     """
     Start the video generation pipeline for a project.
@@ -42,6 +44,7 @@ async def start_generation(
     Returns the job ID immediately; use /jobs/{id} to poll status
     or /jobs/{id}/stream for live SSE updates.
     """
+    user_id = user.get("uid", "local_dev_user") or "local_dev_user"
     project_repo = ProjectRepository()
     job_repo = JobRepository()
 
@@ -62,7 +65,7 @@ async def start_generation(
         )
 
     # Create job document
-    job = job_repo.create(payload.project_id)
+    job = job_repo.create(payload.project_id, user_id=user_id)
     job_id = job["id"]
 
     # Build initial graph state
@@ -91,7 +94,10 @@ async def start_generation(
 
 
 @router.get("/jobs/{job_id}", response_model=JobResponse)
-async def get_job_status(job_id: str) -> JobResponse:
+async def get_job_status(
+    job_id: str,
+    user: dict = Depends(get_current_user),
+) -> JobResponse:
     """Get the current status of a generation job."""
     try:
         job_repo = JobRepository()
@@ -104,7 +110,10 @@ async def get_job_status(job_id: str) -> JobResponse:
 
 
 @router.get("/jobs/{job_id}/stream")
-async def stream_job_progress(job_id: str) -> StreamingResponse:
+async def stream_job_progress(
+    job_id: str,
+    user: dict = Depends(get_current_user),
+) -> StreamingResponse:
     """
     SSE stream of live job progress updates.
     Client should use EventSource API.

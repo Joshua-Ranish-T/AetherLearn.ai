@@ -28,6 +28,7 @@ def _log_entry(stage: str, status: str, message: str, **metadata: Any) -> dict[s
         "status": status,
         "message": message,
         "timestamp": datetime.now(tz=timezone.utc).isoformat(),
+        "metadata": metadata,
         **metadata,
     }
 
@@ -176,7 +177,7 @@ def manim_execution_node(state: VideoGenerationState) -> dict[str, Any]:
             "execution_successful": success,
             "scene_videos": scene_videos,
             "current_stage": "manim_execution_service",
-            "stage_logs": [_log_entry("manim_execution_service", log_status, log_msg)],
+            "stage_logs": [_log_entry("manim_execution_service", log_status, log_msg, error_message=result.error_message if not success else "")],
         }
     except Exception as exc:
         logger.exception("Manim execution node failed", error=str(exc))
@@ -375,6 +376,23 @@ def finalize_node(state: VideoGenerationState) -> dict[str, Any]:
                 content_type="text/x-python",
             )
 
+        # Upload Storyboard JSON
+        if lesson_plan:
+            try:
+                import json, tempfile
+                storyboard_json = lesson_plan.model_dump_json() if hasattr(lesson_plan, "model_dump_json") else json.dumps(lesson_plan.dict() if hasattr(lesson_plan, "dict") else str(lesson_plan))
+                with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as tf:
+                    tf.write(storyboard_json)
+                    tf_path = tf.name
+                uploaded_urls["storyboard_url"] = storage_service.upload_file(
+                    tf_path,
+                    f"projects/{project_id}/storyboard.json",
+                    content_type="application/json",
+                )
+                storage_service.cleanup_local_file(tf_path)
+            except Exception as sb_exc:
+                logger.warning("Failed to upload storyboard JSON", error=str(sb_exc))
+
         # Create video document in Firestore
         video_doc = video_repo.create(
             {
@@ -398,10 +416,35 @@ def finalize_node(state: VideoGenerationState) -> dict[str, Any]:
         # Update project status
         project_repo.update_status(project_id, "completed")
 
-        # Update job
-        import time as time_module
-        # duration computed from state start
-        job_repo.mark_completed(job_id, duration_seconds=0.0)
+        # Update job with actual computed duration
+        job_data = job_repo.get_by_id(job_id)
+        job_duration = 0.0
+        if job_data and "created_at" in job_data:
+            try:
+                created_val = job_data["created_at"]
+                if isinstance(created_val, str):
+                    created_dt = datetime.fromisoformat(created_val)
+                elif isinstance(created_val, datetime):
+                    created_dt = created_val
+                else:
+                    created_dt = None
+                if created_dt is not None:
+                    job_duration = (datetime.now(tz=timezone.utc) - created_dt).total_seconds()
+            except Exception:
+                pass
+        job_repo.mark_completed(job_id, duration_seconds=round(job_duration, 2))
+
+        # Clean up local render directory and build files in production mode
+        for fkey in ["video_file_path", "audio_file_path", "transcript_file_path", "manim_script_file_path"]:
+            fpath = state.get(fkey)
+            if isinstance(fpath, str) and fpath and os.path.exists(fpath):
+                storage_service.cleanup_local_file(fpath)
+
+        render_dir = state.get("render_output_dir", "./renders")
+        if project_id:
+            project_dir = os.path.join(render_dir, project_id)
+            if os.path.exists(project_dir):
+                storage_service.cleanup_directory(project_dir)
 
         return {
             "video_id": video_doc["id"],
@@ -409,6 +452,7 @@ def finalize_node(state: VideoGenerationState) -> dict[str, Any]:
             "audio_url": uploaded_urls.get("audio_url", ""),
             "transcript_url": uploaded_urls.get("transcript_url", ""),
             "manim_script_url": uploaded_urls.get("manim_script_url", ""),
+            "storyboard_url": uploaded_urls.get("storyboard_url", ""),
             "current_stage": "finalize",
             "stage_logs": [
                 _log_entry("finalize", "completed", f"Video {video_doc['id']} created and uploaded")

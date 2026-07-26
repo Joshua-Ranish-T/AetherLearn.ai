@@ -60,6 +60,7 @@ graph TD
 *   **Backend**: Built with **Python 3.10+** and **FastAPI**, providing asynchronous REST endpoints and real-time Server-Sent Events (`/api/v1/jobs/{id}/stream`).
 *   **Orchestration Engine**: **LangGraph** — a directed acyclic graph (DAG) framework that manages multi-agent workflows, checkpointing, and conditional routing.
 *   **Intelligence Engine**: **Google Gemini Pro & Flash** — used for document analysis, instructional design, python code generation, and traceback error repair.
+*   **Architecture Note (Local Dev Mode vs Cloud Production)**: While designed for cloud-native deployment using Firebase Firestore and Google Cloud Storage / Firebase Storage, the codebase includes complete local development implementations (`JobRepository`, `ProjectRepository`, `VideoRepository` backed by local JSON files with thread-safe file locking, and `StorageService` saving assets directly to local storage). This enables zero-dependency local execution without cloud service account keys.
 
 ---
 

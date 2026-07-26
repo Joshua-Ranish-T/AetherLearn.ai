@@ -168,15 +168,20 @@ def build_video_generation_graph() -> StateGraph:
 
 
 from langgraph.checkpoint.memory import MemorySaver
+from app.core.firebase import is_firebase_initialized
 
-# Use MemorySaver to bypass Firestore for local development
-_checkpointer = MemorySaver()
+def _get_default_checkpointer():
+    if is_firebase_initialized():
+        try:
+            return FirebaseCheckpointer()
+        except Exception:
+            pass
+    return MemorySaver()
 
 def get_compiled_graph(checkpointer=None):
-    """Return the compiled LangGraph app with Memory checkpointing."""
+    """Return the compiled LangGraph app with checkpointing."""
     workflow = build_video_generation_graph()
-    # Compile graph
-    cp = checkpointer if checkpointer is not None else _checkpointer
+    cp = checkpointer if checkpointer is not None else _get_default_checkpointer()
     return workflow.compile(checkpointer=cp)
 
 

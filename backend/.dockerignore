@@ -1,0 +1,16 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+renders/
+data/
+uploads/
+*.db
+*.log
+.env
+firebase-credentials*.json

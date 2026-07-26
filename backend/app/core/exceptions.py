@@ -51,6 +51,12 @@ class ConfigurationError(AppError):
     error_code = "CONFIGURATION_ERROR"
 
 
+class AuthenticationError(AppError):
+    """Raised when authentication fails or token is invalid."""
+    status_code = HTTPStatus.UNAUTHORIZED
+    error_code = "AUTHENTICATION_ERROR"
+
+
 # ── Agent Errors ──────────────────────────────────────────────────────────────
 
 class AgentError(AppError):

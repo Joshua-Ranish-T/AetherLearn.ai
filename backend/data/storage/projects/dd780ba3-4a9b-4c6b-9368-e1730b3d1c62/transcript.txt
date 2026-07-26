@@ -1,0 +1,15 @@
+TRANSCRIPT: Visualizing Differential Equations: The Slope Field
+Generated: 2026-07-26 12:57 UTC
+============================================================
+
+[00:00 → 00:21] Scene 1: Introduction to the Concept
+What does a differential equation actually look like? We are often taught to hunt for a single algebraic formula, but what if we could visualize the behavior of every possible solution at once? By stepping away from the algebra and looking at the geometry, we uncover a powerful way to see the dynamics of a system before we even solve it.
+
+[00:21 → 00:45] Scene 2: The Slope Field Grid
+Consider the equation dy/dx equals x minus y. Think of this not just as a rule, but as a local instruction: at any point on the coordinate plane, the value of x minus y dictates the exact steepness of our solution curve. It is as if every point on the grid is whispering a direction, telling us exactly how a solution must behave if it passes through that spot.
+
+[00:45 → 01:06] Scene 3: Interpreting the Field
+When we represent these instructions as tiny line segments across the grid, we create what we call a slope field. Imagine a river where every drop of water has a specific velocity; the slope field is our map of those currents. If you place a particle in this flow, it doesn't choose its path—it simply follows the direction the field demands.
+
+[01:06 → 01:27] Scene 4: Conclusion
+By following these currents, we can trace out the unique path of any solution, starting from any point we choose. This is the true beauty of differential equations: they aren't just rigid formulas, they are landscapes of possibility. Once you learn to read these fields, you aren't just solving for 'y'—you are mapping the future of a system.

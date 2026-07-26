@@ -285,7 +285,7 @@ class OCRService:
 
     def _extract_equations(self, text: str) -> list[str]:
         """Extract mathematical expressions from text."""
-        equations = []
+        equations: list[str] = []
 
         # LaTeX patterns
         latex_patterns = [
@@ -313,7 +313,7 @@ class OCRService:
 
     def _extract_code_blocks(self, text: str) -> list[str]:
         """Extract programming code blocks from text."""
-        blocks = []
+        blocks: list[str] = []
 
         # Markdown fenced code blocks
         pattern = r"```(?:\w+)?\n(.*?)```"

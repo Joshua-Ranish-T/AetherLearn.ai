@@ -56,10 +56,46 @@
   }
   
   .glass-header {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.70);
     backdrop-filter: blur(30px) saturate(150%);
     -webkit-backdrop-filter: blur(30px) saturate(150%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+  }
+
+  /* General Glassmorphism Cards & Containers (used across Dashboard, History, etc.) */
+  .glass {
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 0 10px rgba(255, 255, 255, 0.8) inset;
+  }
+
+  .glass-hover {
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 0 10px rgba(255, 255, 255, 0.8) inset;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-hover:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-color: rgba(27, 194, 55, 0.4); /* Theme green #1BC237 accent */
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px -4px rgba(27, 194, 55, 0.15), 0 0 15px rgba(255, 255, 255, 0.9) inset;
+  }
+
+  /* Shimmer loading animation */
+  .shimmer {
+    background: linear-gradient(90deg, rgba(226, 232, 240, 0.4) 0%, rgba(241, 245, 249, 0.8) 50%, rgba(226, 232, 240, 0.4) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
   }
 
   /* Chatbot bubbles (ChatGPT style UI) */

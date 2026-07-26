@@ -43,6 +43,7 @@ dependencies = [
     "gtts>=2.5.1",
 
     # Video processing
+    "manim>=0.18.0",
     "ffmpeg-python>=0.2.0",
 
     # Utilities

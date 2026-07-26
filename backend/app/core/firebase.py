@@ -46,20 +46,24 @@ def initialize_firebase() -> None:
         settings = get_settings()
         creds_path = Path(settings.firebase_credentials_path)
 
-        if not creds_path.exists():
-            raise ConfigurationError(
-                f"Firebase credentials file not found: {creds_path}",
-                context={"path": str(creds_path)},
-            )
-
-        if not settings.firebase_storage_bucket:
-            raise ConfigurationError(
-                "FIREBASE_STORAGE_BUCKET is not configured.",
-                context={"env_var": "FIREBASE_STORAGE_BUCKET"},
-            )
-
         try:
-            cred = credentials.Certificate(str(creds_path))
+            if settings.firebase_credentials_json:
+                import json, base64
+                cred_data = settings.firebase_credentials_json.strip()
+                if not cred_data.startswith("{"):
+                    try:
+                        cred_data = base64.b64decode(cred_data).decode("utf-8")
+                    except Exception:
+                        pass
+                cred_dict = json.loads(cred_data)
+                cred = credentials.Certificate(cred_dict)
+                logger.info("Firebase credentials loaded from JSON environment variable.")
+            elif creds_path.exists():
+                cred = credentials.Certificate(str(creds_path))
+            else:
+                logger.info("Firebase credentials file not found; trying Application Default Credentials (ADC).")
+                cred = credentials.ApplicationDefault()
+
             firebase_admin.initialize_app(
                 cred,
                 {
@@ -76,10 +80,30 @@ def initialize_firebase() -> None:
                 bucket=settings.firebase_storage_bucket,
             )
         except Exception as exc:
-            raise ConfigurationError(
-                f"Failed to initialize Firebase: {exc}",
-                context={"error": str(exc)},
-            ) from exc
+            if settings.is_production:
+                logger.error(
+                    "Firebase initialization failed in PRODUCTION mode. Firebase is required for production deployment.",
+                    error=str(exc),
+                )
+                _initialized = False
+                _firestore_client = None
+                _storage_bucket = None
+                raise ConfigurationError(f"Production Firebase initialization failed: {exc}") from exc
+            else:
+                logger.warning(
+                    "Firebase initialization/auth failed. Falling back to Local Development Mode.",
+                    error=str(exc),
+                )
+                settings.use_firebase = False
+                _initialized = False
+                _firestore_client = None
+                _storage_bucket = None
+
+
+def is_firebase_initialized() -> bool:
+    """Check if Firebase SDK is initialized and enabled."""
+    with _lock:
+        return _initialized and _firestore_client is not None and get_settings().use_firebase
 
 
 def get_firestore() -> "FirestoreClient":

@@ -15,16 +15,16 @@ const STATS = [
 function StatCard({ label, value, color, icon: Icon }: { label: string; value: number; color: string; icon: React.ElementType }) {
   return (
     <motion.div
-      whileHover={{ y: -2 }}
-      className="glass rounded-xl p-5 border border-white/10 hover:border-white/20 transition-all"
+      whileHover={{ y: -3 }}
+      className="glass rounded-2xl p-5 hover:shadow-lg transition-all"
     >
       <div className="flex items-center justify-between mb-3">
-        <div className={cn('w-10 h-10 rounded-lg bg-gradient-to-br flex items-center justify-center', color)}>
+        <div className={cn('w-11 h-11 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-md', color)}>
           <Icon className="w-5 h-5 text-white" />
         </div>
-        <span className="text-3xl font-bold">{value}</span>
+        <span className="text-3xl font-black text-slate-800">{value}</span>
       </div>
-      <p className="text-sm text-muted-foreground">{label}</p>
+      <p className="text-sm font-semibold text-slate-500">{label}</p>
     </motion.div>
   )
 }
@@ -33,32 +33,32 @@ function ProjectCard({ project, onDelete }: { project: Project; onDelete: (id: s
   const navigate = useNavigate()
   return (
     <motion.div
-      whileHover={{ y: -2 }}
-      className="glass-hover rounded-xl p-5 cursor-pointer"
+      whileHover={{ y: -3 }}
+      className="glass-hover rounded-2xl p-5 cursor-pointer group"
       onClick={() => navigate(`/projects/${project.id}`)}
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold truncate">{project.title}</h3>
-          <p className="text-xs text-muted-foreground mt-0.5 truncate">{project.description || 'No description'}</p>
+          <h3 className="font-bold text-slate-800 truncate group-hover:text-[#1BC237] transition-colors">{project.title}</h3>
+          <p className="text-xs text-slate-500 mt-1 truncate font-medium">{project.description || 'No description provided'}</p>
         </div>
-        <span className={cn('ml-3 shrink-0 text-xs px-2 py-1 rounded-full border', getStatusBg(project.status))}>
+        <span className={cn('ml-3 shrink-0 text-xs px-2.5 py-1 rounded-full border shadow-sm', getStatusBg(project.status))}>
           {project.status}
         </span>
       </div>
-      <div className="flex items-center justify-between text-xs text-muted-foreground">
+      <div className="flex items-center justify-between text-xs font-medium text-slate-400 mt-4 pt-3 border-t border-slate-100">
         <div className="flex items-center gap-1.5">
-          <Clock className="w-3 h-3" />
+          <Clock className="w-3.5 h-3.5 text-slate-400" />
           {formatRelativeTime(project.created_at)}
         </div>
         <div className="flex items-center gap-2">
-          <span className="capitalize bg-white/10 rounded px-1.5 py-0.5">{project.input_type}</span>
+          <span className="capitalize bg-slate-100 text-slate-600 rounded-md px-2 py-0.5 font-semibold border border-slate-200/60">{project.input_type}</span>
           {project.status === 'completed' && (
             <button
               onClick={(e) => { e.stopPropagation(); navigate(`/projects/${project.id}`) }}
-              className="flex items-center gap-1 text-primary hover:text-primary/80 transition-colors"
+              className="flex items-center gap-1 text-[#1BC237] font-bold hover:underline transition-all"
             >
-              View <ArrowRight className="w-3 h-3" />
+              View <ArrowRight className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
@@ -115,23 +115,25 @@ export function Dashboard() {
 
       {/* Projects */}
       <div>
-        <h2 className="text-base font-semibold mb-4">Recent Projects</h2>
+        <h2 className="text-lg font-bold text-slate-800 mb-4">Recent Projects</h2>
         {isLoading ? (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="glass rounded-xl p-5 h-28 shimmer" />
+              <div key={i} className="glass rounded-2xl p-5 h-32 shimmer" />
             ))}
           </div>
         ) : projects.length === 0 ? (
-          <div className="glass rounded-xl p-12 text-center">
-            <Video className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No projects yet</h3>
-            <p className="text-sm text-muted-foreground mb-4">Create your first educational video</p>
+          <div className="glass rounded-2xl p-12 text-center border border-slate-200/80 shadow-sm bg-white/80">
+            <div className="w-16 h-16 rounded-2xl bg-green-50 border border-green-200/60 flex items-center justify-center mx-auto mb-4 shadow-sm">
+              <Video className="w-8 h-8 text-[#1BC237]" />
+            </div>
+            <h3 className="font-bold text-slate-800 text-lg mb-1">No projects yet</h3>
+            <p className="text-sm text-slate-500 mb-6 max-w-sm mx-auto">Create your first AI-generated 3D animated educational video in just seconds.</p>
             <button
               onClick={() => navigate('/create')}
-              className="btn-glow bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium"
+              className="btn-glow bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-lg shadow-primary/25 transition-all"
             >
-              Create Project
+              Create Your First Project
             </button>
           </div>
         ) : (

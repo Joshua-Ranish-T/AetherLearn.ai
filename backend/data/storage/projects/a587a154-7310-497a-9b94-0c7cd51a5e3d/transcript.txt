@@ -1,0 +1,15 @@
+TRANSCRIPT: Calculating the Area of a Square
+Generated: 2026-07-25 12:35 UTC
+============================================================
+
+[00:00 → 00:16] Scene 1: Introduction to Squares
+Have you ever wondered how we measure the space inside a shape? Let’s start with one of geometry's most perfect figures: the square. What makes a square so unique? It’s all about symmetry—every one of its four sides is exactly the same length.
+
+[00:16 → 00:38] Scene 2: The Formula
+To find the area, or the amount of surface covered, we need a simple but powerful tool. We use the formula A equals s-squared. Think of it as multiplying the side by itself. But why do we do that? Because by multiplying length by width, we are essentially counting every square unit that fits inside our boundary.
+
+[00:38 → 00:57] Scene 3: Application
+Let’s put this into practice. Imagine we have a square where each side measures exactly three units. To find the total area, we take our side length of three and multiply it by itself—three times three. Can you visualize those three rows of three units appearing within the shape?
+
+[00:57 → 01:16] Scene 4: Conclusion
+When we complete that calculation, we arrive at nine. So, a square with a side length of three gives us an area of nine square units. It’s a simple process, but once you master it, you’ve unlocked the secret to measuring space in everything from a small tile to a giant plot of land.

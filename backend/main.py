@@ -61,8 +61,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         from app.core.firebase import initialize_firebase
         initialize_firebase()
     except Exception as exc:
-        logger.error("Firebase initialization failed", error=str(exc))
-        logger.warning("Continuing without Firebase — database operations will fail")
+        logger.error("Firebase initialization failed or disabled", error=str(exc))
+        logger.warning("Running in Local Development Mode (local JSON & disk storage)")
 
     # ── Create render output directory ─────────────────────────────────────
     settings.render_output_path.mkdir(parents=True, exist_ok=True)

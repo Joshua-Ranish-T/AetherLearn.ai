@@ -26,6 +26,7 @@ from app.core.logging_config import get_logger
 from app.schemas.manim import ExecutionResult, ExecutionStatus, ManimScene, ManimScript
 from app.schemas.narration import SceneAudio, SceneVideo
 from app.schemas.state import VideoGenerationState
+from app.database.repositories.job_repository import emit_live_log
 
 logger = get_logger(__name__)
 
@@ -76,12 +77,14 @@ class ManimExecutionService:
         individual_scenes = self._get_individual_scenes(manim_script)
         main_class = manim_script.main_scene_class
 
+        job_id = state.get("job_id", "")
         logger.info(
             "Executing Manim per-scene",
             script=script_path,
             individual_scenes=[s.class_name for s in individual_scenes],
             main_class=main_class,
         )
+        emit_live_log(job_id, "manim_execution_service", "in_progress", f"Rendering {len(individual_scenes)} animation scenes...")
 
         if not individual_scenes:
             logger.error("No individual Scene classes found in Manim script.")
@@ -105,6 +108,7 @@ class ManimExecutionService:
                 scene_id = scene_audios[i].scene_id
 
             scene_output_file = str(output_dir / f"{scene_id}_raw.mp4")
+            emit_live_log(job_id, "manim_execution_service", "in_progress", f"Rendering scene {i+1}/{len(individual_scenes)}: {scene.class_name}...")
             result = self._render_single_scene(
                 script_path=script_path,
                 scene_class=scene.class_name,
@@ -138,6 +142,7 @@ class ManimExecutionService:
                     scene_class=scene.class_name,
                     error=result.error_message[:200],
                 )
+                emit_live_log(job_id, "manim_execution_service", "warning", f"Scene {i+1} ({scene.class_name}) failed: {result.error_message[:120]}")
             else:
                 logger.info(
                     "Scene render succeeded",
@@ -145,6 +150,7 @@ class ManimExecutionService:
                     class_name=scene.class_name,
                     raw_video=raw_video_path,
                 )
+                emit_live_log(job_id, "manim_execution_service", "completed", f"Scene {i+1} ({scene.class_name}) rendered successfully.")
 
         # ── Store scene_videos in a temporary attribute for node pickup ────
         # (nodes.py reads this via _extra_scene_videos)

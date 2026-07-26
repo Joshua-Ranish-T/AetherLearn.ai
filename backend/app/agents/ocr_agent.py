@@ -87,6 +87,13 @@ class OCRAgent:
                 f"OCR extraction failed: {exc}",
                 context={"file_path": file_path, "input_type": input_type},
             ) from exc
+        finally:
+            if file_path != input_file_path and os.path.exists(file_path):
+                try:
+                    from app.services.storage_service import StorageService
+                    StorageService().cleanup_local_file(file_path)
+                except Exception as cleanup_exc:
+                    logger.warning("Failed to clean up temp OCR file", path=file_path, error=str(cleanup_exc))
 
         logger.info(
             "OCR agent completed",

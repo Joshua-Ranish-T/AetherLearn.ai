@@ -15,6 +15,7 @@ class ProjectDocument(TypedDict, total=False):
     """Firestore: /projects/{project_id}"""
 
     id: str
+    user_id: str                     # Owner user ID (Firebase Auth UID)
     title: str
     description: str
     input_type: str                  # "text" | "pdf" | "image" | "topic"
@@ -31,6 +32,7 @@ class JobDocument(TypedDict, total=False):
 
     id: str
     project_id: str
+    user_id: str                     # Owner user ID
     status: str                      # "pending" | "running" | "completed" | "failed"
     current_stage: str               # current LangGraph node name
     stages_completed: list[str]
@@ -54,6 +56,7 @@ class VideoDocument(TypedDict, total=False):
     id: str
     project_id: str
     job_id: str
+    user_id: str                     # Owner user ID
     title: str
     duration_seconds: float
     resolution: str                  # e.g. "1280x720"

@@ -284,5 +284,73 @@
       "difficulty": "beginner",
       "scene_count": 4
     }
+  },
+  "7686e996-bb02-406a-b190-1fa704a17665": {
+    "id": "7686e996-bb02-406a-b190-1fa704a17665",
+    "project_id": "a587a154-7310-497a-9b94-0c7cd51a5e3d",
+    "job_id": "827b2cfa-4600-4ce0-bd69-bb04ef63c9e3",
+    "title": "Calculating the Area of a Square",
+    "duration_seconds": 76.61,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/a587a154-7310-497a-9b94-0c7cd51a5e3d/video.mp4",
+    "audio_url": "/storage/projects/a587a154-7310-497a-9b94-0c7cd51a5e3d/narration.mp3",
+    "transcript_url": "/storage/projects/a587a154-7310-497a-9b94-0c7cd51a5e3d/transcript.txt",
+    "manim_script_url": "/storage/projects/a587a154-7310-497a-9b94-0c7cd51a5e3d/manim_script.py",
+    "storyboard_url": "",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-25T12:37:19.050502+00:00",
+    "updated_at": "2026-07-25T12:37:19.050502+00:00",
+    "metadata": {
+      "subject": "Geometry",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
+  },
+  "203c0a03-60dc-485a-b5e7-394b4cda0205": {
+    "id": "203c0a03-60dc-485a-b5e7-394b4cda0205",
+    "project_id": "028beaf6-7f4f-40d4-8a80-b6c65c8da364",
+    "job_id": "5edc0041-7e9c-4c9a-8b53-67c76c903ba5",
+    "user_id": "local_dev_user",
+    "title": "Understanding the Area of a Circle",
+    "duration_seconds": 71.66,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/028beaf6-7f4f-40d4-8a80-b6c65c8da364/video.mp4",
+    "audio_url": "/storage/projects/028beaf6-7f4f-40d4-8a80-b6c65c8da364/narration.mp3",
+    "transcript_url": "/storage/projects/028beaf6-7f4f-40d4-8a80-b6c65c8da364/transcript.txt",
+    "manim_script_url": "/storage/projects/028beaf6-7f4f-40d4-8a80-b6c65c8da364/manim_script.py",
+    "storyboard_url": "/storage/projects/028beaf6-7f4f-40d4-8a80-b6c65c8da364/storyboard.json",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-26T12:10:04.789161+00:00",
+    "updated_at": "2026-07-26T12:10:04.789161+00:00",
+    "metadata": {
+      "subject": "Geometry",
+      "difficulty": "beginner",
+      "scene_count": 4
+    }
+  },
+  "ff1082ee-bb86-4192-94de-ba8bfe9c799f": {
+    "id": "ff1082ee-bb86-4192-94de-ba8bfe9c799f",
+    "project_id": "dd780ba3-4a9b-4c6b-9368-e1730b3d1c62",
+    "job_id": "d1979425-316b-4ad5-8270-97319c6f2cbd",
+    "user_id": "local_dev_user",
+    "title": "Visualizing Differential Equations: The Slope Field",
+    "duration_seconds": 88.07,
+    "resolution": "1080p",
+    "file_url": "/storage/projects/dd780ba3-4a9b-4c6b-9368-e1730b3d1c62/video.mp4",
+    "audio_url": "/storage/projects/dd780ba3-4a9b-4c6b-9368-e1730b3d1c62/narration.mp3",
+    "transcript_url": "/storage/projects/dd780ba3-4a9b-4c6b-9368-e1730b3d1c62/transcript.txt",
+    "manim_script_url": "/storage/projects/dd780ba3-4a9b-4c6b-9368-e1730b3d1c62/manim_script.py",
+    "storyboard_url": "/storage/projects/dd780ba3-4a9b-4c6b-9368-e1730b3d1c62/storyboard.json",
+    "thumbnail_url": "",
+    "file_size_bytes": 0,
+    "created_at": "2026-07-26T13:00:47.621555+00:00",
+    "updated_at": "2026-07-26T13:00:47.621555+00:00",
+    "metadata": {
+      "subject": "math",
+      "difficulty": "intermediate",
+      "scene_count": 4
+    }
   }
 }

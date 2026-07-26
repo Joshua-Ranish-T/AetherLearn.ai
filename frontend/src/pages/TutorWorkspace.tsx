@@ -8,8 +8,12 @@ import { resolveStorageUrl } from '@/services/api';
 import BackgroundShader from '@/components/BackgroundShader';
 import ThreeJSWidget from '@/components/ThreeJSWidget';
 import { ChatMarkdown } from '@/components/ChatMarkdown';
+import { UserMenu } from '@/components/auth/UserMenu';
+import { useAuth } from '@/context/AuthContext';
+import { toast } from 'react-hot-toast';
 
 export function TutorWorkspace() {
+  const { user, isMockUser, loginWithGoogle } = useAuth();
   const [input, setInput] = useState('');
   const [chatHistory, setChatHistory] = useState<{ role: 'user' | 'ai', content: string | React.ReactNode }[]>(() => {
     try {
@@ -114,6 +118,12 @@ export function TutorWorkspace() {
   const handleGenerate = async () => {
     if ((!input.trim() && !attachedFile) || isGenerating) return;
     
+    if (!user && !isMockUser) {
+      toast.error('Please sign in with Google to start generation and save to your Cloud library!');
+      loginWithGoogle();
+      return;
+    }
+    
     const userQuery = input.trim() || `Analyze attached file: ${attachedFile?.name}`;
     const currentFile = attachedFile;
     setInput('');
@@ -213,13 +223,14 @@ export function TutorWorkspace() {
             >
               Generate
             </button>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
               <button onClick={handleReset} title="Clear Session" className="p-2 rounded-full hover:bg-white/50 transition-colors text-gray-500 hover:text-red-500">
                 <span className="material-symbols-outlined">delete_sweep</span>
               </button>
               <button className="p-2 rounded-full hover:bg-white/50 transition-colors text-gray-500">
                 <span className="material-symbols-outlined">notifications</span>
               </button>
+              <UserMenu />
             </div>
           </div>
         </nav>

@@ -1,0 +1,15 @@
+TRANSCRIPT: Understanding the Area of a Circle
+Generated: 2026-07-26 12:07 UTC
+============================================================
+
+[00:00 → 00:16] Scene 1: Introduction to Circle Area
+Have you ever looked at a circle and wondered how we could possibly measure the space trapped inside its curves? It’s not as straightforward as a square or a rectangle, but it all starts with a single, elegant measurement: the radius, that vital distance from the center to the edge.
+
+[00:16 → 00:32] Scene 2: The Slicing Method
+To make sense of this area, let’s try a little experiment. Imagine we take this circle and slice it into sixteen identical, pie-shaped wedges. At first, they just look like parts of a whole, but watch what happens when we start to rearrange them.
+
+[00:32 → 00:51] Scene 3: Rearranging into a Rectangle
+As we line these wedges up side-by-side, something remarkable happens: they begin to form a rectangle. Notice the height of this new shape is exactly our radius, while the base is half of our circumference. Since the full circumference is two-pi-r, half of that is simply pi times the radius.
+
+[00:51 → 01:11] Scene 4: The Final Formula
+So, if the area of a rectangle is base times height, we multiply pi times radius by our radius again. The result? The classic formula: Area equals pi times radius squared. It’s a beautiful way to turn a complex, curved shape into a simple, powerful calculation.

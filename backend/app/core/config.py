@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 from functools import lru_cache
 from pathlib import Path
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -25,8 +25,8 @@ class Settings(BaseSettings):
     # ── Application ───────────────────────────────────────────────────────
     app_name: str = Field(default="AetherLearn.ai Platform")
     app_version: str = Field(default="1.0.0")
-    app_env: Literal["development", "staging", "production"] = Field(default="development")
-    debug: bool = Field(default=True)
+    app_env: Literal["development", "staging", "production"] = Field(default="production")
+    debug: bool = Field(default=False)
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = Field(default="INFO")
 
     # ── API ───────────────────────────────────────────────────────────────
@@ -37,11 +37,14 @@ class Settings(BaseSettings):
 
     # ── Google AI ─────────────────────────────────────────────────────────
     gemini_api_key: str = Field(default="")
-    gemini_model: str = Field(default="gemini-1.5-pro")
+    gemini_model: str = Field(default="gemini-2.5-flash")
     gemini_fast_model: str = Field(default="gemini-2.0-flash")
 
-    # ── Firebase ──────────────────────────────────────────────────────────
+    # ── Firebase & Auth ───────────────────────────────────────────────────
+    use_firebase: bool = Field(default=True)
+    require_auth: bool = Field(default=True)
     firebase_credentials_path: str = Field(default="./firebase-credentials.json")
+    firebase_credentials_json: str = Field(default="")
     firebase_project_id: str = Field(default="")
     firebase_storage_bucket: str = Field(default="")
 

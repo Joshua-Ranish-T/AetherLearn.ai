@@ -53,14 +53,15 @@ class ProjectResponse(BaseModel):
     """Response model for project read operations."""
 
     id: str
+    user_id: str = ""
     title: str
     description: str
     input_type: str
     input_text: str
     input_file_url: str
-    status: GenerationStatus
-    created_at: datetime
-    updated_at: datetime
+    status: GenerationStatus | str
+    created_at: datetime | str
+    updated_at: datetime | str
     metadata: dict[str, Any]
 
     model_config = {"from_attributes": True}
@@ -111,15 +112,21 @@ class JobResponse(BaseModel):
 
     id: str
     project_id: str
-    status: GenerationStatus = GenerationStatus.PENDING
+    user_id: str = ""
+    status: GenerationStatus | str = GenerationStatus.PENDING
     current_stage: str = ""
     stages_completed: list[str] = Field(default_factory=list)
+    progress_percent: float = 0.0
+    result_data: dict[str, Any] = Field(default_factory=dict)
     error_message: str = ""
     error_stage: str = ""
     retry_count: int = 0
     started_at: datetime | str | None = None
     completed_at: datetime | str | None = None
+    created_at: datetime | str | None = None
+    updated_at: datetime | str | None = None
     duration_seconds: float = 0.0
+    graph_state_ref: str = ""
     logs: list[dict[str, Any]] = Field(default_factory=list)
 
     model_config = {"from_attributes": True}
@@ -132,6 +139,7 @@ class VideoResponse(BaseModel):
 
     id: str
     project_id: str
+    user_id: str = ""
     job_id: str = ""
     title: str = "Generated Video"
     duration_seconds: float = 0.0
@@ -144,6 +152,7 @@ class VideoResponse(BaseModel):
     thumbnail_url: str = ""
     file_size_bytes: int = 0
     created_at: datetime | str | None = None
+    updated_at: datetime | str | None = None
     metadata: dict[str, Any] = Field(default_factory=dict)
 
     model_config = {"from_attributes": True}

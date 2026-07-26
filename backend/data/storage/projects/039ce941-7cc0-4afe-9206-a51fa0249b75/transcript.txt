@@ -1,0 +1,15 @@
+TRANSCRIPT: Understanding Derivatives: The Rate of Change
+Generated: 2026-07-26 13:28 UTC
+============================================================
+
+[00:00 → 00:19] Scene 1: Introduction to Change
+Have you ever wondered how we capture the speed of a moment? Whether it is the acceleration of a rocket or the shifting trends in a market, change is rarely constant. To understand this, we turn to the heart of calculus: the derivative. It is our mathematical lens for viewing the world in motion.
+
+[00:19 → 00:39] Scene 2: The Secant Line
+To measure this, let’s look at a curve. If we pick two points and connect them, we get a secant line. Its slope gives us the 'average' rate of change between those points. But what if we want to know what is happening at one specific, singular location? The average just isn't precise enough.
+
+[00:39 → 01:01] Scene 3: The Limit Process
+Here is where the magic happens. Watch what occurs as we slide that second point closer and closer to the first. As the distance between them shrinks toward zero, the secant line pivots. Suddenly, it kisses the curve at just one point. We have reached the limit, transforming our secant into a perfect tangent line.
+
+[01:01 → 01:21] Scene 4: Conclusion
+That line’s slope is our derivative—f-prime of x. It is the mathematical bridge between the past and the future, giving us the instantaneous rate of change at that exact moment. It is not just a calculation; it is the language of how things change. And really, isn't that what science is all about?

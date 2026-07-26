@@ -12,7 +12,7 @@ from __future__ import annotations
 import asyncio
 import json
 from datetime import datetime, timezone
-from typing import Any, AsyncIterator, Iterator, Sequence
+from typing import Any, AsyncIterator, Iterator, Sequence, cast
 
 from langchain_core.runnables import RunnableConfig
 from langgraph.checkpoint.base import (
@@ -31,10 +31,22 @@ logger = get_logger(__name__)
 CHECKPOINTS_COLLECTION = "checkpoints"
 
 
+def _encode_key(k: str) -> str:
+    if k.startswith("__") and k.endswith("__"):
+        return f"_lg_{k[2:-2]}_lg_"
+    return k
+
+
+def _decode_key(k: str) -> str:
+    if k.startswith("_lg_") and k.endswith("_lg_"):
+        return f"__{k[4:-4]}__"
+    return k
+
+
 def _serialize(obj: Any) -> Any:
-    """JSON-serialize LangGraph state (handle non-serializable types)."""
+    """JSON-serialize LangGraph state (handle non-serializable types and Firestore reserved keys)."""
     if isinstance(obj, dict):
-        return {str(k): _serialize(v) for k, v in obj.items()}
+        return {_encode_key(str(k)): _serialize(v) for k, v in obj.items()}
     if isinstance(obj, (list, tuple, set)):
         return [_serialize(item) for item in obj]
     if hasattr(obj, "model_dump"):
@@ -54,6 +66,15 @@ def _serialize(obj: Any) -> Any:
     if isinstance(obj, (int, float, str, bool, type(None))):
         return obj
     return str(obj)
+
+
+def _deserialize(obj: Any) -> Any:
+    """Decode Firestore reserved key names in retrieved checkpoints."""
+    if isinstance(obj, dict):
+        return {_decode_key(str(k)): _deserialize(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_deserialize(item) for item in obj]
+    return obj
 
 
 class FirebaseCheckpointer(BaseCheckpointSaver):
@@ -87,7 +108,7 @@ class FirebaseCheckpointer(BaseCheckpointSaver):
         try:
             col = self._thread_col(thread_id)
             if checkpoint_id:
-                snap = col.document(checkpoint_id).get()
+                snap = cast(Any, col.document(checkpoint_id).get())
                 if not snap.exists:
                     return None
                 doc = snap.to_dict() or {}
@@ -100,8 +121,8 @@ class FirebaseCheckpointer(BaseCheckpointSaver):
                     return None
                 doc = results[0].to_dict() or {}
 
-            checkpoint = doc.get("checkpoint", {})
-            metadata = doc.get("metadata", {})
+            checkpoint = _deserialize(doc.get("checkpoint", {}))
+            metadata = _deserialize(doc.get("metadata", {}))
             parent_config: RunnableConfig | None = None
             if parent_id := doc.get("parent_checkpoint_id"):
                 parent_config = {
@@ -161,8 +182,8 @@ class FirebaseCheckpointer(BaseCheckpointSaver):
                             "checkpoint_id": doc.get("checkpoint_id", ""),
                         }
                     },
-                    checkpoint=doc.get("checkpoint", {}),
-                    metadata=doc.get("metadata", {}),
+                    checkpoint=_deserialize(doc.get("checkpoint", {})),
+                    metadata=_deserialize(doc.get("metadata", {})),
                     parent_config=parent_config,
                 )
         except Exception as exc:

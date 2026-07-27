@@ -74,13 +74,13 @@ def build_manim_script_prompt(
     storyboard_json: str,
     background_color: str,
     highlight_color: str,
-    quality: str = "medium_quality",
+    quality: str = "low_quality",
 ) -> str:
     quality_flag = {
         "low_quality": "l",
         "medium_quality": "m",
         "high_quality": "h",
-    }.get(quality, "m")
+    }.get(quality, "l")
 
     return f"""Generate complete, executable Manim CE Python code for this educational video.
 

@@ -104,7 +104,7 @@ def create_initial_state(
     input_text: str = "",
     input_file_path: str = "",
     input_file_url: str = "",
-    render_quality: str = "medium_quality",
+    render_quality: str = "low_quality",
     tts_engine: str = "edge-tts",
     tts_voice: str = "en-US-AriaNeural",
     render_output_dir: str = "./renders",

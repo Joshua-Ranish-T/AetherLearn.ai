@@ -52,7 +52,7 @@ class ManimExecutionService:
         """
         manim_script: ManimScript | None = state.get("manim_script")
         script_path = state.get("manim_script_file_path", "")
-        render_quality = state.get("render_quality", "medium_quality")
+        render_quality = state.get("render_quality", "low_quality")
         project_id = state.get("project_id", "unknown")
         render_dir = state.get("render_output_dir", "./renders")
         scene_audios: list[SceneAudio] = state.get("scene_audios", [])
@@ -397,4 +397,4 @@ class ManimExecutionService:
             "low_quality": "-ql",
             "medium_quality": "-qm",
             "high_quality": "-qh",
-        }.get(quality, "-qm")
+        }.get(quality, "-ql")

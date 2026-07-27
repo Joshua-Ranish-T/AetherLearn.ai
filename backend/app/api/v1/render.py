@@ -26,7 +26,7 @@ settings = get_settings()
 class RenderRequest(BaseModel):
     """Request body for POST /render."""
     project_id: str
-    quality: str = "medium_quality"
+    quality: str = "low_quality"
     tts_engine: str = "edge-tts"
     tts_voice: str = "en-US-AriaNeural"
     start_from_stage: str = "manim_script_agent"

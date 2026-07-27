@@ -87,7 +87,7 @@ class GenerationRequest(BaseModel):
         description="If True, regenerate even if a video already exists"
     )
     quality: str = Field(
-        default="medium_quality",
+        default="low_quality",
         description="Manim render quality: low_quality | medium_quality | high_quality"
     )
     tts_engine: str = Field(

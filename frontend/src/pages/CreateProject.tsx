@@ -28,7 +28,7 @@ export function CreateProject() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [inputText, setInputText] = useState('')
-  const [quality, setQuality] = useState('medium_quality')
+  const [quality, setQuality] = useState('low_quality')
   const [uploadedFile, setUploadedFile] = useState<File | null>(null)
 
   const createProject = useCreateProject()

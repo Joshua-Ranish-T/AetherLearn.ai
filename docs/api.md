@@ -16,7 +16,7 @@ The backend exposes a REST API built with FastAPI. Complete interactive document
 
 ### Generation & Jobs
 - `POST /generate` — Start the video generation pipeline for a project. Returns a `Job` ID immediately.
-  - Body: `{ "project_id": "string", "quality": "medium_quality", "force_regenerate": boolean }`
+  - Body: `{ "project_id": "string", "quality": "low_quality", "force_regenerate": boolean }`
 - `GET /jobs/{id}` — Get the current status of a generation job.
 - `GET /jobs/{id}/stream` — Server-Sent Events (SSE) endpoint for real-time progress updates and pipeline logs.
 

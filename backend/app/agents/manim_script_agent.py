@@ -74,7 +74,7 @@ class ManimScriptAgent:
         scene_audios: list[SceneAudio] = state.get("scene_audios", [])
 
         project_id = state.get("project_id", "unknown")
-        render_quality = state.get("render_quality", "medium_quality")
+        render_quality = state.get("render_quality", "low_quality")
         render_dir = state.get("render_output_dir", "./renders")
 
         logger.info(
@@ -126,7 +126,7 @@ class ManimScriptAgent:
 
         # ── Build render command ───────────────────────────────────────────
         quality_flag = {"low_quality": "-ql", "medium_quality": "-qm", "high_quality": "-qh"}.get(
-            render_quality, "-qm"
+            render_quality, "-ql"
         )
         script_filename = f"manim_script_{project_id}.py"
         render_command = f"manim {quality_flag} {script_filename} {main_class}"

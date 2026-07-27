@@ -60,7 +60,7 @@ class Settings(BaseSettings):
     # ── Rendering ─────────────────────────────────────────────────────────
     render_output_dir: str = Field(default="./renders")
     manim_quality: Literal["low_quality", "medium_quality", "high_quality"] = Field(
-        default="medium_quality"
+        default="low_quality"
     )
     manim_format: str = Field(default="mp4")
 

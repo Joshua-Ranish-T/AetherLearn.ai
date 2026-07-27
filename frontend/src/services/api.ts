@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { auth } from '../lib/firebase';
+import { auth, isFirebaseConfigured } from '../lib/firebase';
 
 // Use relative URLs in development so requests go through Vite's proxy
 // (avoids cross-origin ERR_CONNECTION_RESET issues).
@@ -36,12 +36,18 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
   async (config) => {
     try {
+      if (auth) {
+        // Wait for Firebase auth state to initialize from storage if not ready
+        await auth.authStateReady();
+      }
       if (auth && auth.currentUser) {
         const token = await auth.currentUser.getIdToken();
         config.headers.Authorization = `Bearer ${token}`;
-      } else {
+      } else if (!isFirebaseConfigured) {
+        // In local development mode without Firebase config, attach mock token
         config.headers.Authorization = `Bearer mock_dev_token`;
       }
+      // If Firebase is configured but user is logged out, do not send mock token
     } catch (e) {
       console.warn('Could not attach auth token:', e);
     }

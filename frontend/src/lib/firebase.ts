@@ -1,6 +1,6 @@
 // Firebase client initialization and Google Auth provider
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signOut } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
@@ -35,6 +35,7 @@ if (googleProvider) {
 /**
  * Sign in with Google using a popup window.
  * Returns user object or mock user if Firebase is not configured in local dev mode.
+ * Automatically falls back to signInWithRedirect if popups are blocked by COOP or browser policies.
  */
 export async function signInWithGoogle() {
   if (!auth) {
@@ -53,9 +54,15 @@ export async function signInWithGoogle() {
   try {
     const result = await signInWithPopup(auth, googleProvider);
     return result.user;
-  } catch (error) {
-    console.error('Google sign-in error:', error);
-    throw error;
+  } catch (error: any) {
+    console.warn('signInWithPopup failed (likely due to COOP or popup blocker). Falling back to signInWithRedirect:', error);
+    try {
+      await signInWithRedirect(auth, googleProvider);
+      return null;
+    } catch (redirectError) {
+      console.error('Google redirect sign-in error:', redirectError);
+      throw redirectError;
+    }
   }
 }
 

@@ -33,7 +33,16 @@ class Settings(BaseSettings):
     api_host: str = Field(default="0.0.0.0")
     api_port: int = Field(default=8000)
     api_prefix: str = Field(default="/api/v1")
-    cors_origins: list[str] = Field(default=["http://localhost:5173", "http://localhost:3000"])
+    cors_origins: list[str] = Field(
+        default=[
+            "http://localhost:5173",
+            "http://localhost:3000",
+            "http://127.0.0.1:5173",
+            "http://127.0.0.1:3000",
+            "https://aetherlearn-ai.vercel.app",
+            "https://aetherlearn-ai.onrender.com",
+        ]
+    )
 
     # ── Google AI ─────────────────────────────────────────────────────────
     gemini_api_key: str = Field(default="")

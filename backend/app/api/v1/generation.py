@@ -65,7 +65,8 @@ async def start_generation(
         )
 
     # Create job document
-    job = job_repo.create(payload.project_id, user_id=user_id)
+    job_status = "queued" if settings.use_background_worker else "pending"
+    job = job_repo.create(payload.project_id, user_id=user_id, status=job_status)
     job_id = job["id"]
 
     # Build initial graph state
@@ -82,15 +83,19 @@ async def start_generation(
         render_output_dir=str(settings.render_output_path),
         max_repair_retries=settings.max_repair_retries,
     )
+    job_repo.update(job_id, {"initial_state": dict(initial_state)})
 
-    # Launch graph in background
-    background_tasks.add_task(
-        _run_generation_pipeline, job_id, payload.project_id, initial_state
-    )
+    # Launch graph in background task or leave queued for background worker
+    if settings.use_background_worker:
+        logger.info("Job queued for background worker", job_id=job_id, project_id=payload.project_id)
+    else:
+        logger.info("Running job in local background task", job_id=job_id, project_id=payload.project_id)
+        job_repo.update(job_id, {"status": "running"})
+        background_tasks.add_task(
+            _run_generation_pipeline, job_id, payload.project_id, initial_state
+        )
 
-    logger.info("Generation job started", job_id=job_id, project_id=payload.project_id)
-
-    return JobResponse(**job)
+    return JobResponse(**job_repo.get_by_id(job_id))
 
 
 @router.get("/jobs/{job_id}", response_model=JobResponse)

@@ -82,7 +82,13 @@ class JobRepository:
                         pass
                 raise DatabaseError(f"Failed to write jobs database: {exc}") from exc
 
-    def create(self, project_id: str, user_id: str = "local_dev_user") -> JobDocument:
+    def create(
+        self,
+        project_id: str,
+        user_id: str = "local_dev_user",
+        status: str = "pending",
+        initial_state: dict[str, Any] | None = None,
+    ) -> JobDocument:
         job_id = str(uuid.uuid4())
         now = datetime.now(tz=UTC)
 
@@ -90,7 +96,7 @@ class JobRepository:
             "id": job_id,
             "project_id": project_id,
             "user_id": user_id,
-            "status": "pending",
+            "status": status,
             "current_stage": "initialized",
             "stages_completed": [],
             "progress_percent": 0.0,
@@ -104,6 +110,7 @@ class JobRepository:
             "duration_seconds": 0.0,
             "logs": [],
             "result_data": {},
+            "initial_state": initial_state or {},
             "graph_state_ref": "",
         }
 
@@ -272,6 +279,48 @@ class JobRepository:
     def get(self, job_id: str) -> JobDocument:
         """Alias for get_by_id."""
         return self.get_by_id(job_id)
+
+    def get_next_queued(self) -> JobDocument | None:
+        """Fetch the oldest job with status='queued' and transition it to 'running'."""
+        if self._use_firestore:
+            try:
+                query: Any = get_firestore().collection(COLLECTION_NAME)
+                query = query.where(filter=FieldFilter("status", "==", "queued"))
+                raw_docs = [cast(Any, doc).to_dict() for doc in query.stream()]
+                items = [cast(JobDocument, x) for x in raw_docs if x is not None]
+                if not items:
+                    return None
+                items.sort(key=lambda x: str(x.get("created_at", "")))
+                next_job = items[0]
+                job_id = next_job.get("id")
+                if job_id:
+                    now_str = datetime.now(tz=UTC).isoformat()
+                    self.update(job_id, {"status": "running", "started_at": now_str})
+                    next_job["status"] = "running"
+                    next_job["started_at"] = now_str
+                return next_job
+            except Exception as exc:
+                logger.warning("Error fetching queued job from Firestore", error=str(exc))
+                return None
+
+        with acquire_lock(DB_PATH):
+            db = self._read_db()
+            queued_jobs = [
+                cast(JobDocument, doc)
+                for doc in db.values()
+                if doc.get("status") == "queued"
+            ]
+            if not queued_jobs:
+                return None
+            queued_jobs.sort(key=lambda x: str(x.get("created_at", "")))
+            next_job = queued_jobs[0]
+            job_id = next_job["id"]
+            now_str = datetime.now(tz=UTC).isoformat()
+            db[job_id]["status"] = "running"
+            db[job_id]["started_at"] = now_str
+            db[job_id]["updated_at"] = now_str
+            self._write_db(db)
+            return cast(JobDocument, db[job_id])
 
 
 def emit_live_log(job_id: str, stage: str, status: str, message: str, **metadata: Any) -> None:

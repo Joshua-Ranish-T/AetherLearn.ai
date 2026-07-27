@@ -1,26 +1,38 @@
 services:
+  # 1. API Web Service (FastAPI / Uvicorn)
   - type: web
-    name: eduvideo-backend
+    name: aetherlearn-api
     env: docker
-    region: oregon
-    plan: standard
-    rootDir: backend
-    dockerfilePath: ./Dockerfile
-    healthCheckPath: /health
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: starter
     envVars:
       - key: APP_ENV
         value: production
-      - key: USE_FIREBASE
+      - key: USE_BACKGROUND_WORKER
         value: true
-      - key: REQUIRE_AUTH
+      - key: MANIM_QUALITY
+        value: low_quality
+      - key: E2B_API_KEY
+        sync: false
+
+  # 2. Background Worker Service (No HTTP Health Checks!)
+  # This worker runs python worker.py and processes queued rendering jobs.
+  # Because it is a Background Worker, Render never probes it with HTTP pings,
+  # preventing SIGTERM crashes during memory/CPU-intensive Manim animation rendering.
+  - type: worker
+    name: aetherlearn-worker
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    dockerCommand: python worker.py
+    plan: starter
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: USE_BACKGROUND_WORKER
         value: true
-      - key: GEMINI_API_KEY
+      - key: MANIM_QUALITY
+        value: low_quality
+      - key: E2B_API_KEY
         sync: false
-      - key: FIREBASE_PROJECT_ID
-        sync: false
-      - key: FIREBASE_STORAGE_BUCKET
-        sync: false
-      - key: FIREBASE_CREDENTIALS_JSON
-        sync: false
-      - key: CORS_ORIGINS
-        value: '["*"]'

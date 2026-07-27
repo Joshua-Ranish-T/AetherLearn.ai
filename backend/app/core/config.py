@@ -57,7 +57,9 @@ class Settings(BaseSettings):
     firebase_project_id: str = Field(default="")
     firebase_storage_bucket: str = Field(default="")
 
-    # ── Rendering ─────────────────────────────────────────────────────────
+    # ── Rendering & Workers ─────────────────────────────────────────────────
+    use_background_worker: bool = Field(default=False)
+    e2b_api_key: str = Field(default="")
     render_output_dir: str = Field(default="./renders")
     manim_quality: Literal["low_quality", "medium_quality", "high_quality"] = Field(
         default="low_quality"

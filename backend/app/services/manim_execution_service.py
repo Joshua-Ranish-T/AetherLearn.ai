@@ -308,7 +308,12 @@ class ManimExecutionService:
     def _run_subprocess(
         self, command: list[str], script_path: str
     ) -> ExecutionResult:
-        """Run Manim as a subprocess and capture output."""
+        """Run Manim as a subprocess or in an E2B cloud sandbox."""
+        # Try E2B sandbox execution if configured
+        e2b_result = self._run_in_e2b_sandbox(command, script_path)
+        if e2b_result is not None:
+            return e2b_result
+
         try:
             process = subprocess.run(
                 command,
@@ -365,6 +370,71 @@ class ManimExecutionService:
                 error_message=f"Subprocess error: {exc}",
                 logs=[str(exc)],
             )
+
+    def _run_in_e2b_sandbox(
+        self, command: list[str], script_path: str
+    ) -> ExecutionResult | None:
+        """Run Manim inside an E2B cloud microVM sandbox if E2B_API_KEY is configured."""
+        settings = get_settings()
+        api_key = settings.e2b_api_key or os.getenv("E2B_API_KEY")
+        if not api_key:
+            return None
+
+        try:
+            from e2b_code_interpreter import Sandbox
+        except ImportError:
+            logger.debug("e2b_code_interpreter not installed, skipping E2B sandbox")
+            return None
+
+        logger.info("Executing Manim in E2B sandbox", command=" ".join(command))
+        try:
+            with Sandbox(api_key=api_key) as sandbox:
+                script_content = Path(script_path).read_text(encoding="utf-8")
+                remote_script_path = f"/root/{Path(script_path).name}"
+                sandbox.files.write(remote_script_path, script_content)
+
+                remote_cmd = list(command)
+                for i, arg in enumerate(remote_cmd):
+                    if arg == script_path or arg == Path(script_path).name:
+                        remote_cmd[i] = remote_script_path
+
+                execution = sandbox.commands.run(" ".join(remote_cmd), timeout=self.EXECUTION_TIMEOUT_SECONDS)
+                stdout = execution.stdout or ""
+                stderr = execution.stderr or ""
+                exit_code = execution.exit_code
+
+                output_dir = Path(script_path).parent
+                try:
+                    for remote_file in sandbox.files.list("/root"):
+                        if remote_file.name.endswith(".mp4"):
+                            data = sandbox.files.read(f"/root/{remote_file.name}", format="bytes")
+                            (output_dir / remote_file.name).write_bytes(data)
+                except Exception as exc:
+                    logger.warning("Error downloading MP4s from E2B sandbox", error=str(exc))
+
+                if exit_code == 0:
+                    return ExecutionResult(
+                        status=ExecutionStatus.SUCCESS,
+                        exit_code=exit_code,
+                        stdout=stdout,
+                        stderr=stderr,
+                        logs=stdout.split("\n"),
+                    )
+                else:
+                    error_message, traceback = self._parse_error(stderr, stdout)
+                    status = self._classify_error(stderr)
+                    return ExecutionResult(
+                        status=status,
+                        exit_code=exit_code,
+                        stdout=stdout,
+                        stderr=stderr,
+                        error_message=error_message,
+                        traceback=traceback,
+                        logs=stderr.split("\n"),
+                    )
+        except Exception as exc:
+            logger.exception("E2B sandbox execution failed, falling back to local subprocess", error=str(exc))
+            return None
 
     def _parse_error(self, stderr: str, stdout: str) -> tuple[str, str]:
         """Extract error message and traceback from stderr."""

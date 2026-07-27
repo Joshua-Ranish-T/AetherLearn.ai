@@ -47,6 +47,7 @@ class JobDocument(TypedDict, total=False):
     duration_seconds: float
     logs: list[dict[str, Any]]       # append-only execution log entries
     result_data: dict[str, Any]
+    initial_state: dict[str, Any]
     graph_state_ref: str             # Firestore doc path to serialized graph state
 
 

@@ -3,10 +3,10 @@ import { Bell, Zap } from 'lucide-react'
 import { UserMenu } from '@/components/auth/UserMenu'
 
 const PAGE_TITLES: Record<string, string> = {
+  '/': 'AI Tutor Chat',
   '/dashboard': 'Dashboard',
   '/create': 'Create New Video',
   '/history': 'Generation History',
-  '/settings': 'Settings',
 }
 
 export function Header() {
@@ -19,7 +19,7 @@ export function Header() {
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-1.5 glass rounded-full px-3 py-1.5">
           <Zap className="w-3.5 h-3.5 text-yellow-400" />
-          <span className="text-xs font-medium text-muted-foreground">Gemini Pro</span>
+          <span className="text-xs font-medium text-muted-foreground">AI Engine</span>
         </div>
         <button className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors">
           <Bell className="w-4 h-4 text-muted-foreground" />

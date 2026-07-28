@@ -209,6 +209,16 @@ export function TutorWorkspace() {
             <Link className="text-primary border-b-2 border-primary pb-1 font-body-base text-body-base transition-all duration-300 font-bold" to="/">Workspace</Link>
             <Link className="text-gray-600 hover:text-gray-900 font-body-base text-body-base transition-all duration-300 active:scale-95" to="/dashboard">Dashboard</Link>
             <Link className="text-gray-600 hover:text-gray-900 font-body-base text-body-base transition-all duration-300 active:scale-95" to="/history">Library</Link>
+            <a 
+              href="https://github.com/Joshua-Ranish-T/AI-Tutor-Manim-Video-Generation" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-900 text-amber-300 font-semibold text-xs shadow-sm hover:bg-slate-800 hover:scale-105 active:scale-95 transition-all duration-200 border border-slate-700/60"
+              title="Star our GitHub Repository!"
+            >
+              <span className="material-symbols-outlined text-[15px]">star</span>
+              <span>Star on GitHub</span>
+            </a>
           </div>
           
           <div className="flex items-center gap-4">
@@ -245,6 +255,16 @@ export function TutorWorkspace() {
               <div className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-primary">forum</span>
                 <h2 className="font-headline-md text-headline-md text-gray-800">Creative Session</h2>
+                <a 
+                  href="https://github.com/Joshua-Ranish-T/AI-Tutor-Manim-Video-Generation" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hidden sm:flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-300/80 font-bold text-[11px] shadow-2xs hover:bg-amber-100/80 transition-all ml-2"
+                  title="Support us by starring the repository on GitHub!"
+                >
+                  <span className="material-symbols-outlined text-[14px] text-amber-500">star</span>
+                  <span>Star Repo</span>
+                </a>
               </div>
               <div className="flex items-center gap-2">
                 {isGenerating && (

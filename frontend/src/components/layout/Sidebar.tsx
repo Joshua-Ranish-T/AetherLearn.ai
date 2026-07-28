@@ -4,17 +4,16 @@ import {
   LayoutDashboard,
   PlusCircle,
   History,
-  Settings,
-  Video,
+  MessageSquare,
   Sparkles,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
+  { to: '/', icon: MessageSquare, label: 'AI Tutor Chat' },
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/create', icon: PlusCircle, label: 'Create Video' },
   { to: '/history', icon: History, label: 'History' },
-  { to: '/settings', icon: Settings, label: 'Settings' },
 ]
 
 export function Sidebar() {
@@ -73,7 +72,7 @@ export function Sidebar() {
         <div className="glass rounded-lg p-3 flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-primary" />
           <div>
-            <p className="text-xs font-medium">Powered by Gemini</p>
+            <p className="text-xs font-medium">Powered by AI</p>
             <p className="text-xs text-muted-foreground">AI Multi-Agent</p>
           </div>
         </div>

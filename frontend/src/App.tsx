@@ -6,7 +6,6 @@ import { GenerationProgress } from '@/pages/GenerationProgress'
 import { ProjectDetail } from '@/pages/ProjectDetail'
 import { VideoPreview } from '@/pages/VideoPreview'
 import { History } from '@/pages/History'
-import { Settings } from '@/pages/Settings'
 import { TutorWorkspace } from '@/pages/TutorWorkspace'
 
 export default function App() {
@@ -21,7 +20,6 @@ export default function App() {
           <Route path="projects/:projectId/generate" element={<GenerationProgress />} />
           <Route path="videos/:videoId" element={<VideoPreview />} />
           <Route path="history" element={<History />} />
-          <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="/admin/*" element={<Navigate to="/dashboard" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
